@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>אתר החדשות שלי</title>
+</head>
+<body>
+    <h1 style="text-align:center; color:blue;">ברוכים הבאים לאתר N-HAREDI</h1>
+    <div id="news-list" style="padding:20px;"></div>
+    <script>
+        const news = JSON.parse(localStorage.getItem('my_news') || '[]');
+        const list = document.getElementById('news-list');
+        news.forEach(item => {
+            list.innerHTML += `<div style="border-bottom:1px solid #ccc;"><h3>${item.title}</h3><p>${item.content}</p></div>`;
+        });
+    </script>
+</body>
+</html>
