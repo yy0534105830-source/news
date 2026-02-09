@@ -2,23 +2,90 @@
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>דף ניהול</title>
-</head>
-<body style="text-align:center; font-family:sans-serif;">
-    <h2>ניהול אתר החדשות</h2>
-    <input type="text" id="title" placeholder="כותרת"><br><br>
-    <textarea id="content" placeholder="תוכן הכתבה"></textarea><br><br>
-    <button onclick="save()">פרסם כתבה</button>
-    <script>
-        function save() {
-            const news = JSON.parse(localStorage.getItem('my_news') || '[]');
-            news.unshift({
-                title: document.getElementById('title').value,
-                content: document.getElementById('content').value
-            });
-            localStorage.setItem('my_news', JSON.stringify(news));
-            alert("פורסם! עכשיו חזור לדף הבית.");
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ניהול תוכן - N-HAREDI</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
-    </script>
+        .admin-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+        h2 { color: #2c3e50; margin-bottom: 20px; }
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+            outline: none;
+        }
+        input:focus, textarea:focus { border-color: #3498db; }
+        textarea { height: 150px; resize: vertical; }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover { background-color: #2980b9; }
+        .footer-link { margin-top: 20px; display: block; color: #7f8c8d; text-decoration: none; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<div class="admin-container">
+    <h2>N-HAREDI | ניהול כתבות</h2>
+    <input type="text" id="title" placeholder="כתוב כותרת מושכת...">
+    <textarea id="content" placeholder="מה קרה היום בחדשות?"></textarea>
+    <button onclick="save()">פרסם כתבה עכשיו</button>
+    <a href="index.html" class="footer-link">→ חזרה לאתר הראשי</a>
+</div>
+
+<script>
+    function save() {
+        const title = document.getElementById('title').value;
+        const content = document.getElementById('content').value;
+
+        if (!title || !content) {
+            alert("חובה למלא גם כותרת וגם תוכן!");
+            return;
+        }
+
+        const news = JSON.parse(localStorage.getItem('my_news') || '[]');
+        news.unshift({
+            title: title,
+            content: content,
+            date: new Date().toLocaleString('he-IL')
+        });
+        
+        localStorage.setItem('my_news', JSON.stringify(news));
+        
+        alert("הכתבה פורסמה בהצלחה!");
+        
+        document.getElementById('title').value = '';
+        document.getElementById('content').value = '';
+    }
+</script>
+
 </body>
 </html>
