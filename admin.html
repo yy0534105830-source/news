@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>דף ניהול</title>
+</head>
+<body style="text-align:center; font-family:sans-serif;">
+    <h2>ניהול אתר החדשות</h2>
+    <input type="text" id="title" placeholder="כותרת"><br><br>
+    <textarea id="content" placeholder="תוכן הכתבה"></textarea><br><br>
+    <button onclick="save()">פרסם כתבה</button>
+    <script>
+        function save() {
+            const news = JSON.parse(localStorage.getItem('my_news') || '[]');
+            news.unshift({
+                title: document.getElementById('title').value,
+                content: document.getElementById('content').value
+            });
+            localStorage.setItem('my_news', JSON.stringify(news));
+            alert("פורסם! עכשיו חזור לדף הבית.");
+        }
+    </script>
+</body>
+</html>
