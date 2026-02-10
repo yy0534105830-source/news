@@ -2,6 +2,9 @@ backend:
   name: git-gateway
   branch: main
 
+# הגדרה שמוסיפה את כפתור הפרסום ואת ניהול הטיוטות (Editorial Workflow)
+publish_mode: editorial_workflow
+
 media_folder: "images"
 public_folder: "/images"
 
@@ -10,6 +13,7 @@ collections:
     label: "כתבות"
     folder: "content/blog"
     create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - {label: "כותרת", name: "title", widget: "string"}
       - {label: "תאריך", name: "date", widget: "datetime"}
