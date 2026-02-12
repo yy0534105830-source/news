@@ -2,9 +2,6 @@ backend:
   name: git-gateway
   branch: main
 
-# השורה שמוסיפה את כפתור הפרסום ומערכת הטיוטות
-publish_mode: editorial_workflow
-
 media_folder: "images"
 public_folder: "/images"
 
@@ -15,7 +12,7 @@ collections:
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - {label: "כותרת", name: "title", widget: "string"}
-      - {label: "תאריך", name: "date", widget: "datetime"}
-      - {label: "תמונה", name: "image", widget: "image"}
-      - {label: "תוכן הכתבה", name: "body", widget: "markdown"}
+      - { label: "כותרת", name: "title", widget: "string" }
+      - { label: "תאריך", name: "date", widget: "datetime" }
+      - { label: "תמונה", name: "image", widget: "image", required: false } # כאן ביטלתי את החובה!
+      - { label: "תוכן הכתבה", name: "body", widget: "markdown" }
