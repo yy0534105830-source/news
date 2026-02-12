@@ -3,141 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>N-HAREDI | חדשות הציבור החרדי</title>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>N-HAREDI | חדשות בזמן אמת</title>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;700;800&display=swap" rel="stylesheet">
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <style>
-        :root {
-            --main-blue: #002d58;
-            --accent-red: #cc0000;
-            --bg-gray: #f4f4f4;
-            --text-dark: #222;
-        }
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> <style>
+        :root { --walla-blue: #000; --walla-accent: #2563eb; }
+        body { font-family: 'Assistant', sans-serif; background-color: #fff; margin: 0; color: #1a1a1a; line-height: 1.4; }
+        .header-top { border-bottom: 1px solid #eee; padding: 15px 50px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 42px; font-weight: 800; color: #000; text-decoration: none; }
+        .logo span { color: var(--walla-accent); }
+        nav { background: #fff; border-bottom: 3px solid #000; padding: 10px 50px; margin-bottom: 30px; }
+        nav a { text-decoration: none; color: #000; font-weight: 700; margin-left: 25px; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* עיצוב הכתבה הראשית */
+        .main-article { margin-bottom: 40px; cursor: pointer; }
+        .main-article img { width: 100%; max-height: 500px; object-fit: cover; border-radius: 4px; }
+        .main-article h2 { font-size: 52px; font-weight: 800; margin: 20px 0 10px 0; line-height: 1.1; }
+        .main-article p { font-size: 20px; color: #444; margin: 0; }
 
-        body {
-            font-family: 'Assistant', sans-serif;
-            background-color: var(--bg-gray);
-            margin: 0; padding: 0; color: var(--text-dark);
-        }
-
-        /* כותרת עליונה */
-        .site-header {
-            background-color: var(--main-blue);
-            padding: 20px 0;
-            text-align: center;
-            color: white;
-            border-bottom: 4px solid #004a8f;
-        }
-        .site-header h1 { font-size: 55px; margin: 0; font-weight: 800; letter-spacing: -2px; }
-
-        /* תפריט ניווט */
-        nav {
-            background: #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: sticky; top: 0; z-index: 100;
-            text-align: center; padding: 10px 0;
-        }
-        nav a { color: var(--main-blue); text-decoration: none; margin: 0 15px; font-weight: 600; }
-
-        /* מבזקים */
-        .ticker {
-            background: var(--accent-red); color: white;
-            padding: 8px; text-align: center; font-weight: bold; font-size: 14px;
-        }
-
-        .container { max-width: 1100px; margin: 20px auto; padding: 0 15px; }
-
-        /* אזור הכתבות הראשי */
-        #news-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .news-card {
-            background: white; border-radius: 4px; overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-            transition: transform 0.2s;
-        }
-        .news-card:hover { transform: translateY(-5px); }
-        .news-card img { width: 100%; height: 200px; object-fit: cover; }
-        .news-card-content { padding: 15px; }
-        .news-card h2 { font-size: 20px; margin: 0 0 10px 0; color: var(--main-blue); }
-        .news-card p { font-size: 15px; color: #555; line-height: 1.5; }
-
-        /* כתבה ראשית גדולה */
-        .featured-post {
-            grid-column: 1 / -1;
-            display: flex; background: white; margin-bottom: 20px;
-        }
-        @media (max-width: 768px) { .featured-post { flex-direction: column; } }
-        .featured-post img { width: 60%; height: 400px; object-fit: cover; }
-        .featured-content { padding: 30px; width: 40%; }
-        .featured-content h2 { font-size: 32px; }
-
+        /* גריד לכתבות משניות */
+        #news-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
+        .side-card { border-top: 1px solid #eee; padding-top: 15px; }
+        .side-card img { width: 100%; height: 180px; object-fit: cover; border-radius: 2px; }
+        .side-card h3 { font-size: 22px; margin: 10px 0; font-weight: 700; }
     </style>
 </head>
 <body>
 
-<header class="site-header">
-    <h1>N-HAREDI</h1>
-</header>
+<div class="header-top">
+    <a href="/" class="logo">N<span>-HAREDI</span></a>
+</div>
 
 <nav>
-    <a href="/">ראשי</a>
-    <a href="/admin">ממשק ניהול</a>
+    <a href="#">חדשות</a>
+    <a href="#">פוליטי</a>
+    <a href="#">חצרות קודש</a>
+    <a href="/admin">ניהול</a>
 </nav>
 
-<div class="ticker">מבזק: האתר החדש הושק - כל העדכונים בזמן אמת</div>
-
 <div class="container">
-    <div id="news-grid">
-        <p style="text-align:center;">טוען כתבות אחרונות...</p>
-    </div>
+    <div id="main-zone">
+        </div>
+    <div id="news-list">
+        </div>
 </div>
 
 <script>
-    // פונקציה פשוטה שתמשוך את הכתבות שפרסמת
-    async function loadPosts() {
-        const grid = document.getElementById('news-grid');
-        try {
-            // כאן אנחנו מבקשים מגיטהאב את רשימת הקבצים בתיקיית הכתבות
-            const response = await fetch('https://api.github.com/repos/yy0534105830-source/news/contents/content/blog');
-            const files = await response.json();
-            
-            grid.innerHTML = ''; // מנקים את הודעת הטעינה
+    const GITHUB_USERNAME = "yy0534105830-source";
+    const REPO_NAME = "news";
 
-            for (let file of files) {
+    async function fetchArticles() {
+        const mainZone = document.getElementById('main-zone');
+        const newsList = document.getElementById('news-list');
+
+        try {
+            // 1. קבלת רשימת הקבצים מהתיקייה content/blog
+            const response = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/content/blog`);
+            const files = await response.json();
+
+            // נמיין שהחדשים ביותר יהיו למעלה
+            files.reverse();
+
+            for (let [index, file] of files.entries()) {
                 if (file.name.endsWith('.md')) {
-                    // יוצרים כרטיסייה לכל כתבה
-                    const card = document.createElement('div');
-                    card.className = 'news-card';
-                    card.innerHTML = `
-                        <div class="news-card-content">
-                            <h2>כתבה חדשה</h2>
-                            <p>לחץ כדי לקרוא את הפרטים המלאים בתיקיית התוכן...</p>
-                            <small>${file.name.split('-').slice(0,3).join('/')}</small>
-                        </div>
-                    `;
-                    grid.appendChild(card);
+                    // 2. קריאת התוכן של כל קובץ
+                    const rawData = await fetch(file.download_url);
+                    const content = await rawData.text();
+                    
+                    // שליפת כותרת ותמונה מתוך הקובץ (פונקציה פשוטה לניקוי הטקסט)
+                    const title = content.split('title:')[1]?.split('\n')[0].replace(/"/g, '').trim() || "כתבה ללא כותרת";
+                    const image = content.split('image:')[1]?.split('\n')[0].trim() || "";
+                    const body = content.split('---').slice(2).join('---').trim();
+                    const summary = body.substring(0, 150) + "...";
+
+                    if (index === 0) {
+                        // כתבה ראשית (הגדולה ביותר)
+                        mainZone.innerHTML = `
+                            <div class="main-article">
+                                ${image ? `<img src="${image}">` : ''}
+                                <h2>${title}</h2>
+                                <p>${summary}</p>
+                            </div>
+                        `;
+                    } else {
+                        // כתבות משניות
+                        const card = document.createElement('div');
+                        card.className = 'side-card';
+                        card.innerHTML = `
+                            ${image ? `<img src="${image}">` : ''}
+                            <h3>${title}</h3>
+                            <p>${summary.substring(0, 80)}...</p>
+                        `;
+                        newsList.appendChild(card);
+                    }
                 }
             }
-        } catch (e) {
-            grid.innerHTML = '<p>עדיין אין כתבות להצגה. כנס לממשק הניהול ופרסם את הכתבה הראשונה!</p>';
+        } catch (error) {
+            console.error("Error loading articles:", error);
+            mainZone.innerHTML = "<h2>עדיין אין כתבות. כנס לממשק הניהול ופרסם אחת!</h2>";
         }
     }
 
-    loadPosts();
-
-    // קוד לחיבור Identity
-    if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", user => {
-            if (!user) {
-                window.netlifyIdentity.on("login", () => { document.location.href = "/admin/"; });
-            }
-        });
-    }
+    fetchArticles();
 </script>
-
 </body>
 </html>
