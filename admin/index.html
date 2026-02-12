@@ -1,12 +1,42 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>מנהל מערכת - N-HAREDI</title>
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ממשק ניהול N-HAREDI</title>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <script>
+    // יצירת תצוגה מקדימה שנראית בדיוק כמו האתר
+    var PostPreview = createClass({
+      render: function() {
+        var entry = this.props.entry;
+        var image = entry.getIn(['data', 'image']);
+        var bg = image ? this.props.getAsset(image) : '';
+
+        return h('div', {style: {fontFamily: 'Assistant, sans-serif', padding: '20px', direction: 'rtl'}},
+          h('div', {style: {borderBottom: '3px solid #000', paddingBottom: '10px', marginBottom: '20px'}},
+            h('h1', {style: {fontSize: '42px', fontWeight: '800'}}, 'N-HAREDI')
+          ),
+          h('div', {style: {maxWidth: '800px', margin: '0 auto'}},
+            h('h2', {style: {fontSize: '48px', lineHeight: '1.1', fontWeight: '800', marginBottom: '15px'}}, 
+              entry.getIn(['data', 'title'])
+            ),
+            image ? h('img', {src: bg.toString(), style: {width: '100%', borderRadius: '2px'}}) : null,
+            h('div', {style: {fontSize: '19px', marginTop: '20px', lineHeight: '1.6'}}, 
+              this.props.widgetFor('body')
+            )
+          )
+        );
+      }
+    });
+
+    // רישום התצוגה המקדימה למערכת
+    CMS.registerPreviewTemplate("blog", PostPreview);
+    // הזרקת הפונט של האתר לתוך הממשק
+    CMS.registerPreviewStyle("https://fonts.googleapis.com/css2?family=Assistant:wght@400;700;800&display=swap");
+  </script>
 </body>
 </html>
