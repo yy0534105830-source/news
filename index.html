@@ -3,110 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>N-HAREDI | חדשות בזמן אמת</title>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <title>N-HAREDI | חדשות הציבור החרדי</title>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> <style>
-        :root { --walla-blue: #000; --walla-accent: #2563eb; }
-        body { font-family: 'Assistant', sans-serif; background-color: #fff; margin: 0; color: #1a1a1a; line-height: 1.4; }
-        .header-top { border-bottom: 1px solid #eee; padding: 15px 50px; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 42px; font-weight: 800; color: #000; text-decoration: none; }
-        .logo span { color: var(--walla-accent); }
-        nav { background: #fff; border-bottom: 3px solid #000; padding: 10px 50px; margin-bottom: 30px; }
-        nav a { text-decoration: none; color: #000; font-weight: 700; margin-left: 25px; }
-        
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        
-        /* עיצוב הכתבה הראשית */
-        .main-article { margin-bottom: 40px; cursor: pointer; }
-        .main-article img { width: 100%; max-height: 500px; object-fit: cover; border-radius: 4px; }
-        .main-article h2 { font-size: 52px; font-weight: 800; margin: 20px 0 10px 0; line-height: 1.1; }
-        .main-article p { font-size: 20px; color: #444; margin: 0; }
+    <style>
+        :root {
+            --jdn-blue: #17298d;
+            --jdn-red: #cc0000;
+            --bg-gray: #f0f0f0;
+        }
 
-        /* גריד לכתבות משניות */
-        #news-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
-        .side-card { border-top: 1px solid #eee; padding-top: 15px; }
-        .side-card img { width: 100%; height: 180px; object-fit: cover; border-radius: 2px; }
-        .side-card h3 { font-size: 22px; margin: 10px 0; font-weight: 700; }
+        body {
+            font-family: 'Assistant', sans-serif;
+            background-color: var(--bg-gray);
+            margin: 0; padding: 0; color: #333;
+        }
+
+        /* לוגו כחול עליון בסגנון JDN */
+        .site-header {
+            background: linear-gradient(180deg, #2847f3 0%, #17298d 100%);
+            padding: 25px 0;
+            text-align: center;
+            border-bottom: 4px solid #0d1a5e;
+        }
+        .site-header h1 { 
+            font-size: 60px; margin: 0; font-weight: 800; color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* תפריט */
+        nav { background: #fff; border-bottom: 1px solid #ddd; text-align: center; padding: 12px 0; }
+        nav a { text-decoration: none; color: var(--jdn-blue); font-weight: 700; margin: 0 15px; font-size: 18px; }
+
+        /* פס מבזקים אדום */
+        .ticker-wrap { background: var(--jdn-red); color: white; padding: 10px; font-weight: 700; font-size: 16px; overflow: hidden; }
+
+        .container { max-width: 1200px; margin: 20px auto; padding: 0 15px; display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+
+        /* כתבה ראשית - גדולה עם כותרת על התמונה */
+        .main-hero { position: relative; background: #000; border-radius: 4px; overflow: hidden; grid-column: 1 / 2; height: 450px; }
+        .main-hero img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; }
+        .main-hero-info { 
+            position: absolute; bottom: 0; right: 0; left: 0; 
+            background: linear-gradient(transparent, rgba(0,0,0,0.9)); 
+            padding: 30px; color: white; border-bottom: 8px solid var(--jdn-blue);
+        }
+        .main-hero-info h2 { font-size: 40px; margin: 0; font-weight: 800; line-height: 1.1; }
+
+        /* כתבות צד וכתבות גריד */
+        .news-grid { grid-column: 1 / 2; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .card { background: white; border-radius: 3px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); overflow: hidden; }
+        .card img { width: 100%; height: 180px; object-fit: cover; }
+        .card-content { padding: 12px; }
+        .card-content h3 { font-size: 18px; margin: 0; color: var(--jdn-blue); font-weight: 700; }
+
+        /* טור שמאלי - הכי נקראו */
+        .sidebar { background: white; padding: 15px; border-radius: 3px; height: fit-content; }
+        .sidebar h4 { border-bottom: 3px solid var(--jdn-blue); padding-bottom: 5px; margin-top: 0; }
+
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } .main-hero { height: 300px; } .news-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
-<div class="header-top">
-    <a href="/" class="logo">N<span>-HAREDI</span></a>
-</div>
+<header class="site-header">
+    <h1>N-HAREDI</h1>
+</header>
 
 <nav>
-    <a href="#">חדשות</a>
+    <a href="/">ראשי</a>
     <a href="#">פוליטי</a>
     <a href="#">חצרות קודש</a>
-    <a href="/admin">ניהול</a>
+    <a href="/admin" style="background: gold; padding: 5px 10px; border-radius: 4px; color: black;">ניהול</a>
 </nav>
 
+<div class="ticker-wrap" id="ticker-box">מבזק: טוען עדכונים שוטפים...</div>
+
 <div class="container">
-    <div id="main-zone">
+    <div id="top-section">
         </div>
-    <div id="news-list">
+    <div class="sidebar">
+        <h4>הכי נקראים</h4>
+        <div id="sidebar-content"></div>
+    </div>
+    <div class="news-grid" id="grid-content">
         </div>
 </div>
 
 <script>
-    const GITHUB_USERNAME = "yy0534105830-source";
-    const REPO_NAME = "news";
-
-    async function fetchArticles() {
-        const mainZone = document.getElementById('main-zone');
-        const newsList = document.getElementById('news-list');
+    async function loadJdnStyle() {
+        const topSection = document.getElementById('top-section');
+        const gridContent = document.getElementById('grid-content');
+        const tickerBox = document.getElementById('ticker-box');
 
         try {
-            // 1. קבלת רשימת הקבצים מהתיקייה content/blog
-            const response = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/content/blog`);
-            const files = await response.json();
-
-            // נמיין שהחדשים ביותר יהיו למעלה
+            const res = await fetch(`https://api.github.com/repos/yy0534105830-source/news/contents/content/blog`);
+            const files = await res.json();
             files.reverse();
 
-            for (let [index, file] of files.entries()) {
-                if (file.name.endsWith('.md')) {
-                    // 2. קריאת התוכן של כל קובץ
-                    const rawData = await fetch(file.download_url);
-                    const content = await rawData.text();
-                    
-                    // שליפת כותרת ותמונה מתוך הקובץ (פונקציה פשוטה לניקוי הטקסט)
-                    const title = content.split('title:')[1]?.split('\n')[0].replace(/"/g, '').trim() || "כתבה ללא כותרת";
-                    const image = content.split('image:')[1]?.split('\n')[0].trim() || "";
-                    const body = content.split('---').slice(2).join('---').trim();
-                    const summary = body.substring(0, 150) + "...";
+            for (let file of files) {
+                const raw = await fetch(file.download_url);
+                const text = await raw.text();
+                
+                const title = text.split('title:')[1]?.split('\n')[0].replace(/"/g, '').trim();
+                const pos = text.split('layout_position:')[1]?.split('\n')[0].trim() || "side";
+                const img = text.split('image:')[1]?.split('\n')[0].trim() || "";
 
-                    if (index === 0) {
-                        // כתבה ראשית (הגדולה ביותר)
-                        mainZone.innerHTML = `
-                            <div class="main-article">
-                                ${image ? `<img src="${image}">` : ''}
-                                <h2>${title}</h2>
-                                <p>${summary}</p>
-                            </div>
-                        `;
-                    } else {
-                        // כתבות משניות
-                        const card = document.createElement('div');
-                        card.className = 'side-card';
-                        card.innerHTML = `
-                            ${image ? `<img src="${image}">` : ''}
-                            <h3>${title}</h3>
-                            <p>${summary.substring(0, 80)}...</p>
-                        `;
-                        newsList.appendChild(card);
-                    }
+                if (pos === "top") {
+                    topSection.innerHTML = `
+                        <div class="main-hero">
+                            ${img ? `<img src="${img}">` : ''}
+                            <div class="main-hero-info"><h2>${title}</h2></div>
+                        </div>`;
+                } else if (pos === "ticker") {
+                    tickerBox.innerHTML = `מבזק: ${title}`;
+                } else {
+                    gridContent.innerHTML += `
+                        <div class="card">
+                            ${img ? `<img src="${img}">` : ''}
+                            <div class="card-content"><h3>${title}</h3></div>
+                        </div>`;
                 }
             }
-        } catch (error) {
-            console.error("Error loading articles:", error);
-            mainZone.innerHTML = "<h2>עדיין אין כתבות. כנס לממשק הניהול ופרסם אחת!</h2>";
-        }
+        } catch (e) { console.log("טוען..."); }
     }
-
-    fetchArticles();
+    loadJdnStyle();
 </script>
 </body>
 </html>
