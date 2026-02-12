@@ -1,1 +1,180 @@
 
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JDN - חדשות הציבור החרדי</title>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --jdn-blue: #002d58;
+            --jdn-red: #cc0000;
+            --jdn-text: #333;
+        }
+
+        body {
+            font-family: 'Assistant', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0; padding: 0;
+            color: var(--jdn-text);
+        }
+
+        /* לוגו עליון */
+        .site-header {
+            background-color: var(--jdn-blue);
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            border-bottom: 5px solid #0056a3;
+        }
+
+        .site-header h1 { font-size: 65px; font-weight: 800; margin: 0; }
+
+        /* תפריט */
+        nav {
+            background: var(--jdn-blue);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 8px 0;
+            text-align: center;
+        }
+        nav a { color: white; text-decoration: none; margin: 0 15px; font-weight: bold; font-size: 16px; }
+
+        /* מבזק */
+        .ticker {
+            background: var(--jdn-red);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        /* מבנה הכתבות - הבלוק הראשי */
+        .main-news-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr; /* כתבה גדולה ושתיים קטנות בצד */
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .main-story {
+            position: relative;
+            background: #000;
+            height: 450px;
+            overflow: hidden;
+        }
+        .main-story img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+        .main-story-info {
+            position: absolute;
+            bottom: 0; right: 0; left: 0;
+            padding: 25px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            color: white;
+        }
+        .main-story-info h2 { font-size: 38px; margin: 0; font-weight: 800; line-height: 1.2; }
+
+        .side-stories {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .side-story {
+            position: relative;
+            height: 217px;
+            background: #000;
+        }
+        .side-story img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+        .side-story h3 {
+            position: absolute; bottom: 10px; right: 10px; left: 10px;
+            color: white; margin: 0; font-size: 18px; line-height: 1.2;
+        }
+
+        /* שורת הכתבות מתחת */
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        .card {
+            background: white;
+            border-bottom: 3px solid var(--jdn-blue);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .card img { width: 100%; height: 160px; object-fit: cover; }
+        .card-body { padding: 10px; }
+        .card-body h4 { margin: 0; font-size: 16px; color: var(--jdn-blue); }
+
+        @media (max-width: 768px) {
+            .main-news-section, .bottom-grid { grid-template-columns: 1fr; }
+            .main-story { height: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="site-header">
+    <h1>N-HAREDI</h1>
+</header>
+
+<nav>
+    <a href="#">ראשי</a>
+    <a href="#">חצרות קודש</a>
+    <a href="#">פוליטי</a>
+    <a href="#">מבזקים</a>
+    <a href="#">גלריות</a>
+</nav>
+
+<div class="ticker">
+    מבזק: כל העדכונים האחרונים מריכוזי הציבור החרדי בארץ ובעולם
+</div>
+
+<div class="container">
+    <div class="main-news-section">
+        <div class="main-story">
+            <img src="https://i0.wp.com/www.jdn.co.il/wp-content/uploads/2024/01/9-scaled.jpg" alt="ראשי">
+            <div class="main-story-info">
+                <h2>כותרת ראשית ענקית - בדיוק כמו באתר JDN</h2>
+            </div>
+        </div>
+        <div class="side-stories">
+            <div class="side-story">
+                <img src="https://via.placeholder.com/400x300" alt="משנית">
+                <h3>כתבה משנית א' - כותרת קצרה</h3>
+            </div>
+            <div class="side-story">
+                <img src="https://via.placeholder.com/400x300" alt="משנית">
+                <h3>כתבה משנית ב' - כותרת קצרה</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-grid">
+        <div class="card">
+            <img src="https://via.placeholder.com/300x200" alt="כתבה">
+            <div class="card-body"><h4>כאן תופיע עוד כותרת מעניינת</h4></div>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/300x200" alt="כתבה">
+            <div class="card-body"><h4>כאן תופיע עוד כותרת מעניינת</h4></div>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/300x200" alt="כתבה">
+            <div class="card-body"><h4>כאן תופיע עוד כותרת מעניינת</h4></div>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/300x200" alt="כתבה">
+            <div class="card-body"><h4>כאן תופיע עוד כותרת מעניינת</h4></div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
