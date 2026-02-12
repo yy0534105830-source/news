@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -6,6 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JDN - חדשות הציבור החרדי</title>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    </script>
     <style>
         :root {
             --jdn-blue: #002d58;
@@ -60,7 +72,7 @@
         /* מבנה הכתבות - הבלוק הראשי */
         .main-news-section {
             display: grid;
-            grid-template-columns: 2fr 1fr; /* כתבה גדולה ושתיים קטנות בצד */
+            grid-template-columns: 2fr 1fr;
             gap: 15px;
             margin-bottom: 20px;
         }
