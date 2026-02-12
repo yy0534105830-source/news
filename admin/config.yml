@@ -19,3 +19,4 @@ collections:
       - {label: "תאריך", name: "date", widget: "datetime"}
       - {label: "תמונה", name: "image", widget: "image"}
       - {label: "תוכן הכתבה", name: "body", widget: "markdown"}
+מה קורה אני האוהב את זה 
