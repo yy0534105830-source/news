@@ -13,6 +13,17 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - { label: "כותרת", name: "title", widget: "string" }
+      - { 
+          label: "מיקום באתר", 
+          name: "layout_position", 
+          widget: "select", 
+          options: [
+            { label: "כתבה ראשית (ענקית)", value: "top" },
+            { label: "כתבה משנית (גריד)", value: "side" },
+            { label: "מבזק רץ (בפס האדום)", value: "ticker" }
+          ],
+          default: "side"
+        }
       - { label: "תאריך", name: "date", widget: "datetime" }
-      - { label: "תמונה", name: "image", widget: "image", required: false } # כאן ביטלתי את החובה!
+      - { label: "תמונה", name: "image", widget: "image", required: false }
       - { label: "תוכן הכתבה", name: "body", widget: "markdown" }
