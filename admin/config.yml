@@ -1,29 +1,21 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: yy0534105830-source/news
   branch: main
+  base_url: https://api.github.com
 
+display_url: https://yy0534105830-source.github.io/news/
 media_folder: "images"
 public_folder: "/images"
 
 collections:
   - name: "blog"
-    label: "כתבות"
+    label: "כתבות JDN"
     folder: "content/blog"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - { label: "כותרת", name: "title", widget: "string" }
-      - { 
-          label: "מיקום באתר", 
-          name: "layout_position", 
-          widget: "select", 
-          options: [
-            { label: "כתבה ראשית (ענקית)", value: "top" },
-            { label: "כתבה משנית (גריד)", value: "side" },
-            { label: "מבזק רץ (בפס האדום)", value: "ticker" }
-          ],
-          default: "side"
-        }
-      - { label: "תאריך", name: "date", widget: "datetime" }
-      - { label: "תמונה", name: "image", widget: "image", required: false }
+      - { label: "תמונה", name: "image", widget: "image" }
+      - { label: "מיקום (top/side/ticker)", name: "layout_position", widget: "string", default: "side" }
       - { label: "תוכן הכתבה", name: "body", widget: "markdown" }
