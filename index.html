@@ -4,243 +4,115 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JDN - אתר החדשות המוביל למגזר החרדי</title>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700;800&display=swap" rel="stylesheet">
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <style>
-        :root {
-            --jdn-blue: #17298d;
-            --jdn-gradient: linear-gradient(180deg, #2847f3 0%, #17298d 65%);
-            --jdn-red: #cc0000;
-        }
+        :root { --jdn-blue: #17298d; --jdn-red: #cc0000; }
+        body { font-family: 'Assistant', sans-serif; background-color: #f6f6f6; margin: 0; padding: 0; }
 
-        body {
-            font-family: 'Assistant', sans-serif;
-            background-color: #f6f6f6;
-            margin: 0; padding: 0;
-            color: #333;
-        }
-
-        /* ה-Header המעוגל המדויק של JDN */
+        /* לוגו ומבנה עליון JDN */
         .site-header {
-            background: var(--jdn-gradient);
-            padding: 30px 0 50px 0;
+            background: linear-gradient(180deg, #2847f3 0%, #17298d 65%);
+            padding: 20px 0 45px 0;
             text-align: center;
-            border-bottom-left-radius: 50% 30px;
-            border-bottom-right-radius: 50% 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            position: relative;
-            z-index: 10;
+            border-bottom-left-radius: 50% 25px;
+            border-bottom-right-radius: 50% 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
+        .site-header img { height: 60px; }
 
-        .site-header h1 {
+        /* סרגל מבזקים אדום */
+        .ticker-bar {
+            background: var(--jdn-red);
             color: white;
-            font-size: 65px;
-            font-weight: 800;
-            margin: 0;
-            letter-spacing: -2px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        /* פס המבזקים שמתחבר ל-Header */
-        .ticker-container {
-            background-color: var(--jdn-red);
-            color: white;
-            padding: 10px 0;
-            margin-top: -25px;
+            padding: 8px 0;
+            margin-top: -20px;
+            font-weight: bold;
+            text-align: center;
             position: relative;
             z-index: 5;
-            font-weight: 700;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        /* תפריט ניווט */
-        nav {
-            background: #fff;
-            border-bottom: 1px solid #e0e0e0;
-            padding: 12px 0;
-            text-align: center;
-        }
-        nav a {
-            text-decoration: none;
-            color: var(--jdn-blue);
-            font-weight: 700;
-            margin: 0 15px;
-            font-size: 17px;
-        }
+        .main-container { max-width: 1200px; margin: 20px auto; padding: 0 15px; display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
 
-        .main-wrapper {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 15px;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 25px;
-        }
-
-        /* הכתבה הראשית בסגנון JDN */
-        .main-article {
+        /* כתבה ראשית "אחד על אחד" */
+        .jdn-main-post {
             position: relative;
-            background-color: #000;
+            background: #000;
             height: 480px;
-            border-radius: 6px;
+            border-radius: 4px;
             overflow: hidden;
-            cursor: pointer;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-bottom: 8px solid var(--jdn-blue);
         }
-
-        .main-article img {
-            width: 100%; height: 100%; object-fit: cover; opacity: 0.8;
-            transition: transform 0.3s ease;
-        }
-
-        .main-article:hover img { transform: scale(1.02); }
-
-        .main-article-content {
-            position: absolute;
-            bottom: 0; right: 0; left: 0;
-            padding: 40px 30px;
-            background: linear-gradient(transparent, rgba(0,0,0,0.95));
+        .jdn-main-post img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; }
+        .jdn-main-title {
+            position: absolute; bottom: 0; right: 0; left: 0;
+            padding: 40px 25px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
             color: white;
-            border-bottom: 10px solid var(--jdn-blue);
         }
+        .jdn-main-title h2 { font-size: 42px; margin: 0; font-weight: 800; line-height: 1.1; }
 
-        .main-article-content h2 {
-            font-size: 42px;
-            margin: 0;
-            font-weight: 800;
-            line-height: 1.1;
-        }
+        /* כתבות משניות */
+        .jdn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .jdn-card { background: white; border-bottom: 4px solid var(--jdn-blue); border-radius: 3px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .jdn-card img { width: 100%; height: 190px; object-fit: cover; }
+        .jdn-card h3 { padding: 12px; font-size: 19px; color: var(--jdn-blue); margin: 0; font-weight: 700; line-height: 1.3; }
 
-        /* גריד הכתבות המשניות */
-        .secondary-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 25px;
-        }
-
-        .jdn-card {
-            background: white;
-            border-radius: 4px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            border-bottom: 4px solid var(--jdn-blue);
-            transition: all 0.2s;
-        }
-
-        .jdn-card:hover { transform: translateY(-3px); }
-        .jdn-card img { width: 100%; height: 200px; object-fit: cover; }
-        .jdn-card-body { padding: 15px; }
-        .jdn-card-body h3 {
-            font-size: 20px;
-            color: var(--jdn-blue);
-            margin: 0;
-            font-weight: 700;
-            line-height: 1.3;
-        }
-
-        /* טור צדדי */
-        .sidebar-box {
-            background: white;
-            border-top: 5px solid var(--jdn-blue);
-            padding: 20px;
-            border-radius: 4px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
-
-        .sidebar-box h4 {
-            margin: 0 0 15px 0;
-            font-size: 22px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-        }
-
-        @media (max-width: 768px) {
-            .main-wrapper { grid-template-columns: 1fr; }
-            .secondary-grid { grid-template-columns: 1fr; }
-            .site-header h1 { font-size: 45px; }
-            .main-article { height: 350px; }
-        }
+        @media (max-width: 768px) { .main-container { grid-template-columns: 1fr; } .jdn-main-post { height: 320px; } .jdn-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
 <header class="site-header">
-    <h1>N-HAREDI</h1>
+    <img src="https://www.jdn.co.il/wp-content/themes/jdn/images/logo-white.png" alt="JDN">
 </header>
 
-<div class="ticker-container" id="ticker-text">
-    טוען מבזקים...
-</div>
+<div class="ticker-bar" id="ticker-area">מבזק: טוען עדכונים שוטפים...</div>
 
-<nav>
-    <a href="/">ראשי</a>
-    <a href="#">חדשות</a>
-    <a href="#">פוליטיקה</a>
-    <a href="#">חצרות קודש</a>
-    <a href="/admin">ניהול המערכת</a>
-</nav>
-
-<div class="main-wrapper">
+<div class="main-container">
     <section>
-        <div id="featured-article-root"></div>
-        <div class="secondary-grid" id="grid-root"></div>
+        <div id="featured-root"></div>
+        <div class="jdn-grid" id="grid-root"></div>
     </section>
-
     <aside>
-        <div class="sidebar-box">
-            <h4>הכי נקראים</h4>
-            <div id="sidebar-root">טוען...</div>
-        </div>
+        <div style="background:white; padding:15px; border-top:5px solid var(--jdn-blue); font-weight:bold;">הכי נקראים</div>
     </aside>
 </div>
 
 <script>
-    async function fetchJdnData() {
-        const featuredRoot = document.getElementById('featured-article-root');
-        const gridRoot = document.getElementById('grid-root');
-        const ticker = document.getElementById('ticker-text');
-
+    async function loadData() {
         try {
-            const response = await fetch('https://api.github.com/repos/yy0534105830-source/news/contents/content/blog');
-            const files = await response.json();
+            const res = await fetch('https://api.github.com/repos/yy0534105830-source/news/contents/content/blog');
+            const files = await res.json();
             files.reverse();
 
             for (let file of files) {
-                if (file.name.endsWith('.md')) {
-                    const raw = await fetch(file.download_url);
-                    const text = await raw.text();
-                    
-                    const title = text.split('title:')[1]?.split('\n')[0].replace(/"/g, '').trim();
-                    const img = text.split('image:')[1]?.split('\n')[0].trim() || "";
-                    const pos = text.split('layout_position:')[1]?.split('\n')[0].trim() || "side";
+                const raw = await fetch(file.download_url);
+                const text = await raw.text();
+                const title = text.split('title:')[1]?.split('\n')[0].replace(/"/g, '').trim();
+                const img = text.split('image:')[1]?.split('\n')[0].trim() || "";
+                const pos = text.split('layout_position:')[1]?.split('\n')[0].trim() || "side";
 
-                    if (pos === "top") {
-                        featuredRoot.innerHTML = `
-                            <div class="main-article">
-                                ${img ? `<img src="${img}">` : ''}
-                                <div class="main-article-content">
-                                    <h2>${title}</h2>
-                                </div>
-                            </div>`;
-                    } else if (pos === "ticker") {
-                        ticker.innerHTML = `<span>מבזק: ${title}</span>`;
-                    } else {
-                        gridRoot.innerHTML += `
-                            <div class="jdn-card">
-                                ${img ? `<img src="${img}">` : ''}
-                                <div class="jdn-card-body">
-                                    <h3>${title}</h3>
-                                </div>
-                            </div>`;
-                    }
+                if (pos === "top") {
+                    document.getElementById('featured-root').innerHTML = `
+                        <div class="jdn-main-post">
+                            <img src="${img}">
+                            <div class="jdn-main-title"><h2>${title}</h2></div>
+                        </div>`;
+                } else if (pos === "ticker") {
+                    document.getElementById('ticker-area').innerHTML = `מבזק: ${title}`;
+                } else {
+                    document.getElementById('grid-root').innerHTML += `
+                        <div class="jdn-card">
+                            <img src="${img}">
+                            <h3>${title}</h3>
+                        </div>`;
                 }
             }
-        } catch (e) { console.error("טעינה נכשלה"); }
+        } catch(e) {}
     }
-    fetchJdnData();
+    loadData();
 </script>
-
 </body>
 </html>
