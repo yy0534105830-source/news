@@ -3,51 +3,64 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>N-HAREDI Admin | ניהול בסגנון JDN</title>
+  <title>מערכת ניהול N-HAREDI</title>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-
   <script>
-    // יצירת תצוגה מקדימה שנראית בדיוק כמו הכתבה הראשית ב-JDN
+    // יצירת רכיב תצוגה מקדימה בסגנון JDN
     var PostPreview = createClass({
       render: function() {
         var entry = this.props.entry;
-        var title = entry.getIn(['data', 'title']);
+        var title = entry.getIn(['data', 'title']) || "כותרת הכתבה";
         var image = entry.getIn(['data', 'image']);
         var pos = entry.getIn(['data', 'layout_position']);
+        var body = this.props.widgetFor('body');
         var bg = image ? this.props.getAsset(image) : '';
 
-        // עיצוב JDN בתוך הממשק
-        return h('div', {style: {fontFamily: 'Assistant, sans-serif', direction: 'rtl', padding: '20px', background: '#f0f0f0'}},
-          // לוגו JDN למעלה
-          h('div', {style: {background: 'linear-gradient(180deg, #2847f3 0%, #17298d 100%)', padding: '15px', textAlign: 'center', marginBottom: '20px'}},
-            h('h1', {style: {color: 'white', margin: 0, fontSize: '30px'}}, 'N-HAREDI')
-          ),
-          // תצוגת המיקום הנבחר
-          h('div', {style: {marginBottom: '10px', color: '#cc0000', fontWeight: 'bold'}}, 'תצוגה מקדימה: ' + (pos === 'top' ? 'כתבה ראשית' : pos === 'ticker' ? 'מבזק' : 'כתבה רגילה')),
-          
-          // הכתבה עצמה
-          h('div', {style: {background: 'white', borderRadius: '4px', overflow: 'hidden', boxShadow: '0 2px 5px rgba(0,0,0,0.1)'}},
-            image ? h('img', {src: bg.toString(), style: {width: '100%', height: '300px', object-fit: 'cover'}}) : null,
-            h('div', {style: {padding: '20px', borderBottom: '6px solid #17298d'}},
-              h('h2', {style: {fontSize: '28px', margin: 0, color: (pos === 'top' ? '#000' : '#17298d')}}, title)
+        return h('div', {style: {fontFamily: 'Assistant, sans-serif', direction: 'rtl', backgroundColor: '#f6f6f6', minHeight: '100vh'}},
+          // ה-Header המעוגל של JDN בתוך הניהול
+          h('header', {style: {
+            background: 'linear-gradient(180deg, #2847f3 0%, #17298d 65%)',
+            padding: '20px 0 40px 0',
+            textAlign: 'center',
+            borderBottomLeftRadius: '50% 20px',
+            borderBottomRightRadius: '50% 20px',
+            boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
+            color: 'white'
+          }}, h('h1', {style: {margin: 0, fontSize: '40px', fontWeight: '800'}}, 'N-HAREDI')),
+
+          // תוכן התצוגה המקדימה
+          h('div', {style: {maxWidth: '800px', margin: '20px auto', padding: '0 15px'}},
+            // אם זו כתבה ראשית
+            pos === 'top' ? 
+            h('div', {style: {position: 'relative', background: '#000', height: '350px', borderRadius: '5px', overflow: 'hidden', borderBottom: '8px solid #17298d'}},
+              image ? h('img', {src: bg.toString(), style: {width: '100%', height: '100%', objectFit: 'cover', opacity: '0.8'}}) : null,
+              h('div', {style: {position: 'absolute', bottom: 0, right: 0, left: 0, padding: '20px', background: 'linear-gradient(transparent, rgba(0,0,0,0.9))'}},
+                h('h2', {style: {color: 'white', fontSize: '30px', margin: 0, fontWeight: '800'}}, title)
+              )
+            ) : 
+            // אם זו כתבה רגילה
+            h('div', {style: {background: 'white', borderRadius: '4px', overflow: 'hidden', borderBottom: '4px solid #17298d', boxShadow: '0 2px 5px rgba(0,0,0,0.1)'}},
+              image ? h('img', {src: bg.toString(), style: {width: '100%', height: '250px', objectFit: 'cover'}}) : null,
+              h('div', {style: {padding: '15px'}},
+                h('h3', {style: {color: '#17298d', margin: 0, fontSize: '22px', fontWeight: '700'}}, title)
+              )
             ),
-            h('div', {style: {padding: '20px', fontSize: '18px', lineHeight: '1.6'}}, 
-              this.props.widgetFor('body')
-            )
+            
+            // גוף הכתבה
+            h('div', {style: {marginTop: '20px', backgroundColor: 'white', padding: '20px', borderRadius: '4px', lineHeight: '1.6', fontSize: '18px'}}, body)
           )
         );
       }
     });
 
-    // רישום התבנית למערכת
+    // רישום התבנית
     CMS.registerPreviewTemplate("blog", PostPreview);
-    
-    // הזרקת הסטייל של JDN כדי שיעבוד בתוך ה-Editor
-    CMS.registerPreviewStyle("https://fonts.googleapis.com/css2?family=Assistant:wght@400;700;800&display=swap");
+    // הזרקת הסטייל של הפונט למערכת
+    CMS.registerPreviewStyle("https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&display=swap");
   </script>
 </body>
 </html>
