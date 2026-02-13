@@ -2,51 +2,10 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>ניהול חדשות - JDN Style</title>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700;800&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JDN - ניהול תוכן</title>
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  <script>
-    var PostPreview = createClass({
-      render: function() {
-        var entry = this.props.entry;
-        var title = entry.getIn(['data', 'title']) || "";
-        var image = entry.getIn(['data', 'image']);
-        var pos = entry.getIn(['data', 'layout_position']);
-        var bg = image ? this.props.getAsset(image) : '';
-
-        return h('div', {style: {fontFamily: 'Assistant, sans-serif', direction: 'rtl', backgroundColor: '#f6f6f6', minHeight: '100vh'}},
-          // Header
-          h('header', {style: {
-            background: 'linear-gradient(180deg, #2847f3 0%, #17298d 65%)',
-            padding: '20px 0 50px 0', textAlign: 'center',
-            borderBottomLeftRadius: '50% 25px', borderBottomRightRadius: '50% 25px'
-          }}, h('img', {src: 'https://www.jdn.co.il/wp-content/themes/jdn/images/logo-white.png', style: {height: '50px'}})),
-
-          // Content Preview
-          h('div', {style: {maxWidth: '800px', margin: '20px auto', padding: '15px'}},
-            pos === 'top' ? 
-            h('div', {style: {position: 'relative', background: '#000', height: '350px', borderRadius: '5px', overflow: 'hidden', borderBottom: '8px solid #17298d'}},
-              image ? h('img', {src: bg.toString(), style: {width: '100%', height: '100%', objectFit: 'cover', opacity: '0.8'}}) : null,
-              h('div', {style: {position: 'absolute', bottom: 0, right: 0, left: 0, padding: '20px', background: 'linear-gradient(transparent, rgba(0,0,0,0.9))'}},
-                h('h2', {style: {color: 'white', fontSize: '30px', margin: 0, fontWeight: '800'}}, title)
-              )
-            ) : 
-            h('div', {style: {background: 'white', borderRadius: '4px', borderBottom: '4px solid #17298d'}},
-              image ? h('img', {src: bg.toString(), style: {width: '100%', height: '250px', objectFit: 'cover'}}) : null,
-              h('div', {style: {padding: '15px'}},
-                h('h3', {style: {color: '#17298d', margin: 0, fontSize: '22px', fontWeight: '700'}}, title)
-              )
-            ),
-            h('div', {style: {marginTop: '20px', background: 'white', padding: '20px', borderRadius: '4px'}}, this.props.widgetFor('body'))
-          )
-        );
-      }
-    });
-    CMS.registerPreviewTemplate("blog", PostPreview);
-    CMS.registerPreviewStyle("https://fonts.googleapis.com/css2?family=Assistant:wght@400;700;800&display=swap");
-  </script>
 </body>
 </html>
