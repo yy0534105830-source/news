@@ -2,8 +2,9 @@ backend:
   name: github
   repo: yy0534105830-source/news
   branch: main
+  # הוספנו אפשרות להתחברות קלה יותר
+  auth_type: implicit
 
-site_domain: yy0534105830-source.github.io
 display_url: https://yy0534105830-source.github.io/news/
 media_folder: "images"
 public_folder: "/images"
@@ -11,11 +12,22 @@ public_folder: "/images"
 collections:
   - name: "blog"
     label: "כתבות JDN"
+    label_singular: "כתבה"
     folder: "content/blog"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - { label: "כותרת", name: "title", widget: "string" }
-      - { label: "תמונה", name: "image", widget: "image" }
-      - { label: "מיקום (top/side/ticker)", name: "layout_position", widget: "string", default: "side" }
+      - { label: "כותרת הכתבה", name: "title", widget: "string" }
+      - { label: "תמונה ראשית", name: "image", widget: "image" }
+      - { 
+          label: "מיקום באתר", 
+          name: "layout_position", 
+          widget: "select", 
+          options: [
+            { label: "כתבה ראשית גדולה", value: "top" },
+            { label: "כתבה ברשימה (צד)", value: "side" },
+            { label: "מבזק רץ (פס אדום)", value: "ticker" }
+          ],
+          default: "side"
+        }
       - { label: "תוכן הכתבה", name: "body", widget: "markdown" }
