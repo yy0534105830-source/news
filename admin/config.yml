@@ -2,8 +2,9 @@ backend:
   name: github
   repo: yy0534105830-source/news
   branch: main
+  # השורה הזו היא הקסם - היא אומרת למערכת לא לחפש שרת חיצוני
+  auth_type: implicit 
 
-# הגדרות תצוגה
 display_url: https://yy0534105830-source.github.io/news/
 media_folder: "images"
 public_folder: "/images"
