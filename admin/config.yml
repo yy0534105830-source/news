@@ -2,8 +2,8 @@ backend:
   name: github
   repo: yy0534105830-source/news
   branch: main
-  base_url: https://api.github.com
 
+site_domain: yy0534105830-source.github.io
 display_url: https://yy0534105830-source.github.io/news/
 media_folder: "images"
 public_folder: "/images"
