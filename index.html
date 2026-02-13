@@ -7,138 +7,130 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;700;800&display=swap');
-        body { font-family: 'Assistant', sans-serif; background-color: #f0f2f5; }
+        body { font-family: 'Assistant', sans-serif; background-color: #f2f2f2; margin: 0; padding: 0; }
         
-        .jdn-blue { background: linear-gradient(90deg, #17298D 0%, #2847F3 100%); }
+        /* צבעים ולוגו */
+        .header-top { background: linear-gradient(90deg, #17298D 0%, #2847F3 100%); border-bottom: 4px solid #e31e24; }
+        .nav-bar { background: white; border-bottom: 1px solid #ddd; }
         .jdn-red { background-color: #e31e24; }
+
+        /* מבנה גריד מקצועי */
+        .wrapper { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 300px; gap: 15px; padding: 15px; }
         
-        /* סידור המבנה הראשי: תוכן (מימין) ומבזקים (משמאל) */
-        .page-layout {
-            display: grid;
-            grid-template-columns: 1fr 300px; /* הטור השמאלי למבזקים */
-            gap: 15px;
+        .main-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 190px; gap: 8px; }
+
+        /* כתבה ראשית גדולה */
+        .main-card { grid-column: span 2; grid-row: span 2; position: relative; overflow: hidden; }
+        /* ריבוע רגיל */
+        .sub-card { position: relative; overflow: hidden; background: #fff; }
+
+        .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+        .card-overlay { 
+            position: absolute; bottom: 0; right: 0; left: 0; 
+            background: linear-gradient(transparent, rgba(0,0,0,0.9)); 
+            padding: 15px; color: white; z-index: 2;
         }
 
-        /* גריד הריבועים של הכתבות */
-        .news-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-auto-rows: 180px;
-            gap: 10px;
-        }
+        .main-title { font-size: 1.8rem; font-weight: 800; line-height: 1.1; }
+        .sub-title { font-size: 1rem; font-weight: 700; line-height: 1.2; }
 
-        .main-card { grid-column: span 2; grid-row: span 2; position: relative; overflow: hidden; border-radius: 4px; }
-        .sub-card { position: relative; overflow: hidden; background: #fff; border-radius: 4px; }
+        /* טור מבזקים צדדי */
+        .side-ticker { background: white; border-radius: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .ticker-head { background: #17298D; color: white; padding: 10px; font-weight: bold; text-align: center; }
+        .ticker-entry { padding: 10px; border-bottom: 1px solid #eee; font-size: 0.9rem; display: flex; gap: 10px; }
+        .t-time { color: #e31e24; font-weight: bold; }
 
-        .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
-        .sub-card:hover .card-img, .main-card:hover .card-img { transform: scale(1.05); }
-
-        .card-overlay {
-            position: absolute; bottom: 0; right: 0; left: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.85));
-            padding: 12px; color: white;
-        }
-
-        .main-title { font-size: 1.6rem; font-weight: 800; line-height: 1.2; }
-        .sub-title { font-size: 0.95rem; font-weight: 700; line-height: 1.2; }
-
-        /* טור מבזקים בצד */
-        .ticker-sidebar {
-            background: white; border-top: 4px solid #e31e24;
-            height: fit-content; border-radius: 4px; overflow: hidden;
-        }
-        .ticker-header { background: #f8f8f8; padding: 10px; font-weight: 800; color: #17298D; border-bottom: 1px solid #eee; }
-        .ticker-item { padding: 10px; border-bottom: 1px solid #eee; font-size: 0.9rem; display: flex; gap: 8px; }
-        .ticker-time { color: #e31e24; font-weight: bold; min-width: 40px; }
-
-        @media (max-width: 1024px) { .page-layout { grid-template-columns: 1fr; } .ticker-sidebar { display: none; } }
+        @media (max-width: 1024px) { .wrapper { grid-template-columns: 1fr; } .side-ticker { display: none; } }
     </style>
 </head>
 <body>
 
-    <header class="jdn-blue py-3 shadow-md border-b-4 border-red-600">
+    <div class="header-top py-4">
         <div class="container mx-auto px-4 flex justify-between items-center">
-            <img src="https://www.jdn.co.il/wp-content/uploads/2022/01/logosite.png" alt="JDN" class="h-14">
-            <div class="text-white font-bold hidden md:block">האתר החרדי המוביל בעולם</div>
-        </div>
-    </header>
-
-    <div class="jdn-red text-white py-1 text-sm font-bold">
-        <div class="container mx-auto px-4 flex">
-            <div class="bg-white text-red-600 px-2 ml-3">חדשות</div>
-            <marquee id="top-marquee" behavior="scroll" direction="right">טוען מבזקים...</marquee>
+            <img src="https://www.jdn.co.il/wp-content/uploads/2022/01/logosite.png" class="h-16">
+            <div class="hidden md:block text-white text-sm">האתר החרדי המוביל בעולם</div>
         </div>
     </div>
 
-    <div class="container mx-auto mt-4 px-2">
-        <div class="page-layout">
-            
-            <div>
-                <div class="news-grid" id="news-container">
-                    </div>
+    <div class="nav-bar hidden md:block">
+        <div class="container mx-auto px-4 flex gap-8 py-3 font-bold text-gray-800">
+            <a href="#" class="hover:text-blue-700">דף הבית</a>
+            <a href="#" class="hover:text-blue-700">חדשות</a>
+            <a href="#" class="hover:text-blue-700">פוליטיקה</a>
+            <a href="#" class="hover:text-blue-700">חצרות קודש</a>
+            <a href="#" class="hover:text-blue-700">כלכלה</a>
+        </div>
+    </div>
+
+    <div class="jdn-red text-white py-1 font-bold shadow-md">
+        <div class="container mx-auto px-4 flex items-center">
+            <div class="bg-white text-red-600 px-3 ml-4 text-sm">חדשות</div>
+            <marquee id="marquee-bar" behavior="scroll" direction="right" class="text-sm">טוען מבזקים אחרונים...</marquee>
+        </div>
+    </div>
+
+    <div class="wrapper">
+        
+        <div class="main-grid" id="jdn-grid">
             </div>
 
-            <aside class="ticker-sidebar shadow-md">
-                <div class="ticker-header">מבזקי JDN</div>
-                <div id="side-ticker">
-                    </div>
-            </aside>
+        <aside class="side-ticker">
+            <div class="ticker-head text-lg">מבזקי JDN</div>
+            <div id="sidebar-list">
+                </div>
+        </aside>
 
-        </div>
     </div>
 
     <script>
-        async function loadJDN() {
+        async function fetchJDN() {
             const repo = "yy0534105830-source/news";
-            const response = await fetch(`https://api.github.com/repos/${repo}/contents/content/blog`);
-            const files = await response.json();
+            const res = await fetch(`https://api.github.com/repos/${repo}/contents/content/blog`);
+            const data = await res.json();
             
-            const container = document.getElementById('news-container');
-            const sideTicker = document.getElementById('side-ticker');
-            const topMarquee = document.getElementById('top-marquee');
-            
-            container.innerHTML = "";
-            let tickerHTML = "";
-            let marqueeText = "";
+            const grid = document.getElementById('jdn-grid');
+            const sidebar = document.getElementById('sidebar-list');
+            const marquee = document.getElementById('marquee-bar');
 
-            // סינון וטעינת קבצים
-            const articles = [];
-            for (let file of files) {
+            let marqueeContent = "";
+            let sidebarHTML = "";
+            let gridHTML = "";
+
+            for (let file of data) {
                 if (file.name.endsWith('.md')) {
-                    const res = await fetch(file.download_url);
-                    const text = await res.text();
-                    const title = text.match(/title: "(.*)"/)?.[1] || "ללא כותרת";
-                    const image = text.match(/image: "(.*)"/)?.[1] || "";
+                    const contentRes = await fetch(file.download_url);
+                    const text = await contentRes.text();
+                    
+                    const title = text.match(/title: "(.*)"/)?.[1] || "";
+                    const img = text.match(/image: "(.*)"/)?.[1] || "";
                     const pos = text.match(/layout_position: "(.*)"/)?.[1];
-                    const time = text.match(/date: "(.*)"/)?.[1]?.split(' ')[1] || "00:00";
-                    articles.push({ title, image, pos, time });
+                    const dateMatch = text.match(/date: "(.*)"/)?.[1] || "";
+                    const time = dateMatch.split(' ')[1] || "08:00";
+
+                    if (pos === "ticker") {
+                        marqueeContent += ` • ${title} `;
+                        sidebarHTML += `
+                            <div class="ticker-entry">
+                                <span class="t-time">${time}</span>
+                                <span>${title}</span>
+                            </div>`;
+                    } else {
+                        const isTop = (pos === "top");
+                        gridHTML += `
+                            <div class="${isTop ? 'main-card' : 'sub-card'} shadow hover:shadow-xl cursor-pointer">
+                                <img src="${img}" class="card-img">
+                                <div class="card-overlay">
+                                    <h2 class="${isTop ? 'main-title' : 'sub-title'}">${title}</h2>
+                                </div>
+                            </div>`;
+                    }
                 }
             }
-
-            articles.forEach((art, index) => {
-                if (art.pos === "ticker") {
-                    marqueeText += ` • ${art.title} `;
-                    tickerHTML += `<div class="ticker-item"><span class="ticker-time">${art.time}</span><span>${art.title}</span></div>`;
-                } else {
-                    const isMain = (art.pos === "top");
-                    const cardClass = isMain ? "main-card" : "sub-card";
-                    const titleClass = isMain ? "main-title" : "sub-title";
-
-                    container.innerHTML += `
-                        <div class="${cardClass} shadow-md cursor-pointer bg-white">
-                            <img src="${art.image}" class="card-img" alt="news">
-                            <div class="card-overlay">
-                                <h2 class="${titleClass}">${art.title}</h2>
-                            </div>
-                        </div>
-                    `;
-                }
-            });
-
-            sideTicker.innerHTML = tickerHTML;
-            topMarquee.innerHTML = marqueeText;
+            grid.innerHTML = gridHTML;
+            sidebar.innerHTML = sidebarHTML;
+            marquee.innerHTML = marqueeContent;
         }
-        loadJDN();
+        fetchJDN();
     </script>
 </body>
 </html>
