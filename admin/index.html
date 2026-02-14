@@ -10,10 +10,12 @@
   <script src="https://unpkg.com/netlify-cms@^2.10.192/dist/netlify-cms.js"></script>
   
   <script>
-    window.CMS_MANUAL_INIT = true; // פקודה קריטית למניעת טעינה כפולה
+    // הגדרה שאומרת למערכת לא לחפש קבצים חיצוניים
+    window.CMS_MANUAL_INIT = true;
     
     CMS.init({
       config: {
+        load_config_file: false, // זה יפתור את שגיאת ה-404 של ה-config.yml!
         backend: {
           name: 'github',
           repo: 'yy0534105830-source/news',
@@ -21,7 +23,6 @@
           app_id: 'Ov23liyj2fBKFhjXJGvj',
           base_url: 'https://yy0534105830-source.github.io'
         },
-        load_config_file: false,
         media_folder: 'images',
         public_folder: '/images',
         collections: [
