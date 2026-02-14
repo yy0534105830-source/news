@@ -2,10 +2,6 @@ backend:
   name: github
   repo: yy0534105830-source/news
   branch: main
-  auth_type: implicit
-  app_id: Ov23liyj2fBKFhjXJGvj
-  # התיקון כאן: הוספת הקישור הישיר בצורה שהמערכת לא תנסה "להדביק" לו את כתובת האתר
-  auth_endpoint: https://github.com/login/oauth/authorize
 
 media_folder: "images"
 public_folder: "/images"
