@@ -11,18 +11,6 @@ collections:
     label: "כתבות"
     folder: "content/blog"
     create: true
-    slug: "{{slug}}"
     fields:
       - { label: "כותרת", name: "title", widget: "string" }
-      - { 
-          label: "מיקום", 
-          name: "layout_position", 
-          widget: "select", 
-          options: [
-            { label: "ראשית", value: "top" },
-            { label: "ריבוע", value: "side" },
-            { label: "מבזק", value: "ticker" }
-          ] 
-        }
-      - { label: "תמונה", name: "image", widget: "string", required: false }
       - { label: "תוכן", name: "body", widget: "markdown" }
