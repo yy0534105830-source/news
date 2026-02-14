@@ -1,52 +1,52 @@
 <!doctype html>
-<html>
+<html lang="he">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JDN Admin - ניהול תוכן</title>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <title>ניהול JDN</title>
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   
   <script>
-    CMS.init({
+    // הגדרה נקייה לחלוטין
+    window.CMS_CONFIGURATION = {
       config: {
         backend: {
           name: 'github',
           repo: 'yy0534105830-source/news',
           branch: 'main',
         },
+        display_url: 'https://yy0534105830-source.github.io/news/',
         media_folder: 'images',
-        public_folder: '/images',
         collections: [
           {
-            name: 'blog',
-            label: 'כתבות חדשות',
+            name: 'posts', // שיניתי את השם ל-posts כדי למנוע כפילות עם הגדרות קודמות
+            label: 'כתבות',
             folder: 'content/blog',
             create: true,
-            slug: '{{year}}-{{month}}-{{day}}-{{slug}}',
+            slug: '{{slug}}',
             fields: [
               { label: 'כותרת', name: 'title', widget: 'string' },
               { 
-                label: 'מיקום באתר', 
+                label: 'מיקום', 
                 name: 'layout_position', 
                 widget: 'select', 
                 options: [
-                  { label: 'כתבה ראשית (גדולה)', value: 'top' },
-                  { label: 'כתבה משנית (ריבוע)', value: 'side' },
-                  { label: 'מבזק (רץ למעלה)', value: 'ticker' }
-                ],
-                default: 'side'
+                  { label: 'ראשית', value: 'top' },
+                  { label: 'ריבוע', value: 'side' },
+                  { label: 'מבזק', value: 'ticker' }
+                ] 
               },
-              { label: 'תאריך', name: 'date', widget: 'datetime' },
-              { label: 'קישור לתמונה', name: 'image', widget: 'string' },
+              { label: 'תמונה (קישור)', name: 'image', widget: 'string', required: false },
               { label: 'תוכן הכתבה', name: 'body', widget: 'markdown' }
             ]
           }
         ]
       }
-    });
+    };
+    
+    CMS.init(window.CMS_CONFIGURATION);
   </script>
 </body>
 </html>
