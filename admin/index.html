@@ -1,10 +1,39 @@
 <!doctype html>
-<html>
+<html lang="he">
 <head>
   <meta charset="utf-8" />
-  <title>ניהול JDN</title>
+  <title>ניהול חדשות JDN</title>
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <script>
+    // הגדרה שמונעת מהמערכת לרוץ ללינק ה-404 ומכריחה אותה לבקש Token
+    window.CMS_MANUAL_INIT = true;
+    CMS.init({
+      config: {
+        backend: {
+          name: 'github',
+          repo: 'yy0534105830-source/news',
+          branch: 'main',
+          use_proxy: false // מבטל ניסיונות להתחבר דרך שרתים חיצוניים
+        },
+        load_config_file: false,
+        media_folder: 'images',
+        public_folder: '/images',
+        collections: [
+          {
+            name: 'blog',
+            label: 'כתבות',
+            folder: 'content/blog',
+            create: true,
+            fields: [
+              { label: 'כותרת', name: 'title', widget: 'string' },
+              { label: 'תוכן', name: 'body', widget: 'markdown' }
+            ]
+          }
+        ]
+      }
+    });
+  </script>
 </body>
 </html>
