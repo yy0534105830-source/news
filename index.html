@@ -6,73 +6,111 @@
     <title>JDN - חדשות חרדים</title>
     <style>
         body { font-family: Arial, sans-serif; background-color: #f2f2f2; margin: 0; padding: 0; }
+        
+        /* Header */
         .header-blue {
             background: linear-gradient(90deg, #17298D 0%, #2847F3 100%);
             height: 80px; display: flex; align-items: center; padding: 0 20px;
             border-bottom: 4px solid #e31e24;
         }
-        .nav { background: white; padding: 10px 20px; border-bottom: 1px solid #ddd; font-weight: bold; }
+
+        .nav { background: white; padding: 12px 20px; border-bottom: 1px solid #ddd; font-weight: bold; }
         .nav a { margin-left: 20px; text-decoration: none; color: #333; }
-        .ticker-red { background: #e31e24; color: white; padding: 8px 20px; font-weight: bold; overflow: hidden; }
+
+        .ticker-red { background: #e31e24; color: white; padding: 10px 20px; font-weight: bold; }
+
+        /* Container & Grid */
+        .container { max-width: 1200px; margin: 20px auto; display: flex; gap: 20px; padding: 0 15px; }
+        .main-content { flex: 3; display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         
-        .container { max-width: 1200px; margin: 20px auto; display: flex; gap: 20px; padding: 0 10px; }
-        .main-content { flex: 3; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        
-        .card { position: relative; background: #ddd; overflow: hidden; border-radius: 4px; height: 220px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        /* Card Style */
+        .card { 
+            position: relative; 
+            background-color: #ccc; /* צבע גיבוי אם אין תמונה */
+            overflow: hidden; 
+            border-radius: 4px; 
+            height: 250px; 
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16); 
+        }
         .card.main { grid-column: span 2; height: 450px; }
         
-        /* תיקון לתמונות - מוודא שהן ימלאו את הריבוע */
-        .card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .card img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            display: block;
+        }
         
         .card-text {
             position: absolute; bottom: 0; width: 100%;
             background: linear-gradient(transparent, rgba(0,0,0,0.9));
             color: white; padding: 20px; box-sizing: border-box;
         }
-        .sidebar { flex: 1; background: white; border-top: 4px solid #17298D; height: fit-content; }
-        .sidebar-item { padding: 12px; border-bottom: 1px solid #eee; font-size: 14px; }
-        .sidebar-time { color: #e31e24; font-weight: bold; margin-left: 10px; }
+
+        /* Sidebar */
+        .sidebar { flex: 1; background: white; border-top: 5px solid #17298D; height: fit-content; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .sidebar-title { background: #f8f8f8; padding: 15px; font-weight: bold; text-align: center; border-bottom: 1px solid #eee; color: #17298D; font-size: 18px; }
+        .sidebar-item { padding: 12px 15px; border-bottom: 1px solid #eee; font-size: 15px; line-height: 1.4; }
+        .sidebar-time { color: #e31e24; font-weight: bold; margin-left: 8px; }
+
+        @media (max-width: 900px) {
+            .container { flex-direction: column; }
+            .main-content { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
 
     <div class="header-blue">
-        <img src="https://www.jdn.co.il/wp-content/uploads/2022/01/logosite.png" height="50">
+        <img src="https://www.jdn.co.il/wp-content/uploads/2022/01/logosite.png" height="55" alt="JDN">
     </div>
 
     <div class="nav">
-        <a href="#">דף הבית</a> <a href="#">חדשות</a> <a href="#">פוליטיקה</a> <a href="#">חצרות קודש</a>
+        <a href="#">דף הבית</a>
+        <a href="#">חדשות</a>
+        <a href="#">פוליטיקה</a>
+        <a href="#">חצרות קודש</a>
+        <a href="#">כלכלה</a>
     </div>
 
     <div class="ticker-red">
-        <marquee behavior="scroll" direction="right">מבזק: חשיפה דרמטית בבית הדין על חוק הגיוס • פקקי ענק בכביש 1 לכיוון ירושלים • מזג האוויר: גשמים חזקים הלילה</marquee>
+        <marquee behavior="scroll" direction="right">מבזק: המפלגות החרדיות דורשות פתרון מיידי לחוק הגיוס • עומסי תנועה כבדים בכביש 1 • מזג האוויר: התחממות ניכרת מחר</marquee>
     </div>
 
     <div class="container">
+        
         <div class="main-content">
             <div class="card main">
-                <img src="https://images.jdn.co.il/wp-content/uploads/2024/01/shutterstock_2256784531.jpg">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Jerusalem_Night_View.jpg/1024px-Jerusalem_Night_View.jpg">
                 <div class="card-text">
-                    <h2 style="margin:0; font-size: 28px;">דרמה פוליטית: המפלגות החרדיות מאיימות במשבר קואליציוני</h2>
+                    <h2 style="margin:0; font-size: 30px;">דרמה פוליטית: ראשי הסיעות החרדיות בהתייעצות דחופה אצל גדולי ישראל</h2>
                 </div>
             </div>
+
             <div class="card">
-                <img src="https://images.jdn.co.il/wp-content/uploads/2024/02/IMG_8823.jpg">
-                <div class="card-text"><b>עולם התורה: אלפי בחורים החלו את זמן אלול</b></div>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Western_Wall_Jerusalem_Night.jpg/800px-Western_Wall_Jerusalem_Night.jpg">
+                <div class="card-text">
+                    <h3 style="margin:0;">מעמד תפילה וסליחות מרכזי ברחבת הכותל המערבי</h3>
+                </div>
             </div>
+
             <div class="card">
-                <img src="https://images.jdn.co.il/wp-content/uploads/2024/01/shutterstock_2121.jpg">
-                <div class="card-text"><b>תפילת רבים: מעמד הסליחות המרכזי בכותל המערבי</b></div>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Old_books_on_a_shelf.jpg/800px-Old_books_on_a_shelf.jpg">
+                <div class="card-text">
+                    <h3 style="margin:0;">עולם התורה: אלפי בחורי ישיבות החלו את זמן אלול</h3>
+                </div>
             </div>
         </div>
 
         <div class="sidebar">
-            <div style="background:#f8f8f8; padding:10px; font-weight:bold; text-align:center;">מבזקי JDN</div>
-            <div class="sidebar-item"><span class="sidebar-time">22:05</span>התחזית: שלג בפסגות ההרים הלילה</div>
-            <div class="sidebar-item"><span class="sidebar-time">21:30</span>דיווח: תאונה קשה בכביש 1</div>
-            <div class="sidebar-item"><span class="sidebar-time">20:45</span>הדיון בבג"ץ הסתיים ללא החלטה</div>
-            <div class="sidebar-item"><span class="sidebar-time">20:15</span>בני ברק: הלווית זקן המשגיחים תיערך מחר</div>
+            <div class="sidebar-title">מבזקי JDN</div>
+            <div class="sidebar-item"><span class="sidebar-time">22:45</span>דיווח: פקק ענק בכביש 443 עקב עבודות בכביש</div>
+            <div class="sidebar-item"><span class="sidebar-time">22:10</span>ירושלים: שמחת הבר מצווה לנכד כ"ק האדמו"ר שליט"א</div>
+            <div class="sidebar-item"><span class="sidebar-time">21:50</span>מזג האוויר: מחר ירידה קלה בטמפרטורות, ייתכן גשם מקומי</div>
+            <div class="sidebar-item"><span class="sidebar-time">21:15</span>סערה פוליטית: "לא נתפשר על מעמד בני הישיבות"</div>
+            <div class="sidebar-item"><span class="sidebar-time">20:30</span>בני ברק: עצרת זיכרון במלאת השנה לפטירת ראש הישיבה</div>
         </div>
+
     </div>
 
 </body>
