@@ -2,8 +2,8 @@ backend:
   name: github
   repo: yy0534105830-source/news
   branch: main
-  app_id: Ov23liyj2fBKFhjXJGvj # ה-ID החדש שיצרת
-  base_url: https://yy0534105830-source.github.io
+  auth_type: implicit # שינוי קריטי
+  app_id: Ov23liyj2fBKFhjXJGvj # ה-Client ID שלך
 
 media_folder: "images"
 public_folder: "/images"
