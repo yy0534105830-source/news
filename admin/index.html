@@ -1,12 +1,54 @@
 <!doctype html>
-<html>
+<html lang="he">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="google" content="notranslate" />
-  <title>ניהול תוכן JDN</title>
+  <title>ניהול חדשות JDN</title>
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  
+  <script>
+    CMS.init({
+      config: {
+        backend: {
+          name: 'github',
+          repo: 'yy0534105830-source/news',
+          branch: 'main',
+          // כאן הכנסתי את המזהה החדש שלך
+          app_id: 'Ov23liyj2fBKFhjXJGvj',
+          base_url: 'https://yy0534105830-source.github.io'
+        },
+        display_url: 'https://yy0534105830-source.github.io/news/',
+        media_folder: 'images',
+        public_folder: '/images',
+        collections: [
+          {
+            name: 'blog',
+            label: 'כתבות',
+            folder: 'content/blog',
+            create: true,
+            slug: '{{slug}}',
+            fields: [
+              { label: 'כותרת', name: 'title', widget: 'string' },
+              { 
+                label: 'מיקום', 
+                name: 'layout_position', 
+                widget: 'select', 
+                options: [
+                  { label: 'ראשית', value: 'top' },
+                  { label: 'ריבוע', value: 'side' },
+                  { label: 'מבזק', value: 'ticker' }
+                ] 
+              },
+              { label: 'תמונה (קישור)', name: 'image', widget: 'string', required: false },
+              { label: 'תוכן הכתבה', name: 'body', widget: 'markdown' }
+            ]
+          }
+        ]
+      }
+    });
+  </script>
 </body>
 </html>
