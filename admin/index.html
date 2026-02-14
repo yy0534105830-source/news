@@ -1,55 +1,12 @@
 <!doctype html>
-<html lang="he" class="notranslate" translate="no">
+<html lang="he">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="google" content="notranslate" />
-  <title>ניהול חדשות JDN</title>
+  <title>ניהול תוכן JDN</title>
 </head>
 <body>
-  <script src="https://unpkg.com/netlify-cms@^2.10.192/dist/netlify-cms.js"></script>
-  
-  <script>
-    // יצירת אובייקט הגדרות גלובלי כדי למנוע חיפוש קובץ חיצוני
-    window.cmsConfig = {
-      backend: {
-        name: 'github',
-        repo: 'yy0534105830-source/news',
-        branch: 'main',
-        app_id: 'Ov23liyj2fBKFhjXJGvj', // ה-ID החדש שלך
-        base_url: 'https://yy0534105830-source.github.io'
-      },
-      load_config_file: false,
-      media_folder: 'images',
-      public_folder: '/images',
-      collections: [
-        {
-          name: 'blog',
-          label: 'כתבות',
-          folder: 'content/blog',
-          create: true,
-          slug: '{{slug}}',
-          fields: [
-            { label: 'כותרת', name: 'title', widget: 'string' },
-            { 
-              label: 'מיקום', 
-              name: 'layout_position', 
-              widget: 'select', 
-              options: [
-                { label: 'ראשית', value: 'top' },
-                { label: 'ריבוע', value: 'side' },
-                { label: 'מבזק', value: 'ticker' }
-              ] 
-            },
-            { label: 'תמונה (קישור)', name: 'image', widget: 'string', required: false },
-            { label: 'תוכן הכתבה', name: 'body', widget: 'markdown' }
-          ]
-        }
-      ]
-    };
-
-    // הפעלה ידנית עם ההגדרות שיצרנו למעלה
-    CMS.init({ config: window.cmsConfig });
-  </script>
+  <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
 </body>
 </html>
