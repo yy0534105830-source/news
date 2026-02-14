@@ -4,10 +4,6 @@ backend:
   branch: main
   auth_type: implicit
   app_id: Ov23liyj2fBKFhjXJGvj
-  # הוספתי כאן את הנתיב המלא - זה יפתור את ה-404!
-  site_domain: yy0534105830-source.github.io/news
-  base_url: https://yy0534105830-source.github.io
-  auth_endpoint: https://github.com/login/oauth/authorize
 
 media_folder: "images"
 public_folder: "/images"
