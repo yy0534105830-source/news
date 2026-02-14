@@ -8,11 +8,11 @@ public_folder: "/images"
 
 collections:
   - name: "blog"
-    label: "כתבות JDN"
+    label: "כתבות"
     folder: "content/blog"
     create: true
     fields:
       - { label: "כותרת", name: "title", widget: "string" }
-      - { label: "תמונה", name: "image", widget: "image" }
-      - { label: "מיקום (top/side/ticker)", name: "layout_position", widget: "string", default: "side" }
-      - { label: "תוכן", name: "body", widget: "markdown" }
+      - { label: "תאריך", name: "date", widget: "datetime" }
+      - { label: "תמונה", name: "image", widget: "string" }
+      - { label: "גוף הכתבה", name: "body", widget: "markdown" }
