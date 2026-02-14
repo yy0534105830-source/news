@@ -1,11 +1,54 @@
-<!DOCTYPE html>
-<html lang="he">
+<!doctype html>
+<html lang="he" dir="rtl">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JDN - ניהול תוכן</title>
-  <link rel="sveltia-cms-config" type="text/yaml" href="config.yml" />
-  <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js" type="module"></script>
+  <title>מערכת ניהול תוכן - JDN News</title>
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </head>
-<body></body>
+<body>
+  <script>
+    CMS.init({
+      config: {
+        // הגדרת המאגר שלך ב-GitHub
+        backend: {
+          name: 'github',
+          repo: 'yy0534105830-source/news', // וודא שזה השם המדויק
+          branch: 'main',
+        },
+        // הגדרת מקום שמירת התמונות
+        media_folder: 'images',
+        public_folder: '/images',
+        
+        // הגדרת התוכן
+        collections: [
+          {
+            name: 'blog',
+            label: 'כתבות וחדשות',
+            folder: 'content/blog', // כאן הכתבות יישמרו
+            create: true,
+            slug: '{{year}}-{{month}}-{{day}}-{{slug}}',
+            fields: [
+              { label: 'כותרת הכתבה', name: 'title', widget: 'string' },
+              { 
+                label: 'מיקום באתר', 
+                name: 'layout_position', 
+                widget: 'select', 
+                options: [
+                  { label: 'כתבה ראשית (גדולה)', value: 'top' },
+                  { label: 'כתבה משנית (ריבוע)', value: 'side' },
+                  { label: 'מבזק (רץ למעלה)', value: 'ticker' }
+                ],
+                default: 'side'
+              },
+              { label: 'תאריך ושעה', name: 'date', widget: 'datetime', format: 'YYYY-MM-DD HH:mm' },
+              { label: 'תמונה ראשית (קישור)', name: 'image', widget: 'string', hint: 'עדיף להשתמש בקישור ישיר מתמונה ב-JDN כדי שנטפרי יפתח' },
+              { label: 'גוף הכתבה', name: 'body', widget: 'markdown' },
+            ],
+          },
+        ],
+      },
+    });
+  </script>
+</body>
 </html>
