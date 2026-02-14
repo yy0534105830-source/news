@@ -1,51 +1,12 @@
 <!doctype html>
-<html lang="he" class="notranslate" translate="no">
+<html>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="google" content="notranslate" />
-  <title>ניהול JDN</title>
+  <title>Content Manager</title>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  
-  <script>
-    CMS.init({
-      config: {
-        backend: {
-          name: 'github',
-          repo: 'yy0534105830-source/news',
-          branch: 'main',
-        },
-        display_url: 'https://yy0534105830-source.github.io/news/',
-        media_folder: 'images',
-        collections: [
-          {
-            name: 'blog_posts', // שם ייחודי כדי למנוע כפילויות
-            label: 'כתבות',
-            folder: 'content/blog',
-            create: true,
-            slug: '{{slug}}',
-            fields: [
-              { label: 'כותרת', name: 'title', widget: 'string' },
-              { 
-                label: 'מיקום', 
-                name: 'layout_position', 
-                widget: 'select', 
-                options: [
-                  { label: 'ראשית', value: 'top' },
-                  { label: 'ריבוע', value: 'side' },
-                  { label: 'מבזק', value: 'ticker' }
-                ] 
-              },
-              { label: 'תמונה (קישור)', name: 'image', widget: 'string', required: false },
-              { label: 'תוכן הכתבה', name: 'body', widget: 'markdown' }
-            ]
-          }
-        ]
-      }
-    });
-  </script>
 </body>
 </html>
