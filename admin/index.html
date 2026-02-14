@@ -10,47 +10,46 @@
   <script src="https://unpkg.com/netlify-cms@^2.10.192/dist/netlify-cms.js"></script>
   
   <script>
-    // הגדרה שאומרת למערכת לא לחפש קבצים חיצוניים
-    window.CMS_MANUAL_INIT = true;
-    
-    CMS.init({
-      config: {
-        load_config_file: false, // זה יפתור את שגיאת ה-404 של ה-config.yml!
-        backend: {
-          name: 'github',
-          repo: 'yy0534105830-source/news',
-          branch: 'main',
-          app_id: 'Ov23liyj2fBKFhjXJGvj',
-          base_url: 'https://yy0534105830-source.github.io'
-        },
-        media_folder: 'images',
-        public_folder: '/images',
-        collections: [
-          {
-            name: 'blog',
-            label: 'כתבות',
-            folder: 'content/blog',
-            create: true,
-            slug: '{{slug}}',
-            fields: [
-              { label: 'כותרת', name: 'title', widget: 'string' },
-              { 
-                label: 'מיקום', 
-                name: 'layout_position', 
-                widget: 'select', 
-                options: [
-                  { label: 'ראשית', value: 'top' },
-                  { label: 'ריבוע', value: 'side' },
-                  { label: 'מבזק', value: 'ticker' }
-                ] 
-              },
-              { label: 'תמונה (קישור)', name: 'image', widget: 'string', required: false },
-              { label: 'תוכן הכתבה', name: 'body', widget: 'markdown' }
-            ]
-          }
-        ]
-      }
-    });
+    // יצירת אובייקט הגדרות גלובלי כדי למנוע חיפוש קובץ חיצוני
+    window.cmsConfig = {
+      backend: {
+        name: 'github',
+        repo: 'yy0534105830-source/news',
+        branch: 'main',
+        app_id: 'Ov23liyj2fBKFhjXJGvj', // ה-ID החדש שלך
+        base_url: 'https://yy0534105830-source.github.io'
+      },
+      load_config_file: false,
+      media_folder: 'images',
+      public_folder: '/images',
+      collections: [
+        {
+          name: 'blog',
+          label: 'כתבות',
+          folder: 'content/blog',
+          create: true,
+          slug: '{{slug}}',
+          fields: [
+            { label: 'כותרת', name: 'title', widget: 'string' },
+            { 
+              label: 'מיקום', 
+              name: 'layout_position', 
+              widget: 'select', 
+              options: [
+                { label: 'ראשית', value: 'top' },
+                { label: 'ריבוע', value: 'side' },
+                { label: 'מבזק', value: 'ticker' }
+              ] 
+            },
+            { label: 'תמונה (קישור)', name: 'image', widget: 'string', required: false },
+            { label: 'תוכן הכתבה', name: 'body', widget: 'markdown' }
+          ]
+        }
+      ]
+    };
+
+    // הפעלה ידנית עם ההגדרות שיצרנו למעלה
+    CMS.init({ config: window.cmsConfig });
   </script>
 </body>
 </html>
