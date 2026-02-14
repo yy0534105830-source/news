@@ -1,16 +1,17 @@
 <!doctype html>
-<html lang="he">
+<html lang="he" class="notranslate" translate="no">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="google" content="notranslate" />
   <title>ניהול JDN</title>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   
   <script>
-    // הגדרה נקייה לחלוטין
-    window.CMS_CONFIGURATION = {
+    CMS.init({
       config: {
         backend: {
           name: 'github',
@@ -21,7 +22,7 @@
         media_folder: 'images',
         collections: [
           {
-            name: 'posts', // שיניתי את השם ל-posts כדי למנוע כפילות עם הגדרות קודמות
+            name: 'blog_posts', // שם ייחודי כדי למנוע כפילויות
             label: 'כתבות',
             folder: 'content/blog',
             create: true,
@@ -44,9 +45,7 @@
           }
         ]
       }
-    };
-    
-    CMS.init(window.CMS_CONFIGURATION);
+    });
   </script>
 </body>
 </html>
