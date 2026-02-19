@@ -3,151 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JDN - פורטל החדשות</title>
+    <title>JDN NEWS - פורטל החדשות</title>
     <style>
-        :root { --main-blue: #004a99; --dark-blue: #003366; --bg-gray: #f0f2f5; --flash-red: #d00; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-gray); margin: 0; padding: 0; }
-        
-        header { background: var(--main-blue); color: white; padding: 15px; text-align: center; border-bottom: 5px solid var(--dark-blue); font-size: 2.2rem; font-weight: bold; }
+        :root {
+            --jdn-blue: #004a99;
+            --jdn-dark: #002d5f;
+            --jdn-accent: #e31e24;
+            --bg-gray: #f0f2f5;
+        }
 
-        /* מבזק רץ */
-        .ticker-wrapper { background: white; border-bottom: 1px solid #ddd; height: 45px; overflow: hidden; display: flex; align-items: center; }
-        .ticker-label { background: var(--flash-red); color: white; padding: 0 20px; height: 100%; display: flex; align-items: center; font-weight: bold; z-index: 5; }
-        .ticker-text-container { overflow: hidden; white-space: nowrap; flex-grow: 1; }
-        .ticker-text { display: inline-block; animation: ticker 40s linear infinite; padding-right: 100%; font-size: 1.1rem; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg-gray); margin: 0; padding: 0; color: #333; }
+        
+        /* כותרת */
+        header { background: var(--jdn-blue); color: white; padding: 15px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.2); cursor: pointer; }
+        header h1 { margin: 0; font-size: 2.2rem; }
+
+        /* מבזקים */
+        .ticker { background: white; border-bottom: 1px solid #ddd; height: 40px; display: flex; align-items: center; overflow: hidden; }
+        .ticker-label { background: var(--jdn-accent); color: white; padding: 0 15px; font-weight: bold; height: 100%; display: flex; align-items: center; z-index: 2; }
+        .ticker-text { white-space: nowrap; animation: ticker 40s linear infinite; padding-right: 100%; }
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(100%); } }
 
-        .container { max-width: 1200px; margin: 20px auto; padding: 0 15px; display: grid; grid-template-columns: 3fr 1fr; gap: 20px; }
+        .container { max-width: 1100px; margin: 20px auto; padding: 0 15px; display: grid; grid-template-columns: 3fr 1fr; gap: 20px; }
 
-        /* כתבות */
-        .main-article { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 25px; display: block; text-decoration: none; color: inherit; }
-        .main-article img { height: 450px; width: 100%; object-fit: cover; background: #eee; }
-        .main-article-content { padding: 25px; border-top: 6px solid var(--main-blue); }
-        .main-article h2 { font-size: 2.5rem; margin: 0 0 10px 0; color: var(--dark-blue); }
+        /* תצוגת הכתבה המלאה (מוסתרת בהתחלה) */
+        #single-article-view { display: none; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin-top: 20px; }
+        .back-btn { background: var(--jdn-blue); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-bottom: 20px; font-weight: bold; }
+        #full-article-content img { max-width: 100%; border-radius: 8px; margin-bottom: 20px; }
 
-        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px; }
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
+        /* דף הבית */
+        #home-view { display: block; }
 
-        .card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); text-decoration: none; color: inherit; }
-        .card img { height: 160px; width: 100%; object-fit: cover; background: #ddd; border-bottom: 3px solid var(--main-blue); }
-        .card-content { padding: 12px; }
-        .card h3 { font-size: 1.1rem; margin: 0; line-height: 1.4; height: 2.8em; overflow: hidden; }
+        /* כתבה ראשית - מוקטנת */
+        .main-article { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; cursor: pointer; transition: 0.3s; }
+        .main-article:hover { transform: translateY(-3px); }
+        .main-article img { height: 350px; width: 100%; object-fit: cover; }
+        .main-article-content { padding: 20px; border-top: 5px solid var(--jdn-blue); }
+        .main-article h2 { font-size: 1.8rem; margin: 0 0 10px 0; color: var(--jdn-dark); }
 
-        /* צד */
-        .sidebar { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); height: fit-content; border-top: 4px solid var(--flash-red); }
-        .sidebar h2 { font-size: 1.4rem; border-bottom: 2px solid #eee; padding-bottom: 8px; color: var(--flash-red); margin-top: 0; }
-        .flash-item { padding: 10px 0; border-bottom: 1px solid #f0f0f0; font-size: 0.95rem; }
-        .flash-time { font-weight: bold; color: var(--flash-red); margin-left: 5px; }
+        /* גרידים */
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
 
-        @media (max-width: 900px) { .container { grid-template-columns: 1fr; } .grid-4, .grid-3 { grid-template-columns: 1fr 1fr; } }
+        .card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); cursor: pointer; transition: 0.2s; }
+        .card:hover { transform: scale(1.03); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .card img { height: 140px; width: 100%; object-fit: cover; }
+        .card-content { padding: 10px; }
+        .card h3 { font-size: 1rem; margin: 0; height: 2.8em; overflow: hidden; color: #222; }
+
+        /* סיידבר */
+        .sidebar { background: white; padding: 15px; border-radius: 12px; border-top: 4px solid var(--jdn-accent); }
+        .flash-item { padding: 10px 0; border-bottom: 1px dotted #ccc; font-size: 0.9rem; }
+        .flash-time { color: var(--jdn-accent); font-weight: bold; margin-left: 5px; }
+
+        @media (max-width: 800px) { .container { grid-template-columns: 1fr; } .grid-4, .grid-3 { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
 <body>
 
-<header>JDN NEWS</header>
+<header onclick="showHome()">
+    <h1>JDN NEWS</h1>
+</header>
 
-<div class="ticker-wrapper">
+<div class="ticker">
     <div class="ticker-label">מבזקים</div>
-    <div class="ticker-text-container"><div class="ticker-text" id="ticker-content">טוען מבזקים...</div></div>
+    <div class="ticker-text" id="ticker-content">טוען...</div>
 </div>
 
 <div class="container">
-    <main>
+    <main id="home-view">
         <div id="section-main"></div>
         <div id="section-grid-4" class="grid-4"></div>
         <div id="section-grid-3" class="grid-3"></div>
     </main>
+
+    <main id="single-article-view">
+        <button class="back-btn" onclick="showHome()">→ חזרה לדף הבית</button>
+        <div id="full-article-content"></div>
+    </main>
+
     <aside class="sidebar">
-        <h2>מבזקי חמים</h2>
+        <h3 style="color:var(--jdn-accent); margin-top:0;">מבזקי אמת</h3>
         <div id="sidebar-flashes"></div>
     </aside>
 </div>
 
 <script>
-
     const repo = 'yy0534105830-source/news';
+    const baseUrl = 'https://yy0534105830-source.github.io/news/';
+    let allArticles = [];
 
-    // פונקציה חכמה למציאת התמונה האמיתית
-    function fixImg(text) {
-        // מחפש את שדה התמונה (thumbnail) בקובץ ה-Markdown
-        let m = text.match(/thumbnail:\s*(.*)\n/) || text.match(/image:\s*(.*)\n/);
-        if (!m) return 'https://via.placeholder.com/600x400/004a99/ffffff?text=No+Image';
-        
-        let path = m[1].trim().replace(/['"]/g, ''); // מנקה גרשיים
-        
-        // אם זה קישור מלא (http), מחזיר אותו כמו שהוא
-        if (path.startsWith('http')) return path;
-        
-        // תיקון נתיב: מוודא שהכתובת מצביעה לתיקיית images ב-GitHub שלך
-        path = path.replace(/^\//, ''); // מוריד לוכסן מההתחלה אם יש
-        
-        // בונה נתיב ישיר לקובץ ב-GitHub Pages
-        return 'https://yy0534105830-source.github.io/news/' + path;
+    function fixImg(txt) {
+        let m = txt.match(/thumbnail:\s*(.*)\n/) || txt.match(/image:\s*(.*)\n/);
+        if (!m) return 'https://via.placeholder.com/800x500/004a99/ffffff?text=JDN';
+        let p = m[1].trim().replace(/['"]/g, '').replace(/^\//, '');
+        return p.startsWith('http') ? p : baseUrl + p;
     }
 
-    async function load() {
+    async function loadData() {
         try {
-            // טעינת הכתבות
-            const bRes = await fetch(`https://api.github.com/repos/${repo}/contents/content/blog`);
-            const bFiles = await bRes.json();
-            const arts = [];
+            const [bRes, fRes] = await Promise.all([
+                fetch(`https://api.github.com/repos/${repo}/contents/content/blog`),
+                fetch(`https://api.github.com/repos/${repo}/contents/content/flashes`)
+            ]);
 
-            for (let f of bFiles.reverse()) {
+            const bFiles = (await bRes.json()).reverse();
+            const fFiles = (await fRes.json()).reverse();
+
+            // טעינת כתבות
+            const promises = bFiles.slice(0, 11).map(async f => {
                 const r = await fetch(f.download_url);
                 const t = await r.text();
-                
-                arts.push({
+                return {
                     title: t.match(/title:\s*(.*)\n/)?.[1]?.replace(/['"]/g, '') || "ללא כותרת",
                     img: fixImg(t),
-                    body: t.split('---').pop().trim().substring(0, 150) + "...",
-                    url: `https://github.com/${repo}/blob/main/${f.path}`
-                });
-            }
+                    content: t.split('---').pop().trim(),
+                    summary: t.split('---').pop().trim().substring(0, 150) + "..."
+                };
+            });
+            allArticles = await Promise.all(promises);
 
-            if (arts.length > 0) {
-                // הזרקת הכתבה הראשית
-                document.getElementById('section-main').innerHTML = `
-                    <a href="${arts[0].url}" class="main-article">
-                        <img src="${arts[0].img}" onerror="this.src='https://via.placeholder.com/800x450/004a99/ffffff?text=Image+Not+Found'">
-                        <div class="main-article-content">
-                            <h2>${arts[0].title}</h2>
-                            <p>${arts[0].body}</p>
-                        </div>
-                    </a>`;
-
-                // הזרקת 4 ריבועים
-                const g4 = document.getElementById('section-grid-4');
-                g4.innerHTML = '';
-                arts.slice(1, 5).forEach(a => {
-                    g4.innerHTML += `<a href="${a.url}" class="card"><img src="${a.img}" onerror="this.src='https://via.placeholder.com/400x250/004a99/ffffff?text=JDN'"><div class="card-content"><h3>${a.title}</h3></div></a>`;
-                });
-
-                // הזרקת 6 ריבועים
-                const g3 = document.getElementById('section-grid-3');
-                g3.innerHTML = '';
-                arts.slice(5, 11).forEach(a => {
-                    g3.innerHTML += `<a href="${a.url}" class="card"><img src="${a.img}" onerror="this.src='https://via.placeholder.com/400x250/004a99/ffffff?text=JDN'"><div class="card-content"><h3>${a.title}</h3></div></a>`;
-                });
-            }
+            renderHome();
 
             // טעינת מבזקים
-            const fRes = await fetch(`https://api.github.com/repos/${repo}/contents/content/flashes`);
-            const fFiles = await fRes.json();
             let tick = ""; let side = "";
-            for (let f of fFiles.reverse()) {
+            for (let f of fFiles.slice(0,10)) {
                 const r = await fetch(f.download_url);
                 const t = await r.text();
                 const title = t.match(/title:\s*(.*)\n/)?.[1]?.replace(/['"]/g, '') || "";
-                tick += ` &nbsp;&nbsp; • &nbsp; ${title} `;
+                tick += ` • ${title} &nbsp;&nbsp; `;
                 side += `<div class="flash-item"><span class="flash-time">${new Date().getHours()}:${new Date().getMinutes()}</span>${title}</div>`;
             }
-            document.getElementById('ticker-content').innerHTML = tick + tick;
+            document.getElementById('ticker-content').innerHTML = tick;
             document.getElementById('sidebar-flashes').innerHTML = side;
 
-        } catch (e) { console.error("Error loading data:", e); }
+        } catch (e) { console.error(e); }
     }
-    load();
 
+    function renderHome() {
+        if (allArticles.length === 0) return;
+
+        // ראשי
+        document.getElementById('section-main').innerHTML = `
+            <div class="main-article" onclick="showArticle(0)">
+                <img src="${allArticles[0].img}">
+                <div class="main-article-content">
+                    <h2>${allArticles[0].title}</h2>
+                    <p>${allArticles[0].summary}</p>
+                </div>
+            </div>`;
+
+        // גריד 4
+        document.getElementById('section-grid-4').innerHTML = allArticles.slice(1, 5).map((a, i) => `
+            <div class="card" onclick="showArticle(${i + 1})">
+                <img src="${a.img}">
+                <div class="card-content"><h3>${a.title}</h3></div>
+            </div>`).join('');
+
+        // גריד 3
+        document.getElementById('section-grid-3').innerHTML = allArticles.slice(5, 11).map((a, i) => `
+            <div class="card" onclick="showArticle(${i + 5})">
+                <img src="${a.img}">
+                <div class="card-content"><h3>${a.title}</h3></div>
+            </div>`).join('');
+    }
+
+    function showArticle(index) {
+        const art = allArticles[index];
+        document.getElementById('home-view').style.display = 'none';
+        document.getElementById('single-article-view').style.display = 'block';
+        document.getElementById('full-article-content').innerHTML = `
+            <h1>${art.title}</h1>
+            <img src="${art.img}">
+            <div style="font-size:1.2rem; line-height:1.8; white-space: pre-wrap;">${art.content}</div>
+        `;
+        window.scrollTo(0,0);
+    }
+
+    function showHome() {
+        document.getElementById('home-view').style.display = 'block';
+        document.getElementById('single-article-view').style.display = 'none';
+        window.scrollTo(0,0);
+    }
+
+    loadData();
 </script>
 </body>
 </html>
