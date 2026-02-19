@@ -18,73 +18,82 @@
 
         body { font-family: 'Assistant', sans-serif; background-color: var(--bg); margin: 0; color: var(--text); line-height: 1.8; transition: 0.3s; }
         
-        /* Header & Nav */
-        header { background: var(--primary); color: white; padding: 20px; text-align: center; border-bottom: 5px solid var(--accent); position: relative; }
-        header h1 { font-family: 'Frank Ruhl Libre', serif; margin: 0; font-size: 2.5rem; cursor: pointer; }
+        header { background: var(--primary); color: white; padding: 25px; text-align: center; border-bottom: 5px solid var(--accent); position: relative; }
+        header h1 { font-family: 'Frank Ruhl Libre', serif; margin: 0; font-size: 2.8rem; cursor: pointer; }
 
         .theme-toggle {
             position: absolute; left: 20px; top: 50%; transform: translateY(-50%);
             background: rgba(255,255,255,0.1); border: 1px solid var(--accent); color: white;
-            padding: 8px 12px; border-radius: 50px; cursor: pointer; font-size: 0.9rem;
+            padding: 8px 15px; border-radius: 50px; cursor: pointer; font-size: 0.9rem;
         }
 
         .nav-wrapper {
-            background: var(--white); position: sticky; top: 0; z-index: 1000;
-            border-bottom: 1px solid #ddd; display: flex; align-items: center; justify-content: space-between;
+            background: var(--card-bg); position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: space-between;
             padding: 10px 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
-        nav { display: flex; gap: 10px; }
-        .nav-link { font-weight: bold; color: var(--primary); cursor: pointer; padding: 5px 15px; border-radius: 20px; }
+        nav { display: flex; gap: 15px; }
+        .nav-link { font-weight: bold; color: var(--primary); cursor: pointer; padding: 6px 15px; border-radius: 20px; }
         body.dark-mode .nav-link { color: var(--accent); }
         .nav-link.active { background: var(--accent); color: white !important; }
 
-        .search-box input { padding: 8px; border-radius: 20px; border: 1px solid #ddd; background: var(--card-bg); color: var(--text); outline: none; }
+        .search-box input { padding: 8px 15px; border-radius: 20px; border: 1px solid #ddd; background: var(--bg); color: var(--text); outline: none; }
 
-        /* Layout Grid System */
-        .container { max-width: 1300px; margin: 20px auto; padding: 0 20px; }
+        .container { max-width: 1300px; margin: 30px auto; padding: 0 20px; }
+
+        /* HERO BENTO WITH SLIDER */
+        .hero-bento { display: grid; grid-template-columns: 2fr 1fr; gap: var(--gap); height: 550px; margin-bottom: var(--gap); }
         
-        /* 1. Hero Bento: Big + 2 Side Stacked */
-        .hero-bento { display: grid; grid-template-columns: 2fr 1fr; gap: var(--gap); height: 500px; margin-bottom: var(--gap); }
+        /* Slider Styles */
+        .slider-container { position: relative; height: 100%; border-radius: var(--radius); overflow: hidden; background: #000; }
+        .slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 0.8s ease-in-out; cursor: pointer; }
+        .slide.active { opacity: 1; z-index: 1; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); }
+        
+        .slide-content { position: absolute; bottom: 0; right: 0; padding: 40px; color: white; z-index: 2; width: 100%; box-sizing: border-box; background: linear-gradient(transparent, rgba(0,0,0,0.9)); }
+        .slide-content h2 { font-family: 'Frank Ruhl Libre', serif; font-size: 2.5rem; margin: 0; }
+
+        .slider-dots { position: absolute; bottom: 20px; left: 20px; z-index: 3; display: flex; gap: 8px; }
+        .dot { width: 12px; height: 12px; background: rgba(255,255,255,0.4); border-radius: 50%; cursor: pointer; }
+        .dot.active { background: var(--accent); width: 30px; border-radius: 10px; }
+
         .side-stack { display: grid; grid-template-rows: 1fr 1fr; gap: var(--gap); }
 
-        /* 2. Grid of 4 */
-        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); margin-bottom: 40px; }
+        /* Grid 4 */
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); margin-bottom: var(--gap); }
 
-        /* 3. Spacing / Section Title */
-        .section-divider { height: 2px; background: #ddd; margin: 40px 0; position: relative; }
-        .section-divider::after { content: "חדשות נוספות"; position: absolute; top: -15px; right: 20px; background: var(--bg); padding: 0 15px; font-weight: bold; color: var(--primary); }
+        .section-divider { display: flex; align-items: center; margin: 50px 0 30px 0; }
+        .section-divider .line { flex: 1; height: 1px; background: #ccc; }
+        .section-divider .title { padding: 0 20px; font-weight: 900; color: var(--primary); font-size: 1.4rem; font-family: 'Frank Ruhl Libre', serif; }
 
-        /* Card Design */
+        /* Card Styling */
         .card { 
             background: var(--card-bg); border-radius: var(--radius); overflow: hidden; 
-            position: relative; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
-            transition: 0.3s; height: 250px; 
+            position: relative; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.06); 
+            transition: 0.4s; height: 260px; 
         }
-        .hero-bento .main-card { height: 100%; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        .card:hover { transform: translateY(-7px); }
         .card img { width: 100%; height: 100%; object-fit: cover; }
-        .card-overlay { 
-            position: absolute; bottom: 0; width: 100%; padding: 15px; 
-            background: linear-gradient(transparent, rgba(0,0,0,0.85)); color: white; box-sizing: border-box; 
-        }
-        .card h3 { margin: 0; font-size: 1.1rem; line-height: 1.3; font-family: 'Frank Ruhl Libre', serif; }
+        .card-overlay { position: absolute; bottom: 0; width: 100%; padding: 20px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); color: white; box-sizing: border-box; }
+        .card h3 { margin: 0; font-size: 1.15rem; line-height: 1.3; font-family: 'Frank Ruhl Libre', serif; }
 
-        /* Contact Section */
-        .contact-box { background: var(--primary); color: white; padding: 40px; border-radius: var(--radius); text-align: center; margin-top: 60px; }
-        .contact-btns { display: flex; justify-content: center; gap: 15px; margin-top: 20px; flex-wrap: wrap; }
-        .contact-btns a { color: white; text-decoration: none; background: var(--accent); padding: 10px 20px; border-radius: 50px; font-weight: bold; }
+        /* Contact & Footer */
+        .contact-footer { background: var(--primary); color: white; padding: 40px; border-radius: var(--radius); text-align: center; margin-top: 60px; }
+        .contact-grid { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
+        .contact-item { background: var(--accent); padding: 10px 25px; border-radius: 50px; color: white; text-decoration: none; font-weight: bold; }
 
-        /* Article View */
-        #article-view { display: none; background: var(--card-bg); padding: 30px; border-radius: var(--radius); }
+        #article-view { display: none; }
 
-        @media (max-width: 850px) {
+        @media (max-width: 900px) {
             .hero-bento, .grid-4 { grid-template-columns: 1fr; height: auto; }
+            .hero-bento { height: auto; }
+            .slider-container { height: 350px; }
             .side-stack { height: 500px; }
         }
     </style>
 </head>
-<body id="body">
+<body>
 
 <header onclick="showHome()">
     <h1>חדשות חרדים</h1>
@@ -99,26 +108,24 @@
         <div class="nav-link" onclick="filterBy('כלכלה', this)">כלכלה</div>
     </nav>
     <div class="search-box">
-        <input type="text" id="site-search" placeholder="חיפוש כתבה..." oninput="handleSearch()">
+        <input type="text" id="site-search" placeholder="חיפוש..." oninput="handleSearch()">
     </div>
 </div>
 
 <div class="container" id="home-view">
-    <div id="dynamic-content">
-        </div>
+    <div id="dynamic-content"></div>
 
-    <div class="contact-box">
-        <h2>יש לכם סקופ? שלחו לנו!</h2>
-        <div class="contact-btns">
-            <a href="#">וואטסאפ</a>
-            <a href="#">מייל האדום</a>
-            <a href="#">טלפון</a>
+    <div class="contact-footer">
+        <h2>יש לכם סקופ?</h2>
+        <div class="contact-grid">
+            <a href="#" class="contact-item">וואטסאפ המערכת</a>
+            <a href="#" class="contact-item">מייל אדום</a>
         </div>
     </div>
 </div>
 
 <div class="container" id="article-view">
-    <button onclick="showHome()" style="margin-bottom:20px; cursor:pointer;">← חזרה לדף הבית</button>
+    <button onclick="showHome()" style="margin-bottom:20px; cursor:pointer; padding:10px 20px; border-radius:50px; background:var(--primary); color:white; border:none;">→ חזרה</button>
     <div id="full-article-content"></div>
 </div>
 
@@ -126,7 +133,7 @@
     const repo = 'yy0534105830-source/news';
     const baseUrl = 'https://yy0534105830-source.github.io/news/';
     let allArticles = [];
-    let currentCategory = 'הכל';
+    let currentSlide = 0;
 
     function toggleTheme(e) {
         e.stopPropagation();
@@ -140,90 +147,98 @@
             const promises = files.map(async f => {
                 const r = await fetch(f.download_url);
                 const t = await r.text();
-                const meta = { title: "כותרת", category: "הכל", img: "" };
+                const meta = { title: "חדשות", category: "הכל", img: "" };
                 t.split('\n').slice(0, 10).forEach(line => {
                     if (line.startsWith('title:')) meta.title = line.replace('title:', '').trim().replace(/['"]/g, '');
                     if (line.startsWith('thumbnail:')) meta.img = line.replace('thumbnail:', '').trim().replace(/['"]/g, '');
                     if (line.startsWith('category:')) meta.category = line.replace('category:', '').trim().replace(/['"]/g, '');
                 });
-                if (!meta.img.startsWith('http')) meta.img = baseUrl + meta.img;
+                if (meta.img && !meta.img.startsWith('http')) meta.img = baseUrl + meta.img;
                 return { ...meta, body: t.split('---').pop().trim() };
             });
             allArticles = await Promise.all(promises);
             renderLayout(allArticles);
+            startSlider();
         } catch (e) { console.error(e); }
-    }
-
-    function createCard(a) {
-        const idx = allArticles.indexOf(a);
-        return `
-            <div class="card" onclick="openArticle(${idx})">
-                <img src="${a.img || 'https://via.placeholder.com/400'}">
-                <div class="card-overlay">
-                    <span style="font-size:0.7rem; color:var(--accent)">${a.category}</span>
-                    <h3>${a.title}</h3>
-                </div>
-            </div>`;
     }
 
     function renderLayout(data) {
         const target = document.getElementById('dynamic-content');
-        if (!data.length) { target.innerHTML = "אין כתבות"; return; }
+        if (!data.length) return;
 
-        let html = "";
-
-        // 1. הכתבה הגדולה ו-2 הקטנות בצד
-        if (data.length >= 3) {
+        let html = '<div class="hero-bento">';
+        
+        // SLIDER (3 articles)
+        html += `<div class="slider-container">`;
+        data.slice(0,3).forEach((a, i) => {
             html += `
-                <div class="hero-bento">
-                    <div class="main-card">${createCard(data[0])}</div>
-                    <div class="side-stack">
-                        ${createCard(data[1])}
-                        ${createCard(data[2])}
+                <div class="slide ${i === 0 ? 'active' : ''}" onclick="openArticle(${allArticles.indexOf(a)})">
+                    <img src="${a.img}">
+                    <div class="slide-content">
+                        <span style="color:var(--accent); font-weight:bold;">${a.category}</span>
+                        <h2>${a.title}</h2>
                     </div>
                 </div>`;
-        }
+        });
+        html += `<div class="slider-dots">${data.slice(0,3).map((_, i) => `<div class="dot ${i === 0 ? 'active' : ''}" onclick="goToSlide(${i})"></div>`).join('')}</div>`;
+        html += `</div>`;
 
-        // 2. שורה של 4 ריבועים
-        if (data.length > 3) {
-            html += `<div class="grid-4">${data.slice(3, 7).map(a => createCard(a)).join('')}</div>`;
-        }
+        // SIDE STACK
+        html += `<div class="side-stack">${data.slice(3,5).map(a => createCard(a)).join('')}</div></div>`;
 
-        // 3. רווח ו-3 שורות של 4
-        if (data.length > 7) {
-            html += `<div class="section-divider"></div>`;
-            const extra = data.slice(7, 19); // לוקח עד 12 כתבות נוספות
-            html += `<div class="grid-4" style="grid-template-rows: repeat(3, auto);">
-                        ${extra.map(a => createCard(a)).join('')}
-                    </div>`;
+        // GRID 4
+        html += `<div class="grid-4">${data.slice(5,9).map(a => createCard(a)).join('')}</div>`;
+
+        // EXTRA ROWS
+        if (data.length > 9) {
+            html += `<div class="section-divider"><div class="line"></div><div class="title">כתבות נוספות</div><div class="line"></div></div>`;
+            html += `<div class="grid-4">${data.slice(9, 21).map(a => createCard(a)).join('')}</div>`;
         }
 
         target.innerHTML = html;
     }
 
-    function filterBy(cat, el) {
-        currentCategory = cat;
-        document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
-        el.classList.add('active');
-        handleSearch();
+    function createCard(a) {
+        return `
+            <div class="card" onclick="openArticle(${allArticles.indexOf(a)})">
+                <img src="${a.img || 'https://via.placeholder.com/400'}">
+                <div class="card-overlay">
+                    <h3>${a.title}</h3>
+                </div>
+            </div>`;
     }
 
-    function handleSearch() {
-        const query = document.getElementById('site-search').value.toLowerCase();
-        let filtered = allArticles;
-        if (currentCategory !== 'הכל') filtered = filtered.filter(a => a.category === currentCategory);
-        if (query) filtered = filtered.filter(a => a.title.toLowerCase().includes(query));
-        renderLayout(filtered);
+    function startSlider() {
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % 3;
+            updateSlider();
+        }, 5000);
+    }
+
+    function goToSlide(i) {
+        currentSlide = i;
+        updateSlider();
+    }
+
+    function updateSlider() {
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        if (!slides.length) return;
+        slides.forEach(s => s.classList.remove('active'));
+        dots.forEach(d => d.classList.remove('active'));
+        slides[currentSlide].classList.add('active');
+        dots[currentSlide].classList.add('active');
     }
 
     function openArticle(idx) {
         const a = allArticles[idx];
         document.getElementById('home-view').style.display = 'none';
         document.getElementById('article-view').style.display = 'block';
+        const body = a.body.split('\n').filter(p => p.trim() !== '').map(p => `<p>${p}</p>`).join('');
         document.getElementById('full-article-content').innerHTML = `
-            <h1>${a.title}</h1>
-            <img src="${a.img}" style="width:100%; max-height:500px; object-fit:cover; border-radius:12px;">
-            <div style="font-size:1.3rem; margin-top:20px; white-space:pre-wrap;">${a.body}</div>
+            <h1 style="font-size:3rem; font-family:'Frank Ruhl Libre', serif;">${a.title}</h1>
+            <img src="${a.img}" style="width:100%; border-radius:12px; margin:20px 0;">
+            <div style="font-size:1.4rem; line-height:2;">${body}</div>
         `;
         window.scrollTo(0,0);
     }
@@ -231,10 +246,10 @@
     function showHome() {
         document.getElementById('home-view').style.display = 'block';
         document.getElementById('article-view').style.display = 'none';
+        window.scrollTo(0,0);
     }
 
     loadData();
 </script>
-
 </body>
 </html>
