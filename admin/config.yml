@@ -13,12 +13,12 @@ collections:
     create: true
     fields:
       - { label: "כותרת", name: "title", widget: "string" }
-      - { label: "תמונה", name: "thumbnail", widget: "image" }
-      - { label: "תוכן", name: "body", widget: "markdown" }
+      - { label: "תמונה ראשית", name: "thumbnail", widget: "image", required: false }
+      - { label: "תוכן הכתבה", name: "body", widget: "markdown" }
 
   - name: "flashes"
     label: "מבזקים"
     folder: "content/flashes"
     create: true
     fields:
-      - { label: "מבזק", name: "title", widget: "string" }
+      - { label: "תוכן המבזק", name: "title", widget: "string" }
