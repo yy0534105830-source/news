@@ -8,46 +8,38 @@
         :root { --main-blue: #004a99; --dark-blue: #003366; --bg-gray: #f0f2f5; --flash-red: #d00; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-gray); margin: 0; padding: 0; }
         
-        header { background: var(--main-blue); color: white; padding: 15px; text-align: center; border-bottom: 5px solid var(--dark-blue); font-size: 2.2rem; font-weight: bold; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        header { background: var(--main-blue); color: white; padding: 15px; text-align: center; border-bottom: 5px solid var(--dark-blue); font-size: 2.2rem; font-weight: bold; }
 
-        /* שורת מבזקים רצה */
-        .ticker-wrapper { background: white; border-bottom: 1px solid #ddd; height: 45px; overflow: hidden; display: flex; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .ticker-label { background: var(--flash-red); color: white; padding: 0 20px; height: 100%; display: flex; align-items: center; font-weight: bold; z-index: 5; position: relative; }
+        /* מבזק רץ */
+        .ticker-wrapper { background: white; border-bottom: 1px solid #ddd; height: 45px; overflow: hidden; display: flex; align-items: center; }
+        .ticker-label { background: var(--flash-red); color: white; padding: 0 20px; height: 100%; display: flex; align-items: center; font-weight: bold; z-index: 5; }
         .ticker-text-container { overflow: hidden; white-space: nowrap; flex-grow: 1; }
-        .ticker-text { display: inline-block; animation: ticker 40s linear infinite; padding-right: 100%; font-weight: 500; font-size: 1.1rem; }
+        .ticker-text { display: inline-block; animation: ticker 40s linear infinite; padding-right: 100%; font-size: 1.1rem; }
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(100%); } }
 
         .container { max-width: 1200px; margin: 20px auto; padding: 0 15px; display: grid; grid-template-columns: 3fr 1fr; gap: 20px; }
 
-        /* כתבה ראשית */
-        .main-article { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 25px; transition: 0.3s; display: block; text-decoration: none; color: inherit; }
-        .main-article:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
+        /* כתבות */
+        .main-article { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 25px; display: block; text-decoration: none; color: inherit; }
         .main-article img { height: 450px; width: 100%; object-fit: cover; background: #eee; }
-        .main-article-content { padding: 30px; border-top: 6px solid var(--main-blue); }
-        .main-article h2 { font-size: 2.8rem; margin: 0 0 15px 0; color: var(--dark-blue); line-height: 1.2; }
-        .main-article p { font-size: 1.25rem; line-height: 1.7; color: #444; }
+        .main-article-content { padding: 25px; border-top: 6px solid var(--main-blue); }
+        .main-article h2 { font-size: 2.5rem; margin: 0 0 10px 0; color: var(--dark-blue); }
 
-        /* גרידים */
         .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px; }
         .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
 
-        .card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: 0.3s; text-decoration: none; color: inherit; display: block; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .card img { height: 180px; width: 100%; object-fit: cover; background: #ddd; border-bottom: 4px solid var(--main-blue); }
-        .card-content { padding: 15px; }
-        .card h3 { font-size: 1.15rem; margin: 0; color: #222; line-height: 1.4; height: 3.2em; overflow: hidden; }
+        .card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); text-decoration: none; color: inherit; }
+        .card img { height: 160px; width: 100%; object-fit: cover; background: #ddd; border-bottom: 3px solid var(--main-blue); }
+        .card-content { padding: 12px; }
+        .card h3 { font-size: 1.1rem; margin: 0; line-height: 1.4; height: 2.8em; overflow: hidden; }
 
-        /* מבזקים בצד */
-        .sidebar { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); height: fit-content; border-top: 4px solid var(--flash-red); }
-        .sidebar h2 { font-size: 1.5rem; border-bottom: 2px solid #eee; padding-bottom: 10px; color: var(--flash-red); margin-top: 0; }
-        .flash-item { padding: 12px 0; border-bottom: 1px solid #f0f0f0; font-size: 0.95rem; display: flex; align-items: flex-start; }
-        .flash-time { font-weight: bold; color: var(--flash-red); margin-left: 8px; white-space: nowrap; }
+        /* צד */
+        .sidebar { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); height: fit-content; border-top: 4px solid var(--flash-red); }
+        .sidebar h2 { font-size: 1.4rem; border-bottom: 2px solid #eee; padding-bottom: 8px; color: var(--flash-red); margin-top: 0; }
+        .flash-item { padding: 10px 0; border-bottom: 1px solid #f0f0f0; font-size: 0.95rem; }
+        .flash-time { font-weight: bold; color: var(--flash-red); margin-left: 5px; }
 
-        @media (max-width: 900px) { 
-            .container { grid-template-columns: 1fr; } 
-            .grid-4, .grid-3 { grid-template-columns: 1fr 1fr; }
-            .main-article img { height: 300px; }
-        }
+        @media (max-width: 900px) { .container { grid-template-columns: 1fr; } .grid-4, .grid-3 { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
 <body>
@@ -56,9 +48,7 @@
 
 <div class="ticker-wrapper">
     <div class="ticker-label">מבזקים</div>
-    <div class="ticker-text-container">
-        <div class="ticker-text" id="ticker-content">טוען מבזקים...</div>
-    </div>
+    <div class="ticker-text-container"><div class="ticker-text" id="ticker-content">טוען מבזקים...</div></div>
 </div>
 
 <div class="container">
@@ -67,9 +57,8 @@
         <div id="section-grid-4" class="grid-4"></div>
         <div id="section-grid-3" class="grid-3"></div>
     </main>
-
     <aside class="sidebar">
-        <h2>מבזקים חמים</h2>
+        <h2>מבזקי חמים</h2>
         <div id="sidebar-flashes"></div>
     </aside>
 </div>
@@ -77,83 +66,52 @@
 <script>
     const repo = 'yy0534105830-source/news';
 
-    function fixPath(p) {
-        if (!p) return 'https://via.placeholder.com/600x400/004a99/ffffff?text=JDN';
-        p = p.trim().replace(/^['"]|['"]$/g, ''); // ניקוי גרשיים
-        if (p.startsWith('http')) return p;
-        p = p.replace(/^\//, ''); // הורדת לוכסן בתחילה
-        return './' + p;
+    function fixImg(txt) {
+        let m = txt.match(/thumbnail:\s*(.*)\n/);
+        if (!m) return 'https://via.placeholder.com/600x400?text=JDN';
+        let p = m[1].trim().replace(/['"]/g, '');
+        return p.startsWith('http') ? p : './' + p.replace(/^\//, '');
     }
 
-    async function loadData() {
+    async function load() {
         try {
-            // טעינת כתבות
-            const blogRes = await fetch(`https://api.github.com/repos/${repo}/contents/content/blog`);
-            const blogFiles = await blogRes.json();
-            const articles = [];
-
-            for (let file of blogFiles.reverse()) {
-                const res = await fetch(file.download_url);
-                const text = await res.text();
-                const title = text.match(/title:\s*(.*)\n/)?.[1] || "ללא כותרת";
-                const img = text.match(/thumbnail:\s*(.*)\n/)?.[1];
-                const body = text.split('---').pop().trim().substring(0, 180) + "...";
-                
-                articles.push({
-                    title: title.replace(/['"]/g, ''),
-                    image: fixPath(img),
-                    body: body,
-                    url: `https://github.com/${repo}/blob/main/${file.path}`
+            // כתבות
+            const bRes = await fetch(`https://api.github.com/repos/${repo}/contents/content/blog`);
+            const bFiles = await bRes.json();
+            const arts = [];
+            for (let f of bFiles.reverse()) {
+                const r = await fetch(f.download_url);
+                const t = await r.text();
+                arts.push({
+                    title: t.match(/title:\s*(.*)\n/)?.[1]?.replace(/['"]/g, '') || "ללא כותרת",
+                    img: fixImg(t),
+                    body: t.split('---').pop().trim().substring(0, 150) + "...",
+                    url: `https://github.com/${repo}/blob/main/${f.path}`
                 });
             }
 
-            if (articles.length > 0) {
-                // ראשית
-                document.getElementById('section-main').innerHTML = `
-                    <a href="${articles[0].url}" class="main-article">
-                        <img src="${articles[0].image}" onerror="this.src='https://via.placeholder.com/800x450/004a99/ffffff?text=JDN'">
-                        <div class="main-article-content">
-                            <h2>${articles[0].title}</h2>
-                            <p>${articles[0].body}</p>
-                        </div>
-                    </a>`;
-
-                // גריד 4
-                articles.slice(1, 5).forEach(art => {
-                    document.getElementById('section-grid-4').innerHTML += `
-                    <a href="${art.url}" class="card">
-                        <img src="${art.image}" onerror="this.src='https://via.placeholder.com/400x250/004a99/ffffff?text=JDN'">
-                        <div class="card-content"><h3>${art.title}</h3></div>
-                    </a>`;
-                });
-
-                // גריד 3 (שתי שורות)
-                articles.slice(5, 11).forEach(art => {
-                    document.getElementById('section-grid-3').innerHTML += `
-                    <a href="${art.url}" class="card">
-                        <img src="${art.image}" onerror="this.src='https://via.placeholder.com/400x250/004a99/ffffff?text=JDN'">
-                        <div class="card-content"><h3>${art.title}</h3></div>
-                    </a>`;
-                });
+            if (arts.length > 0) {
+                document.getElementById('section-main').innerHTML = `<a href="${arts[0].url}" class="main-article"><img src="${arts[0].img}"><div class="main-article-content"><h2>${arts[0].title}</h2><p>${arts[0].body}</p></div></a>`;
+                arts.slice(1, 5).forEach(a => { document.getElementById('section-grid-4').innerHTML += `<a href="${a.url}" class="card"><img src="${a.img}"><div class="card-content"><h3>${a.title}</h3></div></a>`; });
+                arts.slice(5, 11).forEach(a => { document.getElementById('section-grid-3').innerHTML += `<a href="${a.url}" class="card"><img src="${a.img}"><div class="card-content"><h3>${a.title}</h3></div></a>`; });
             }
 
-            // טעינת מבזקים
+            // מבזקים
             const fRes = await fetch(`https://api.github.com/repos/${repo}/contents/content/flashes`);
             const fFiles = await fRes.json();
-            let ticker = ""; let side = "";
+            let tick = ""; let side = "";
             for (let f of fFiles.reverse()) {
-                const res = await fetch(f.download_url);
-                const text = await res.text();
-                const t = text.match(/title:\s*(.*)\n/)?.[1]?.replace(/['"]/g, '') || "";
-                ticker += ` &nbsp;&nbsp;&nbsp; • &nbsp; ${t} `;
-                side += `<div class="flash-item"><span class="flash-time">${new Date().getHours()}:${new Date().getMinutes()}</span> ${t}</div>`;
+                const r = await fetch(f.download_url);
+                const t = await r.text();
+                const title = t.match(/title:\s*(.*)\n/)?.[1]?.replace(/['"]/g, '') || "";
+                tick += ` &nbsp;&nbsp; • &nbsp; ${title} `;
+                side += `<div class="flash-item"><span class="flash-time">${new Date().getHours()}:${new Date().getMinutes()}</span>${title}</div>`;
             }
-            document.getElementById('ticker-content').innerHTML = ticker + ticker;
+            document.getElementById('ticker-content').innerHTML = tick + tick;
             document.getElementById('sidebar-flashes').innerHTML = side;
-
-        } catch (e) { console.error(e); }
+        } catch (e) { console.log(e); }
     }
-    loadData();
+    load();
 </script>
 </body>
 </html>
