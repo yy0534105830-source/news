@@ -6,19 +6,40 @@ backend:
 media_folder: "images"
 public_folder: "images"
 
+# הגדרות שפה וממשק
+locale: 'he'
+
+# עיצוב מותאם אישית ללוח הבקרה
+slug:
+  encoding: "unicode"
+  clean_accents: false
+  sanitize_replacement: "-"
+
 collections:
   - name: "blog"
-    label: "כתבות"
+    label: "כתבות ומאמרים"
+    label_singular: "כתבה"
     folder: "content/blog"
     create: true
+    # תצוגה מקדימה ברשימה (עוזר למצוא כתבות מהר)
+    summary: '{{title}} - ({{date}})'
+    sortable_fields: ['date', 'title']
     fields:
-      - { label: "כותרת", name: "title", widget: "string" }
-      - { label: "תמונה ראשית", name: "thumbnail", widget: "image", required: false }
+      - { label: "כותרת ראשית", name: "title", widget: "string", hint: "הכותרת שתופיע בגדול" }
+      - { label: "כותרת משנה", name: "subtitle", widget: "string", required: false, hint: "משפט קצר שמרחיב על הכותרת" }
+      - { label: "תאריך פרסום", name: "date", widget: "datetime", format: "DD.MM.YYYY", date_format: "DD.MM.YYYY", time_format: "HH:mm" }
+      - { label: "תמונה ראשית", name: "thumbnail", widget: "image", hint: "התמונה שתוצג בדף הבית" }
+      - { label: "קטגוריה", name: "category", widget: "select", options: ["חדשות", "פוליטיקה", "כלכלה", "בריאות", "טכנולוגיה"], default: "חדשות" }
       - { label: "תוכן הכתבה", name: "body", widget: "markdown" }
+      - { label: "סטטוס פרסום", name: "status", widget: "select", options: ["טיוטה", "פורסם"], default: "פורסם" }
 
   - name: "flashes"
-    label: "מבזקים"
+    label: "מבזקי חדשות"
+    label_singular: "מבזק"
     folder: "content/flashes"
     create: true
+    summary: '{{title}}'
     fields:
       - { label: "תוכן המבזק", name: "title", widget: "string" }
+      - { label: "זמן", name: "date", widget: "datetime", format: "HH:mm" }
+      - { label: "דחיפות", name: "urgent", widget: "boolean", default: false, label: "מבזק דחוף (אדום)" }
