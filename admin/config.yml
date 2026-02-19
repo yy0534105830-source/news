@@ -1,16 +1,36 @@
+# הגדרות חיבור ל-GitHub
 backend:
   name: github
   repo: yy0534105830-source/news
   branch: main
 
+# הגדרות תמונות - חשוב מאוד להצגת תמונות באתר!
 media_folder: "images"
-public_folder: "/images"
+public_folder: "images"
+
+# הגדרות תצוגה
+display_url: https://yy0534105830-source.github.io/news/
+locale: 'he'
 
 collections:
+  # אוסף הכתבות (הריבועים והראשית)
   - name: "blog"
     label: "כתבות"
     folder: "content/blog"
     create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - { label: "כותרת", name: "title", widget: "string" }
-      - { label: "תוכן", name: "body", widget: "markdown" }
+      - { label: "תמונה ראשית", name: "thumbnail", widget: "image", required: false }
+      - { label: "תאריך פרסום", name: "date", widget: "datetime" }
+      - { label: "תוכן הכתבה", name: "body", widget: "markdown" }
+
+  # אוסף המבזקים (הפס הרץ והצד)
+  - name: "flashes"
+    label: "מבזקים"
+    folder: "content/flashes"
+    create: true
+    slug: "flash-{{year}}-{{month}}-{{day}}-{{hour}}-{{minute}}"
+    fields:
+      - { label: "תוכן המבזק (קצר)", name: "title", widget: "string" }
+      - { label: "זמן", name: "date", widget: "datetime" }
