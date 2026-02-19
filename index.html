@@ -3,100 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JDN - חדשות חרדים</title>
+    <title>JDN - חדשות בזמן אמת</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f2f2f2; margin: 0; padding: 0; }
-        .header-blue { background: linear-gradient(90deg, #17298D 0%, #2847F3 100%); height: 80px; display: flex; align-items: center; padding: 0 20px; border-bottom: 4px solid #e31e24; }
-        .nav { background: white; padding: 12px 20px; border-bottom: 1px solid #ddd; font-weight: bold; }
-        .nav a { margin-left: 20px; text-decoration: none; color: #333; }
-        .ticker-red { background: #e31e24; color: white; padding: 10px 20px; font-weight: bold; height: 40px; }
-        .container { max-width: 1200px; margin: 20px auto; display: flex; gap: 20px; padding: 0 15px; }
-        .main-content { flex: 3; display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        /* עיצוב כללי */
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; color: #333; }
+        header { background-color: #004a99; color: white; padding: 15px 0; text-align: center; border-bottom: 4px solid #003366; }
+        .container { max-width: 900px; margin: 20px auto; padding: 0 15px; }
         
-        /* עיצוב כרטיס שפועל גם בלי תמונה */
-        .card { 
-            position: relative; 
-            background-color: #17298D; /* צבע כחול JDN כברירת מחדל */
-            overflow: hidden; 
-            border-radius: 4px; 
-            height: 250px; 
-            box-shadow: 0 3px 6px rgba(0,0,0,0.16); 
-        }
-        .card.main { grid-column: span 2; height: 450px; }
-        .card img { width: 100%; height: 100%; object-fit: cover; display: block; border: none; }
+        /* עיצוב כותרת האתר */
+        header h1 { margin: 0; font-size: 2.5rem; letter-spacing: -1px; }
+
+        /* אזור הכתבות */
+        #news-container { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 20px; }
         
-        /* אם אין תמונה, הכותרת תהיה במרכז הריבוע */
-        .card-text { 
-            position: absolute; bottom: 0; width: 100%; 
-            background: linear-gradient(transparent, rgba(0,0,0,0.9)); 
-            color: white; padding: 20px; box-sizing: border-box; 
-        }
+        /* כרטיסיית כתבה */
+        .article-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-right: 6px solid #004a99; transition: transform 0.2s; }
+        .article-card:hover { transform: translateY(-3px); }
+        .article-card h3 { margin-top: 0; color: #004a99; font-size: 1.6rem; line-height: 1.3; }
+        .article-card p { color: #555; line-height: 1.6; font-size: 1.1rem; }
+        .article-card .meta { font-size: 0.85rem; color: #888; margin-bottom: 10px; display: block; }
         
-        .sidebar { flex: 1; background: white; border-top: 5px solid #17298D; height: fit-content; }
-        .sidebar-title { background: #f8f8f8; padding: 15px; font-weight: bold; text-align: center; border-bottom: 1px solid #eee; color: #17298D; }
-        .sidebar-item { padding: 12px 15px; border-bottom: 1px solid #eee; font-size: 15px; }
+        /* כפתור קרא עוד */
+        .read-more { display: inline-block; background-color: #004a99; color: white; padding: 8px 16px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 10px; font-size: 0.9rem; }
+        .read-more:hover { background-color: #003366; }
+
+        /* הודעת טעינה */
+        .loader { text-align: center; padding: 50px; font-size: 1.2rem; color: #004a99; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <div class="header-blue"><img src="https://www.jdn.co.il/wp-content/uploads/2022/01/logosite.png" height="55"></div>
-    <div class="nav"><a href="#">דף הבית</a><a href="#">חדשות</a><a href="#">פוליטיקה</a></div>
-    <div class="ticker-red"><marquee id="top-marquee">טוען מבזקים...</marquee></div>
+<header>
+    <h1>JDN - עדכוני חדשות</h1>
+</header>
 
-    <div class="container">
-        <div class="main-content" id="main-grid">טוען כתבות...</div>
-        <div class="sidebar">
-            <div class="sidebar-title">מבזקי JDN</div>
-            <div id="side-list"></div>
-        </div>
-    </div>
+<div class="container">
+    <div id="news-container" class="loader">טוען חדשות אחרונות מהמערכת...</div>
+</div>
 
-    <script>
-        async function loadData() {
-            const repo = "yy0534105830-source/news";
-            try {
-                const response = await fetch(`https://api.github.com/repos/${repo}/contents/content/blog`);
-                const files = await response.json();
-                
-                let gridHTML = "";
-                let sideHTML = "";
-                let marqueeText = "";
-
-                for (let file of files) {
-                    if (file.name.endsWith('.md')) {
-                        const res = await fetch(file.download_url);
-                        const text = await res.text();
-                        
-                        // חילוץ נתונים
-                        const title = text.match(/title:\s*"(.*)"/)?.[1] || "ללא כותרת";
-                        const image = text.match(/image:\s*"(.*)"/)?.[1] || "";
-                        const pos = text.match(/layout_position:\s*"(.*)"/)?.[1] || "side";
-
-                        if (pos === "ticker") {
-                            marqueeText += ` • ${title} `;
-                            sideHTML += `<div class="sidebar-item">${title}</div>`;
-                        } else {
-                            // כאן השינוי: אם אין תמונה, פשוט לא שמים תג <img>
-                            const imgTag = image ? `<img src="${image}" onerror="this.style.display='none'">` : "";
-                            
-                            gridHTML += `
-                                <div class="card ${pos === 'top' ? 'main' : ''}">
-                                    ${imgTag}
-                                    <div class="card-text">
-                                        <h2 style="margin:0;">${title}</h2>
-                                    </div>
-                                </div>`;
-                        }
-                    }
-                }
-                document.getElementById('main-grid').innerHTML = gridHTML;
-                document.getElementById('side-list').innerHTML = sideHTML;
-                document.getElementById('top-marquee').innerHTML = marqueeText;
-            } catch (e) {
-                document.getElementById('main-grid').innerHTML = "שגיאה בטעינה. וודא ששם המאגר והתיקייה נכונים.";
+<script>
+    async function loadNews() {
+        const repo = 'yy0534105830-source/news'; // שם המאגר שלך
+        const path = 'content/blog'; // התיקייה שבה נשמרות הכתבות
+        const container = document.getElementById('news-container');
+        
+        try {
+            // פנייה ל-GitHub API לקבלת רשימת הקבצים
+            const response = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`);
+            const files = await response.json();
+            
+            if (!Array.isArray(files)) {
+                container.innerHTML = '<div class="loader">עדיין לא פורסמו כתבות.</div>';
+                return;
             }
+
+            container.innerHTML = ''; // ניקוי הודעת הטעינה
+
+            // סינון קבצי Markdown בלבד והצגתם
+            for (const file of files) {
+                if (file.name.endsWith('.md')) {
+                    const contentRes = await fetch(file.download_url);
+                    const text = await contentRes.text();
+                    
+                    // חילוץ הכותרת מתוך ה-Frontmatter (החלק העליון של הקובץ)
+                    const titleMatch = text.match(/title:\s*["']?(.*?)["']?\n/);
+                    const title = titleMatch ? titleMatch[1] : "כתבה ללא כותרת";
+                    
+                    // חילוץ תוכן הכתבה (הכל אחרי ה- --- השני)
+                    const bodyParts = text.split('---');
+                    const body = bodyParts.length > 2 ? bodyParts[2].trim().substring(0, 180) + "..." : "לחץ לקריאת הכתבה המלאה";
+                    
+                    const articleDiv = document.createElement('div');
+                    articleDiv.className = 'article-card';
+                    articleDiv.innerHTML = `
+                        <span class="meta">פורסם במערכת JDN</span>
+                        <h3>${title}</h3>
+                        <p>${body}</p>
+                        <a href="https://github.com/${repo}/blob/main/${file.path}" class="read-more" target="_blank">קרא עוד ←</a>
+                    `;
+                    container.appendChild(articleDiv);
+                }
+            }
+        } catch (error) {
+            console.error('שגיאה בטעינת הכתבות:', error);
+            container.innerHTML = '<div class="loader">שגיאה בחיבור למאגר החדשות. וודא שהתיקייה קיימת.</div>';
         }
-        loadData();
-    </script>
+    }
+
+    loadNews();
+</script>
+
 </body>
 </html>
