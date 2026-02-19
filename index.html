@@ -1,1 +1,223 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>חדשות חרדים | הפורטל המרכזי</title>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&family=Frank+Ruhl+Libre:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #002d5f; 
+            --accent: #c5a059; 
+            --bg: #f8f9fa; 
+            --white: #ffffff; 
+            --radius: 16px;
+        }
 
+        body { 
+            font-family: 'Assistant', sans-serif; 
+            background-color: var(--bg); 
+            margin: 0; 
+            color: #1a1a1a;
+            line-height: 1.8; /* ריווח שורות כללי */
+        }
+        
+        /* Header & Nav */
+        header { background: var(--primary); color: var(--white); padding: 30px; text-align: center; border-bottom: 5px solid var(--accent); cursor: pointer; }
+        header h1 { font-family: 'Frank Ruhl Libre', serif; margin: 0; font-size: 3rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+
+        nav { 
+            background: rgba(255, 255, 255, 0.98); 
+            backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 1000; 
+            border-bottom: 1px solid #e1e4e8; 
+            display: flex; justify-content: center; 
+            padding: 15px; gap: 25px; 
+        }
+        .nav-link { font-weight: bold; color: var(--primary); cursor: pointer; padding: 8px 20px; border-radius: 30px; transition: 0.3s; font-size: 1.1rem; }
+        .nav-link:hover, .nav-link.active { background: var(--accent); color: white; }
+
+        /* Ticker */
+        .ticker { background: #fff; border-bottom: 1px solid #ddd; height: 45px; display: flex; align-items: center; overflow: hidden; font-weight: bold; }
+        .ticker-label { background: #d32f2f; color: #fff; padding: 0 20px; height: 100%; display: flex; align-items: center; box-shadow: 2px 0 5px rgba(0,0,0,0.1); }
+        .ticker-text { white-space: nowrap; animation: ticker 60s linear infinite; padding-right: 100%; }
+        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(100%); } }
+
+        .container { max-width: 1400px; margin: 40px auto; padding: 0 30px; }
+        
+        /* Layouts & Gaps */
+        .hero-bento { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; height: 580px; margin-bottom: 40px; }
+        .side-articles { display: grid; grid-template-rows: 1fr 1fr; gap: 30px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-bottom: 40px; }
+        .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+
+        /* Card Design */
+        .card { 
+            background: var(--white); border-radius: var(--radius); overflow: hidden; 
+            position: relative; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.06); 
+            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); height: 280px; 
+        }
+        .hero-bento .card { height: 100%; }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(0,0,0,0.12); }
+        .card img { width: 100%; height: 100%; object-fit: cover; transition: 0.8s; }
+        .card:hover img { transform: scale(1.08); }
+        
+        .card-overlay { 
+            position: absolute; bottom: 0; width: 100%; padding: 25px; 
+            background: linear-gradient(transparent, rgba(0,0,0,0.95)); 
+            color: white; box-sizing: border-box; 
+        }
+        .card h3 { font-family: 'Frank Ruhl Libre', serif; margin: 0; font-size: 1.3rem; line-height: 1.3; }
+        .time-tag { 
+            position: absolute; top: 15px; right: 15px; background: var(--accent); color: var(--primary); 
+            padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; z-index: 10; 
+        }
+
+        /* Full Article View */
+        #article-view { display: none; background: white; padding: 60px; border-radius: var(--radius); max-width: 850px; margin: 40px auto; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+        .full-title { font-family: 'Frank Ruhl Libre', serif; font-size: 3.5rem; line-height: 1.2; color: var(--primary); margin-bottom: 30px; }
+        .article-body { font-size: 1.4rem; line-height: 2.0; color: #333; }
+        .article-body p { margin-bottom: 30px; } /* רווח גדול בין פסקאות */
+
+        @media (max-width: 950px) { 
+            .hero-bento, .grid-4, .grid-5 { grid-template-columns: 1fr; height: auto; } 
+            .card { height: 280px; } 
+            .full-title { font-size: 2.5rem; }
+            #article-view { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+<header onclick="showHome()"><h1>חדשות חרדים</h1></header>
+
+<nav id="main-nav">
+    <div class="nav-link active" onclick="filterCategory('הכל')">הכל</div>
+    <div class="nav-link" onclick="filterCategory('חצרות קודש')">חצרות קודש</div>
+    <div class="nav-link" onclick="filterCategory('פוליטיקה')">פוליטיקה</div>
+    <div class="nav-link" onclick="filterCategory('כלכלה')">כלכלה</div>
+</nav>
+
+<div class="ticker"><div class="ticker-label">מבזקים</div><div class="ticker-text" id="ticker-target">טוען עדכונים...</div></div>
+
+<div class="container" id="home-view"><div id="news-content"></div></div>
+
+<div class="container" id="article-view">
+    <button onclick="showHome()" style="padding:12px 30px; cursor:pointer; background:var(--primary); color:white; border:none; border-radius:50px; font-weight:bold; margin-bottom:40px; font-size: 1rem;">← חזרה לדף הבית</button>
+    <div id="full-article-content"></div>
+</div>
+
+<script>
+    const repo = 'yy0534105830-source/news';
+    const baseUrl = 'https://yy0534105830-source.github.io/news/';
+    let allArticles = [];
+
+    async function loadData() {
+        try {
+            const res = await fetch(`https://api.github.com/repos/${repo}/contents/content/blog`);
+            const files = (await res.json()).reverse();
+            
+            const promises = files.map(async f => {
+                const r = await fetch(f.download_url);
+                const t = await r.text();
+                const meta = { title: "חדשות חרדים", category: "הכל", img: "" };
+                
+                // שליפת נתונים בטוחה
+                t.split('\n').slice(0, 15).forEach(line => {
+                    const l = line.toLowerCase();
+                    if (l.startsWith('title:')) meta.title = line.split(':')[1].trim().replace(/['"]/g, '');
+                    if (l.startsWith('thumbnail:')) meta.img = line.split(':')[1].trim().replace(/['"]/g, '');
+                    if (l.startsWith('category:')) meta.category = line.split(':')[1].trim().replace(/['"]/g, '');
+                });
+
+                // תיקון תמונה
+                if (meta.img && !meta.img.startsWith('http')) {
+                    meta.img = baseUrl + meta.img.replace(/^\//, '');
+                } else if (!meta.img) {
+                    meta.img = "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800";
+                }
+
+                return { ...meta, body: t.split('---').pop().trim() };
+            });
+
+            allArticles = await Promise.all(promises);
+            renderLayout(allArticles);
+            loadFlashes();
+        } catch (e) { console.error("Data Error:", e); }
+    }
+
+    function createCard(a) {
+        const idx = allArticles.indexOf(a);
+        return `
+            <div class="card" onclick="openArticle(${idx})">
+                <div class="time-tag">🕒 חדש</div>
+                <img src="${a.img}" loading="lazy">
+                <div class="card-overlay"><h3>${a.title}</h3></div>
+            </div>`;
+    }
+
+    function renderLayout(data) {
+        const target = document.getElementById('news-content');
+        if (!data.length) {
+            target.innerHTML = "<h3>אין תוכן להצגה בקטגוריה זו.</h3>";
+            return;
+        }
+
+        let html = "";
+        
+        // Hero Section
+        if (data.length >= 3) {
+            html += `<div class="hero-bento">
+                <div style="height:100%">${createCard(data[0])}</div>
+                <div class="side-articles">${data.slice(1,3).map(a => createCard(a)).join('')}</div>
+            </div>`;
+        }
+
+        // Grid Sections
+        if(data.length > 3) html += `<div class="grid-4">${data.slice(3,7).map(a => createCard(a)).join('')}</div>`;
+        if(data.length > 7) html += `<div class="grid-5">${data.slice(7).map(a => createCard(a)).join('')}</div>`;
+        
+        target.innerHTML = html;
+    }
+
+    function openArticle(idx) {
+        const a = allArticles[idx];
+        document.getElementById('home-view').style.display = 'none';
+        document.getElementById('article-view').style.display = 'block';
+        
+        // הפיכת טקסט לפסקאות HTML עם רווחים
+        const formattedBody = a.body.split('\n').filter(p => p.trim() !== '').map(p => `<p>${p}</p>`).join('');
+        
+        document.getElementById('full-article-content').innerHTML = `
+            <h1 class="full-title">${a.title}</h1>
+            <img src="${a.img}" style="width:100%; border-radius:16px; margin-bottom:40px; box-shadow: 0 15px 40px rgba(0,0,0,0.1);">
+            <div class="article-body">${formattedBody}</div>
+        `;
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    function showHome() {
+        document.getElementById('home-view').style.display = 'block';
+        document.getElementById('article-view').style.display = 'none';
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    async function loadFlashes() {
+        try {
+            const res = await fetch(`https://api.github.com/repos/${repo}/contents/content/flashes`);
+            const files = (await res.json()).reverse();
+            let txt = "";
+            for(let f of files.slice(0,8)) {
+                const r = await fetch(f.download_url);
+                const t = await r.text();
+                const flashTitle = t.match(/title:\s*(.*)/)?.[1]?.replace(/['"]/g, '') || "עדכון";
+                txt += " • " + flashTitle + " &nbsp;&nbsp;&nbsp;&nbsp; ";
+            }
+            document.getElementById('ticker-target').innerHTML = txt;
+        } catch(e) {}
+    }
+
+    loadData();
+</script>
+</body>
+</html>
