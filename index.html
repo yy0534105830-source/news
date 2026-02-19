@@ -8,85 +8,83 @@
     <style>
         :root {
             --primary: #002d5f; --accent: #c5a059; --bg: #f4f6f8; --white: #ffffff; 
-            --text: #1a1a1a; --card-bg: #ffffff; --radius: 16px; --nav-bg: rgba(255, 255, 255, 0.95);
+            --text: #1a1a1a; --card-bg: #ffffff; --radius: 12px; --gap: 20px;
         }
 
-        /* Dark Mode Colors */
         body.dark-mode {
             --bg: #0d1117; --white: #161b22; --text: #f0f6fc; 
-            --card-bg: #1c2128; --nav-bg: rgba(13, 17, 23, 0.95);
+            --card-bg: #1c2128; --nav-bg: #161b22;
         }
 
-        body { font-family: 'Assistant', sans-serif; background-color: var(--bg); margin: 0; color: var(--text); line-height: 1.8; transition: background 0.3s, color 0.3s; }
+        body { font-family: 'Assistant', sans-serif; background-color: var(--bg); margin: 0; color: var(--text); line-height: 1.8; transition: 0.3s; }
         
-        header { background: var(--primary); color: white; padding: 25px; text-align: center; border-bottom: 5px solid var(--accent); cursor: pointer; position: relative; }
-        header h1 { font-family: 'Frank Ruhl Libre', serif; margin: 0; font-size: 2.8rem; }
+        /* Header & Nav */
+        header { background: var(--primary); color: white; padding: 20px; text-align: center; border-bottom: 5px solid var(--accent); position: relative; }
+        header h1 { font-family: 'Frank Ruhl Libre', serif; margin: 0; font-size: 2.5rem; cursor: pointer; }
 
-        /* Dark Mode Toggle */
         .theme-toggle {
             position: absolute; left: 20px; top: 50%; transform: translateY(-50%);
             background: rgba(255,255,255,0.1); border: 1px solid var(--accent); color: white;
-            padding: 8px 15px; border-radius: 50px; cursor: pointer; font-size: 1.2rem; transition: 0.3s;
+            padding: 8px 12px; border-radius: 50px; cursor: pointer; font-size: 0.9rem;
         }
-        .theme-toggle:hover { background: var(--accent); }
 
         .nav-wrapper {
-            background: var(--nav-bg); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 1000;
-            border-bottom: 1px solid rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: space-between;
-            padding: 8px 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            background: var(--white); position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid #ddd; display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         nav { display: flex; gap: 10px; }
-        .nav-link { font-weight: bold; color: var(--primary); cursor: pointer; padding: 8px 15px; border-radius: 30px; transition: 0.3s; }
+        .nav-link { font-weight: bold; color: var(--primary); cursor: pointer; padding: 5px 15px; border-radius: 20px; }
         body.dark-mode .nav-link { color: var(--accent); }
         .nav-link.active { background: var(--accent); color: white !important; }
 
-        .search-box input {
-            padding: 8px 15px; border-radius: 20px; border: 1px solid #ddd;
-            outline: none; width: 180px; background: var(--card-bg); color: var(--text);
-        }
+        .search-box input { padding: 8px; border-radius: 20px; border: 1px solid #ddd; background: var(--card-bg); color: var(--text); outline: none; }
 
-        /* News Layouts */
-        .container { max-width: 1400px; margin: 30px auto; padding: 0 25px; }
-        .hero-bento { display: grid; grid-template-columns: 2fr 1fr; gap: 25px; height: 500px; margin-bottom: 30px; }
-        .side-articles { display: grid; grid-template-rows: 1fr 1fr; gap: 25px; }
-        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; margin-bottom: 30px; }
-        .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; }
+        /* Layout Grid System */
+        .container { max-width: 1300px; margin: 20px auto; padding: 0 20px; }
+        
+        /* 1. Hero Bento: Big + 2 Side Stacked */
+        .hero-bento { display: grid; grid-template-columns: 2fr 1fr; gap: var(--gap); height: 500px; margin-bottom: var(--gap); }
+        .side-stack { display: grid; grid-template-rows: 1fr 1fr; gap: var(--gap); }
 
+        /* 2. Grid of 4 */
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); margin-bottom: 40px; }
+
+        /* 3. Spacing / Section Title */
+        .section-divider { height: 2px; background: #ddd; margin: 40px 0; position: relative; }
+        .section-divider::after { content: "חדשות נוספות"; position: absolute; top: -15px; right: 20px; background: var(--bg); padding: 0 15px; font-weight: bold; color: var(--primary); }
+
+        /* Card Design */
         .card { 
             background: var(--card-bg); border-radius: var(--radius); overflow: hidden; 
-            position: relative; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
-            transition: 0.4s; height: 260px; border: 1px solid rgba(0,0,0,0.05);
+            position: relative; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
+            transition: 0.3s; height: 250px; 
         }
-        .card:hover { transform: translateY(-8px); }
+        .hero-bento .main-card { height: 100%; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        .card img { width: 100%; height: 100%; object-fit: cover; }
         .card-overlay { 
-            position: absolute; bottom: 0; width: 100%; padding: 20px; 
-            background: linear-gradient(transparent, rgba(0,0,0,0.9)); color: white; box-sizing: border-box; 
+            position: absolute; bottom: 0; width: 100%; padding: 15px; 
+            background: linear-gradient(transparent, rgba(0,0,0,0.85)); color: white; box-sizing: border-box; 
         }
+        .card h3 { margin: 0; font-size: 1.1rem; line-height: 1.3; font-family: 'Frank Ruhl Libre', serif; }
 
         /* Contact Section */
-        .contact-strip {
-            background: var(--primary); color: white; padding: 60px 20px; text-align: center;
-            border-radius: var(--radius); margin: 60px 0; border-top: 6px solid var(--accent);
-        }
-        .contact-strip h2 { font-family: 'Frank Ruhl Libre', serif; font-size: 2.5rem; margin-bottom: 15px; }
-        .contact-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
-        .contact-card {
-            background: rgba(255,255,255,0.1); padding: 20px 40px; border-radius: 12px;
-            text-decoration: none; color: white; font-weight: bold; transition: 0.3s; border: 1px solid transparent;
-        }
-        .contact-card:hover { background: var(--accent); transform: scale(1.05); border-color: white; }
+        .contact-box { background: var(--primary); color: white; padding: 40px; border-radius: var(--radius); text-align: center; margin-top: 60px; }
+        .contact-btns { display: flex; justify-content: center; gap: 15px; margin-top: 20px; flex-wrap: wrap; }
+        .contact-btns a { color: white; text-decoration: none; background: var(--accent); padding: 10px 20px; border-radius: 50px; font-weight: bold; }
 
-        footer { background: #001226; color: #999; padding: 40px; text-align: center; margin-top: 50px; }
+        /* Article View */
+        #article-view { display: none; background: var(--card-bg); padding: 30px; border-radius: var(--radius); }
 
-        @media (max-width: 900px) { 
-            .nav-wrapper { flex-direction: column; padding: 15px; }
-            .hero-bento, .grid-4, .grid-5 { grid-template-columns: 1fr; height: auto; } 
-            .card { height: 250px; }
+        @media (max-width: 850px) {
+            .hero-bento, .grid-4 { grid-template-columns: 1fr; height: auto; }
+            .side-stack { height: 500px; }
         }
     </style>
 </head>
-<body class="">
+<body id="body">
 
 <header onclick="showHome()">
     <h1>חדשות חרדים</h1>
@@ -94,39 +92,35 @@
 </header>
 
 <div class="nav-wrapper">
-    <nav id="categories-nav">
+    <nav>
         <div class="nav-link active" onclick="filterBy('הכל', this)">הכל</div>
         <div class="nav-link" onclick="filterBy('חצרות קודש', this)">חצרות קודש</div>
         <div class="nav-link" onclick="filterBy('פוליטיקה', this)">פוליטיקה</div>
         <div class="nav-link" onclick="filterBy('כלכלה', this)">כלכלה</div>
     </nav>
     <div class="search-box">
-        <input type="text" id="site-search" placeholder="חיפוש..." oninput="handleSearch()">
+        <input type="text" id="site-search" placeholder="חיפוש כתבה..." oninput="handleSearch()">
     </div>
 </div>
 
 <div class="container" id="home-view">
-    <div id="dynamic-content"></div>
+    <div id="dynamic-content">
+        </div>
 
-    <div class="contact-strip">
+    <div class="contact-box">
         <h2>יש לכם סקופ? שלחו לנו!</h2>
-        <p>מערכת "חדשות חרדים" זמינה עבורכם 24 שעות ביממה (למעט שבתות וחגים)</p>
-        <div class="contact-grid">
-            <a href="https://wa.me/YOUR_NUMBER" class="contact-card">📱 וואטסאפ המערכת</a>
-            <a href="mailto:office@news.com" class="contact-card">📧 דואר אלקטרוני</a>
-            <a href="tel:030000000" class="contact-card">📞 קו חם</a>
+        <div class="contact-btns">
+            <a href="#">וואטסאפ</a>
+            <a href="#">מייל האדום</a>
+            <a href="#">טלפון</a>
         </div>
     </div>
 </div>
 
-<div class="container" id="article-view" style="display:none;">
-    <button onclick="showHome()" style="padding:10px 25px; cursor:pointer; background:var(--primary); color:white; border:none; border-radius:50px; font-weight:bold; margin-bottom:30px;">← חזרה</button>
+<div class="container" id="article-view">
+    <button onclick="showHome()" style="margin-bottom:20px; cursor:pointer;">← חזרה לדף הבית</button>
     <div id="full-article-content"></div>
 </div>
-
-<footer>
-    &copy; כל הזכויות שמורות לפורטל "חדשות חרדים" | 2026
-</footer>
 
 <script>
     const repo = 'yy0534105830-source/news';
@@ -134,34 +128,25 @@
     let allArticles = [];
     let currentCategory = 'הכל';
 
-    // Theme Toggle Function
     function toggleTheme(e) {
         e.stopPropagation();
         document.body.classList.toggle('dark-mode');
-        const isDark = document.body.classList.contains('dark-mode');
-        document.querySelector('.theme-toggle').innerText = isDark ? "☀️ מצב יום" : "🌙 מצב לילה";
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
     }
 
     async function loadData() {
-        if(localStorage.getItem('theme') === 'dark') {
-            document.body.classList.add('dark-mode');
-            document.querySelector('.theme-toggle').innerText = "☀️ מצב יום";
-        }
         try {
             const res = await fetch(`https://api.github.com/repos/${repo}/contents/content/blog`);
             const files = (await res.json()).reverse();
             const promises = files.map(async f => {
                 const r = await fetch(f.download_url);
                 const t = await r.text();
-                const meta = { title: "חדשות חרדים", category: "הכל", img: "" };
-                t.split('\n').slice(0, 15).forEach(line => {
-                    const l = line.toLowerCase();
-                    if (l.startsWith('title:')) meta.title = line.split(':')[1].trim().replace(/['"]/g, '');
-                    if (l.startsWith('thumbnail:')) meta.img = line.split(':')[1].trim().replace(/['"]/g, '');
-                    if (l.startsWith('category:')) meta.category = line.split(':')[1].trim().replace(/['"]/g, '');
+                const meta = { title: "כותרת", category: "הכל", img: "" };
+                t.split('\n').slice(0, 10).forEach(line => {
+                    if (line.startsWith('title:')) meta.title = line.replace('title:', '').trim().replace(/['"]/g, '');
+                    if (line.startsWith('thumbnail:')) meta.img = line.replace('thumbnail:', '').trim().replace(/['"]/g, '');
+                    if (line.startsWith('category:')) meta.category = line.replace('category:', '').trim().replace(/['"]/g, '');
                 });
-                if (!meta.img) meta.img = "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800";
+                if (!meta.img.startsWith('http')) meta.img = baseUrl + meta.img;
                 return { ...meta, body: t.split('---').pop().trim() };
             });
             allArticles = await Promise.all(promises);
@@ -169,32 +154,56 @@
         } catch (e) { console.error(e); }
     }
 
+    function createCard(a) {
+        const idx = allArticles.indexOf(a);
+        return `
+            <div class="card" onclick="openArticle(${idx})">
+                <img src="${a.img || 'https://via.placeholder.com/400'}">
+                <div class="card-overlay">
+                    <span style="font-size:0.7rem; color:var(--accent)">${a.category}</span>
+                    <h3>${a.title}</h3>
+                </div>
+            </div>`;
+    }
+
     function renderLayout(data) {
         const target = document.getElementById('dynamic-content');
-        if (!data.length) { target.innerHTML = "<h3>לא נמצאו תוצאות.</h3>"; return; }
+        if (!data.length) { target.innerHTML = "אין כתבות"; return; }
+
         let html = "";
+
+        // 1. הכתבה הגדולה ו-2 הקטנות בצד
         if (data.length >= 3) {
-            html += `<div class="hero-bento">
-                <div style="height:100%">${createCard(data[0])}</div>
-                <div class="side-articles">${data.slice(1,3).map(a => createCard(a)).join('')}</div>
-            </div>`;
+            html += `
+                <div class="hero-bento">
+                    <div class="main-card">${createCard(data[0])}</div>
+                    <div class="side-stack">
+                        ${createCard(data[1])}
+                        ${createCard(data[2])}
+                    </div>
+                </div>`;
         }
-        html += `<div class="grid-4">${data.slice(3,7).map(a => createCard(a)).join('')}</div>`;
+
+        // 2. שורה של 4 ריבועים
+        if (data.length > 3) {
+            html += `<div class="grid-4">${data.slice(3, 7).map(a => createCard(a)).join('')}</div>`;
+        }
+
+        // 3. רווח ו-3 שורות של 4
+        if (data.length > 7) {
+            html += `<div class="section-divider"></div>`;
+            const extra = data.slice(7, 19); // לוקח עד 12 כתבות נוספות
+            html += `<div class="grid-4" style="grid-template-rows: repeat(3, auto);">
+                        ${extra.map(a => createCard(a)).join('')}
+                    </div>`;
+        }
+
         target.innerHTML = html;
     }
 
-    function createCard(a) {
-        const idx = allArticles.indexOf(a);
-        return `<div class="card" onclick="openArticle(${idx})">
-            <div style="position:absolute; top:10px; left:10px; background:var(--accent); padding:2px 10px; border-radius:5px; font-size:0.7rem; color:white;">${a.category}</div>
-            <img src="${a.img}" style="width:100%; height:100%; object-fit:cover;">
-            <div class="card-overlay"><h3>${a.title}</h3></div>
-        </div>`;
-    }
-
-    function filterBy(category, el) {
-        currentCategory = category;
-        document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
+    function filterBy(cat, el) {
+        currentCategory = cat;
+        document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
         el.classList.add('active');
         handleSearch();
     }
@@ -211,22 +220,21 @@
         const a = allArticles[idx];
         document.getElementById('home-view').style.display = 'none';
         document.getElementById('article-view').style.display = 'block';
-        const body = a.body.split('\n').filter(p => p.trim() !== '').map(p => `<p>${p}</p>`).join('');
         document.getElementById('full-article-content').innerHTML = `
-            <h1 style="font-size:3rem; font-family:'Frank Ruhl Libre', serif;">${a.title}</h1>
-            <img src="${a.img}" style="width:100%; border-radius:16px; margin:20px 0;">
-            <div style="font-size:1.4rem;">${body}</div>
+            <h1>${a.title}</h1>
+            <img src="${a.img}" style="width:100%; max-height:500px; object-fit:cover; border-radius:12px;">
+            <div style="font-size:1.3rem; margin-top:20px; white-space:pre-wrap;">${a.body}</div>
         `;
-        window.scrollTo(0, 0);
+        window.scrollTo(0,0);
     }
 
     function showHome() {
         document.getElementById('home-view').style.display = 'block';
         document.getElementById('article-view').style.display = 'none';
-        window.scrollTo(0, 0);
     }
 
     loadData();
 </script>
+
 </body>
 </html>
