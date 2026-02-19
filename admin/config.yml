@@ -3,28 +3,40 @@ backend:
   repo: yy0534105830-source/news
   branch: main
 
-media_folder: "images"
-public_folder: "images"
-locale: 'he'
+media_folder: images
+public_folder: images
+locale: he
 
 collections:
-  - name: "blog"
-    label: "כתבות ומאמרים"
-    folder: "content/blog"
+  - name: blog
+    label: כתבות ומאמרים
+    folder: content/blog
     create: true
     fields:
-      - { label: "כותרת ראשית", name: "title", widget: "string" }
-      - { label: "כותרת משנה", name: "subtitle", widget: "string", required: false }
-      - { label: "תאריך פרסום", name: "date", widget: "datetime" }
-      - { label: "תמונה ראשית", name: "thumbnail", widget: "image" }
-      - { label: "קטגוריה", name: "category", widget: "select", options: ["חדשות", "פוליטיקה", "כלכלה", "בריאות", "טכנולוגיה"], default: "חדשות" }
-      - { label: "תוכן הכתבה", name: "body", widget: "markdown" }
-      - { label: "סטטוס", name: "status", widget: "select", options: ["טיוטה", "פורסם"], default: "פורסם" }
+      - label: כותרת ראשית
+        name: title
+        widget: string
+      - label: כותרת משנה
+        name: subtitle
+        widget: string
+        required: false
+      - label: תמונה ראשית
+        name: thumbnail
+        widget: image
+      - label: קטגוריה
+        name: category
+        widget: select
+        options: ["חדשות", "פוליטיקה", "כלכלה", "בריאות"]
+        default: "חדשות"
+      - label: תוכן הכתבה
+        name: body
+        widget: markdown
 
-  - name: "flashes"
-    label: "מבזקי חדשות"
-    folder: "content/flashes"
+  - name: flashes
+    label: מבזקי חדשות
+    folder: content/flashes
     create: true
     fields:
-      - { label: "תוכן המבזק", name: "title", widget: "string" }
-      - { label: "זמן", name: "date", widget: "datetime" }
+      - label: תוכן המבזק
+        name: title
+        widget: string
