@@ -64,24 +64,38 @@
 </div>
 
 <script>
+
     const repo = 'yy0534105830-source/news';
 
-    function fixImg(txt) {
-        let m = txt.match(/thumbnail:\s*(.*)\n/);
-        if (!m) return 'https://via.placeholder.com/600x400?text=JDN';
-        let p = m[1].trim().replace(/['"]/g, '');
-        return p.startsWith('http') ? p : './' + p.replace(/^\//, '');
+    // פונקציה חכמה למציאת התמונה האמיתית
+    function fixImg(text) {
+        // מחפש את שדה התמונה (thumbnail) בקובץ ה-Markdown
+        let m = text.match(/thumbnail:\s*(.*)\n/) || text.match(/image:\s*(.*)\n/);
+        if (!m) return 'https://via.placeholder.com/600x400/004a99/ffffff?text=No+Image';
+        
+        let path = m[1].trim().replace(/['"]/g, ''); // מנקה גרשיים
+        
+        // אם זה קישור מלא (http), מחזיר אותו כמו שהוא
+        if (path.startsWith('http')) return path;
+        
+        // תיקון נתיב: מוודא שהכתובת מצביעה לתיקיית images ב-GitHub שלך
+        path = path.replace(/^\//, ''); // מוריד לוכסן מההתחלה אם יש
+        
+        // בונה נתיב ישיר לקובץ ב-GitHub Pages
+        return 'https://yy0534105830-source.github.io/news/' + path;
     }
 
     async function load() {
         try {
-            // כתבות
+            // טעינת הכתבות
             const bRes = await fetch(`https://api.github.com/repos/${repo}/contents/content/blog`);
             const bFiles = await bRes.json();
             const arts = [];
+
             for (let f of bFiles.reverse()) {
                 const r = await fetch(f.download_url);
                 const t = await r.text();
+                
                 arts.push({
                     title: t.match(/title:\s*(.*)\n/)?.[1]?.replace(/['"]/g, '') || "ללא כותרת",
                     img: fixImg(t),
@@ -91,12 +105,32 @@
             }
 
             if (arts.length > 0) {
-                document.getElementById('section-main').innerHTML = `<a href="${arts[0].url}" class="main-article"><img src="${arts[0].img}"><div class="main-article-content"><h2>${arts[0].title}</h2><p>${arts[0].body}</p></div></a>`;
-                arts.slice(1, 5).forEach(a => { document.getElementById('section-grid-4').innerHTML += `<a href="${a.url}" class="card"><img src="${a.img}"><div class="card-content"><h3>${a.title}</h3></div></a>`; });
-                arts.slice(5, 11).forEach(a => { document.getElementById('section-grid-3').innerHTML += `<a href="${a.url}" class="card"><img src="${a.img}"><div class="card-content"><h3>${a.title}</h3></div></a>`; });
+                // הזרקת הכתבה הראשית
+                document.getElementById('section-main').innerHTML = `
+                    <a href="${arts[0].url}" class="main-article">
+                        <img src="${arts[0].img}" onerror="this.src='https://via.placeholder.com/800x450/004a99/ffffff?text=Image+Not+Found'">
+                        <div class="main-article-content">
+                            <h2>${arts[0].title}</h2>
+                            <p>${arts[0].body}</p>
+                        </div>
+                    </a>`;
+
+                // הזרקת 4 ריבועים
+                const g4 = document.getElementById('section-grid-4');
+                g4.innerHTML = '';
+                arts.slice(1, 5).forEach(a => {
+                    g4.innerHTML += `<a href="${a.url}" class="card"><img src="${a.img}" onerror="this.src='https://via.placeholder.com/400x250/004a99/ffffff?text=JDN'"><div class="card-content"><h3>${a.title}</h3></div></a>`;
+                });
+
+                // הזרקת 6 ריבועים
+                const g3 = document.getElementById('section-grid-3');
+                g3.innerHTML = '';
+                arts.slice(5, 11).forEach(a => {
+                    g3.innerHTML += `<a href="${a.url}" class="card"><img src="${a.img}" onerror="this.src='https://via.placeholder.com/400x250/004a99/ffffff?text=JDN'"><div class="card-content"><h3>${a.title}</h3></div></a>`;
+                });
             }
 
-            // מבזקים
+            // טעינת מבזקים
             const fRes = await fetch(`https://api.github.com/repos/${repo}/contents/content/flashes`);
             const fFiles = await fRes.json();
             let tick = ""; let side = "";
@@ -109,9 +143,11 @@
             }
             document.getElementById('ticker-content').innerHTML = tick + tick;
             document.getElementById('sidebar-flashes').innerHTML = side;
-        } catch (e) { console.log(e); }
+
+        } catch (e) { console.error("Error loading data:", e); }
     }
     load();
+
 </script>
 </body>
 </html>
