@@ -149,20 +149,33 @@
     const rawBase = 'https://raw.githubusercontent.com/' + repo + '/main/';
     let articles = [];
 
-    async function start() {
-        document.getElementById('date-heb').innerText = "יום שישי, י' בשבט תשפ\"ו";
-        try {
-            // טעינת מבזקים
-            const fRes = await fetch(`https://api.github.com/repos/${repo}/contents/content/flashes`);
-            const fFiles = await fRes.json();
-            const flashData = await Promise.all(fFiles.reverse().slice(0,12).map(async f => {
-                const r = await fetch(f.download_url);
-                const t = await r.text();
-                return t.split('title:')[1]?.split('\n')[0].replace(/['"]/g,'').trim() || "";
-            }));
-            document.getElementById('flashes-list').innerHTML = flashData.map(m => `<div class="flash-row">${m}</div>`).join('');
+async function start() {
+        // 1. תאריך עברי אוטומטי
+        const options = { calendar: 'hebrew', dateStyle: 'full' };
+        document.getElementById('date-heb').innerText = new Intl.DateTimeFormat('he-IL-u-ca-hebrew', options).format(new Date());
 
-            // טעינת כתבות
+        try {
+            // 2. טעינת מבזקים מ-N12 (Mako)
+            const N12_RSS = `https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.mako.co.il%2Ffeeds%2FNews-hamaid-mivzakim.xml`;
+            
+            const fRes = await fetch(N12_RSS);
+            const fData = await fRes.json();
+            
+            if (fData.items && fData.items.length > 0) {
+                const flashData = fData.items.slice(0, 15).map(item => {
+                    const dateObj = new Date(item.pubDate);
+                    const time = dateObj.toLocaleTimeString('he-IL', {hour: '2-digit', minute:'2-digit'});
+                    
+                    return `
+                        <div class="flash-row" onclick="window.open('${item.link}', '_blank')" style="cursor:pointer; transition:0.2s; border-bottom:1px solid #eee; padding:12px 10px;">
+                            <span style="color:var(--danger); font-weight:800; margin-left:8px; font-size:0.85rem;">${time}</span>
+                            <span style="font-size:0.95rem;">${item.title}</span>
+                        </div>`;
+                });
+                document.getElementById('flashes-list').innerHTML = flashData.join('');
+            }
+
+            // 3. טעינת הכתבות שלך מה-GitHub (תיקיית Blog)
             const bRes = await fetch(`https://api.github.com/repos/${repo}/contents/content/blog`);
             const bFiles = await bRes.json();
             articles = await Promise.all(bFiles.reverse().map(async f => {
@@ -180,9 +193,13 @@
                 m.body = t.split('---').pop().trim();
                 return m;
             }));
-            render();
-        } catch(e) { console.error(e); }
-    }
+            
+            render(); // מפעיל את התצוגה של הכתבות
+            
+        } catch(e) { 
+            console.error("שגיאה בטעינת נתונים:", e);
+        }
+     }
 
     function render() {
         const cats = ['הכל', ...new Set(articles.map(a => a.category))];
