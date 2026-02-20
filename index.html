@@ -13,77 +13,82 @@
 
         body { font-family: 'Assistant', sans-serif; background-color: var(--bg); margin: 0; color: var(--text); line-height: 1.6; }
 
-        /* Header & Nav */
+        /* Header */
         .top-bar { background: var(--primary); color: white; padding: 10px 40px; display: flex; justify-content: space-between; font-size: 0.85rem; border-bottom: 2px solid var(--accent); }
         header { background: var(--primary); color: white; padding: 20px; text-align: center; }
         header h1 { font-family: 'Frank Ruhl Libre', serif; margin: 0; font-size: 3rem; cursor: pointer; }
+        
         .nav-wrapper { background: white; position: sticky; top: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 10px 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         nav { display: flex; gap: 15px; }
-        .nav-link { font-weight: 800; color: var(--primary); cursor: pointer; padding: 8px 15px; border-radius: 20px; }
-        .nav-link.active { background: var(--accent); color: white; }
+        .nav-link { font-weight: 800; color: var(--primary); cursor: pointer; padding: 8px 15px; border-radius: 20px; transition: 0.3s; }
+        .nav-link.active, .nav-link:hover { background: var(--accent); color: white; }
 
         .container { max-width: 1450px; margin: 20px auto; padding: 0 20px; }
 
-        /* --- המבנה המורכב שביקשת --- */
+        /* --- ה-Hero Grid המתוקן --- */
         .hero-grid { 
             display: grid; 
-            grid-template-columns: 1.8fr 1.5fr 300px; /* צד ימין מורחב | סליידר | מבזקים */
+            grid-template-columns: 480px 1.5fr 300px; /* רוחב קבוע לצד ימין למניעת כפילות */
             gap: var(--gap); 
-            height: 550px; 
+            height: 520px; 
             margin-bottom: 30px; 
         }
 
-        /* קומבינציית הריבועים בצד ימין */
+        /* קומבינציית ימין: בינוני + 2 קטנים */
         .right-combo {
             display: grid;
-            grid-template-columns: 1.2fr 1fr; /* ריבוע בינוני | שני קטנים */
+            grid-template-columns: 1.4fr 1fr; 
             gap: var(--gap);
         }
 
-        .medium-card { position: relative; border-radius: var(--radius); overflow: hidden; cursor: pointer; border: 1px solid #ddd; }
+        .medium-card, .small-card, .slider-box { position: relative; border-radius: var(--radius); overflow: hidden; border: 1px solid #ddd; cursor: pointer; }
         .side-stack { display: grid; grid-template-rows: 1fr 1fr; gap: var(--gap); }
-        .small-card { position: relative; border-radius: var(--radius); overflow: hidden; cursor: pointer; border: 1px solid #ddd; }
         
         .card-img { width: 100%; height: 100%; object-fit: cover; transition: 0.4s; }
         .card-overlay { position: absolute; bottom: 0; padding: 15px; background: linear-gradient(transparent, rgba(0,0,0,0.85)); color: white; width: 100%; box-sizing: border-box; font-weight: 800; }
 
         /* סליידר מרכזי */
-        .slider-box { position: relative; border-radius: var(--radius); overflow: hidden; }
-        .slide { position: absolute; inset: 0; opacity: 0; transition: 0.8s; cursor: pointer; }
+        .slide { position: absolute; inset: 0; opacity: 0; transition: 0.8s; }
         .slide.active { opacity: 1; }
         .slide-overlay { position: absolute; bottom: 0; padding: 30px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); color: white; width: 100%; box-sizing: border-box; }
-        .slide-overlay h2 { margin: 0; font-size: 2rem; line-height: 1.2; }
 
-        /* מבזקים משמאל */
+        /* מבזקים שמאל */
         .mivzakim-box { background: white; border-radius: var(--radius); border: 1px solid #ddd; display: flex; flex-direction: column; overflow: hidden; }
         .mivzakim-title { background: #d93025; color: white; padding: 10px; font-weight: 900; text-align: center; }
-        .mivzakim-list { flex: 1; overflow-y: auto; }
-        .mivzak-row { padding: 12px; border-bottom: 1px solid #eee; font-size: 0.9rem; font-weight: 600; }
+        .mivzak-list { flex: 1; overflow-y: auto; }
+        .mivzak-row { padding: 12px; border-bottom: 1px solid #eee; font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
 
-        /* גריד תחתון */
+        /* גריד כתבות */
         .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); }
-        .article-card { background: white; border-radius: var(--radius); overflow: hidden; height: 320px; cursor: pointer; border: 1px solid #eee; }
+        .article-card { background: white; border-radius: var(--radius); overflow: hidden; height: 320px; cursor: pointer; border: 1px solid #eee; transition: 0.3s; }
+        .article-card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
         .article-card img { width: 100%; height: 180px; object-fit: cover; }
         .article-card-body { padding: 15px; font-weight: 700; }
 
-        .divider { height: 2px; background: var(--primary); margin: 40px 0; position: relative; text-align: center; }
-        .divider span { position: absolute; top: -15px; background: var(--bg); padding: 0 20px; font-weight: 900; color: var(--primary); left: 50%; transform: translateX(-50%); }
+        .divider { height: 2px; background: var(--primary); margin: 40px 0; position: relative; }
+        .divider span { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: var(--bg); padding: 0 20px; font-weight: 900; color: var(--primary); }
 
         /* Footer */
         footer { background: var(--primary); color: white; padding: 50px 20px 20px; margin-top: 50px; }
-        .footer-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+        .footer-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; text-align: right; }
         .footer-col h3 { color: var(--accent); margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
-        .footer-links { list-style: none; padding: 0; cursor: pointer; }
+        .footer-links { list-style: none; padding: 0; }
+        .footer-links li { margin-bottom: 10px; cursor: pointer; }
         .footer-links li:hover { color: var(--accent); }
 
-        @media (max-width: 1100px) { .hero-grid { display: flex; flex-direction: column; height: auto; } .right-combo { grid-template-columns: 1fr; } }
+        @media (max-width: 1200px) { 
+            .hero-grid { grid-template-columns: 1fr; height: auto; } 
+            .right-combo { grid-template-columns: 1fr; height: 500px; }
+            .slider-box { height: 400px; }
+            .grid-4 { grid-template-columns: 1fr 1fr; }
+        }
     </style>
 </head>
 <body>
 
 <div class="top-bar">
     <div id="date-heb">טוען תאריך...</div>
-    <div>בני ברק: 22° | ירושלים: 20°</div>
+    <div>📍 בני ברק: 22° | ירושלים: 20°</div>
 </div>
 
 <header onclick="showHome()">
@@ -92,7 +97,7 @@
 
 <div class="nav-wrapper">
     <nav id="nav-cats"></nav>
-    <input type="text" placeholder="חיפוש..." style="padding:8px 20px; border-radius:50px; border:1px solid #ddd;">
+    <div style="font-weight: 800; color: var(--primary);">חיפוש 🔍</div>
 </div>
 
 <div class="container" id="home-view">
@@ -106,17 +111,19 @@
 
         <div class="mivzakim-box">
             <div class="mivzakim-title">מבזקים</div>
-            <div class="mivzakim-list" id="mivzak-list"></div>
+            <div class="mivzak-list" id="mivzak-list"></div>
         </div>
     </div>
 
     <div id="row-1" class="grid-4"></div>
-    <div class="divider"><span>כתבות נוספות</span></div>
+
+    <div class="divider"><span>כתבות נוספות מהשטח</span></div>
+
     <div id="more-rows" class="grid-4"></div>
 </div>
 
-<div id="article-view" class="container" style="display:none; background:white; padding:30px; border-radius:var(--radius);">
-    <button onclick="showHome()" style="margin-bottom:20px; cursor:pointer; padding:10px 20px; background:var(--primary); color:white; border:none; border-radius:50px;">→ חזרה לראשי</button>
+<div id="article-view" class="container" style="display:none; background:white; padding:40px; border-radius:var(--radius);">
+    <button onclick="showHome()" style="margin-bottom:20px; padding:10px 25px; background:var(--primary); color:white; border:none; border-radius:50px; cursor:pointer; font-weight:bold;">→ חזרה לראשי</button>
     <div id="full-content"></div>
 </div>
 
@@ -127,17 +134,18 @@
             <ul class="footer-links" id="footer-cats"></ul>
         </div>
         <div class="footer-col">
-            <h3>מידע נוסף</h3>
+            <h3>ניווט מהיר</h3>
             <ul class="footer-links">
                 <li onclick="showHome()">דף הבית</li>
                 <li>אודות המערכת</li>
-                <li>תנאי שימוש</li>
+                <li>מייל אדום</li>
             </ul>
         </div>
         <div class="footer-col">
             <h3>יצירת קשר</h3>
-            <p>מייל: office@news.co.il</p>
+            <p>מייל: office@news-haredi.co.il</p>
             <p>וואטסאפ: 050-XXXXXXX</p>
+            <p>כתובת: בני ברק</p>
         </div>
     </div>
 </footer>
@@ -148,27 +156,29 @@
     let articles = [];
     let slideIdx = 0;
 
-    async function load() {
+    async function loadData() {
         document.getElementById('date-heb').innerText = "יום שישי, י' בשבט תשפ\"ו";
         try {
-            // מבזקים
+            // 1. מבזקים מתיקיית flashes
             const fRes = await fetch(`https://api.github.com/repos/${repo}/contents/content/flashes`);
-            const fFiles = await fRes.json();
-            const fData = await Promise.all(fFiles.reverse().slice(0,15).map(async f => {
-                const r = await fetch(f.download_url);
-                const t = await r.text();
-                return t.split('title:')[1]?.split('\n')[0].trim().replace(/['"]/g, '') || "";
-            }));
-            document.getElementById('mivzak-list').innerHTML = fData.map(m => `<div class="mivzak-row">• ${m}</div>`).join('');
+            if (fRes.ok) {
+                const fFiles = await fRes.json();
+                const fData = await Promise.all(fFiles.reverse().slice(0,15).map(async f => {
+                    const r = await fetch(f.download_url);
+                    const t = await r.text();
+                    return t.split('title:')[1]?.split('\n')[0].trim().replace(/['"]/g, '') || "";
+                }));
+                document.getElementById('mivzak-list').innerHTML = fData.map(m => `<div class="mivzak-row"><b>•</b> ${m}</div>`).join('');
+            }
 
-            // כתבות
+            // 2. כתבות מתיקיית blog
             const bRes = await fetch(`https://api.github.com/repos/${repo}/contents/content/blog`);
             const bFiles = await bRes.json();
             articles = await Promise.all(bFiles.reverse().map(async f => {
                 const r = await fetch(f.download_url);
                 const t = await r.text();
                 const m = { title: "כתבה", category: "כללי", img: "" };
-                t.split('\n').forEach(l => {
+                t.split('\n').slice(0,15).forEach(l => {
                     if (l.startsWith('title:')) m.title = l.split(':')[1].trim().replace(/['"]/g, '');
                     if (l.startsWith('category:')) m.category = l.split(':')[1].trim().replace(/['"]/g, '');
                     if (l.startsWith('thumbnail:')) {
@@ -178,52 +188,61 @@
                 });
                 return { ...m, body: t.split('---').pop().trim() };
             }));
-            render();
-        } catch(e) { console.log(e); }
+            renderSite();
+        } catch(e) { console.error(e); }
     }
 
-    function render() {
+    function renderSite() {
         const cats = ['הכל', ...new Set(articles.map(a => a.category))];
         document.getElementById('nav-cats').innerHTML = cats.map(c => `<div class="nav-link" onclick="filterBy('${c}')">${c}</div>`).join('');
         document.getElementById('footer-cats').innerHTML = cats.map(c => `<li onclick="filterBy('${c}')">${c}</li>`).join('');
 
         // ריבוע בינוני (כתבה 4)
-        const med = articles[3];
-        document.getElementById('medium-area').innerHTML = `
-            <div onclick="openArt(3)" style="height:100%"><img src="${med.img}" class="card-img"><div class="card-overlay">${med.title}</div></div>
-        `;
+        if(articles[3]) {
+            document.getElementById('medium-area').innerHTML = `
+                <div onclick="openArt(3)" style="height:100%"><img src="${articles[3].img}" class="card-img"><div class="card-overlay">${articles[3].title}</div></div>
+            `;
+        }
 
         // 2 ריבועים קטנים (כתבות 5, 6)
         document.getElementById('small-stack-area').innerHTML = articles.slice(4,6).map((a,i) => `
-            <div class="small-card" onclick="openArt(${i+4})"><img src="${a.img}" class="card-img"><div class="card-overlay" style="font-size:0.9rem;">${a.title}</div></div>
+            <div class="small-card" onclick="openArt(${i+4})"><img src="${a.img}" class="card-img"><div class="card-overlay" style="font-size:0.85rem;">${a.title}</div></div>
         `).join('');
 
         // סליידר (1-3)
         document.getElementById('main-slider').innerHTML = articles.slice(0,3).map((a,i) => `
-            <div class="slide ${i===0?'active':''}" onclick="openArt(${i})"><img src="${a.img}" style="width:100%; height:100%; object-fit:cover;"><div class="slide-overlay"><h2>${a.title}</h2></div></div>
+            <div class="slide ${i===0?'active':''}" onclick="openArt(${i})">
+                <img src="${a.img}" style="width:100%; height:100%; object-fit:cover;">
+                <div class="slide-overlay"><h2>${a.title}</h2></div>
+            </div>
         `).join('');
 
-        // שורות גריד
-        document.getElementById('row-1').innerHTML = articles.slice(6,10).map((a,i) => cardHtml(a, i+6)).join('');
-        document.getElementById('more-rows').innerHTML = articles.slice(10,22).map((a,i) => cardHtml(a, i+10)).join('');
+        // גריד תחתון
+        document.getElementById('row-1').innerHTML = articles.slice(6,10).map((a,i) => createCard(a, i+6)).join('');
+        document.getElementById('more-rows').innerHTML = articles.slice(10,22).map((a,i) => createCard(a, i+10)).join('');
 
+        startSlider();
+    }
+
+    function createCard(a, i) {
+        return `<div class="article-card" onclick="openArt(${i})"><img src="${a.img}" onerror="this.src='https://via.placeholder.com/300x180'"><div class="article-card-body"><small style="color:var(--accent)">${a.category}</small><br>${a.title}</div></div>`;
+    }
+
+    function startSlider() {
         setInterval(() => {
             const s = document.querySelectorAll('.slide');
+            if(!s.length) return;
             s[slideIdx].classList.remove('active');
             slideIdx = (slideIdx + 1) % s.length;
             s[slideIdx].classList.add('active');
         }, 5000);
     }
 
-    function cardHtml(a, i) {
-        return `<div class="article-card" onclick="openArt(${i})"><img src="${a.img}"><div class="article-card-body"><small style="color:var(--accent)">${a.category}</small><br>${a.title}</div></div>`;
-    }
-
     function openArt(i) {
         const a = articles[i];
         document.getElementById('home-view').style.display='none';
         document.getElementById('article-view').style.display='block';
-        document.getElementById('full-content').innerHTML = `<h1>${a.title}</h1><img src="${a.img}" style="width:100%"><div style="font-size:1.4rem; margin-top:20px;">${a.body}</div>`;
+        document.getElementById('full-content').innerHTML = `<h1>${a.title}</h1><img src="${a.img}" style="width:100%; border-radius:15px;"><div style="font-size:1.4rem; margin-top:20px;">${a.body}</div>`;
         window.scrollTo(0,0);
     }
 
@@ -232,7 +251,7 @@
         document.getElementById('article-view').style.display='none';
     }
 
-    load();
+    loadData();
 </script>
 </body>
 </html>
