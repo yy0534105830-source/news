@@ -184,29 +184,34 @@
         } catch(e) { console.error(e); }
     }
 
-    function render() {
+  function render() {
         const cats = ['הכל', ...new Set(articles.map(a => a.category))];
         document.getElementById('main-nav').innerHTML = cats.map(c => `<div class="nav-link" onclick="filterBy('${c}')">${c}</div>`).join('');
         document.getElementById('footer-nav').innerHTML = cats.map(c => `<li onclick="filterBy('${c}')">${c}</li>`).join('');
 
-        // Hero ימין: כתבה 1
-        const a1 = articles[0];
-        document.getElementById('hero-med').innerHTML = `<div onclick="openArt(0)" style="height:100%"><img src="${a1.img}" class="img-box"><div class="overlay-text"><h2>${a1.title}</h2></div></div>`;
+        // הכתבה הכי חדשה (0) לריבוע הבינוני מימין
+        if (articles.length > 0) {
+            const a1 = articles[0];
+            document.getElementById('hero-med').innerHTML = `
+                <div onclick="openArt(0)" style="height:100%; position:relative; cursor:pointer;">
+                    <img src="${a1.img}" class="img-box" onerror="this.src='https://via.placeholder.com/600x400?text=News'">
+                    <div class="overlay-text"><h2>${a1.title}</h2></div>
+                </div>`;
+        }
 
-        // Hero מרכז: כתבות 2-3
+        // כתבות 2 ו-3 לריבועים הקטנים במרכז
         document.getElementById('hero-center').innerHTML = articles.slice(1,3).map((a,i) => `
             <div class="hero-small" onclick="openArt(${i+1})">
-                <img src="${a.img}" class="img-box">
+                <img src="${a.img}" class="img-box" onerror="this.src='https://via.placeholder.com/300x150?text=News'">
                 <div class="overlay-text"><h2 style="font-size:1.1rem;">${a.title}</h2></div>
             </div>`).join('');
 
-        // שורה ראשונה (4 כתבות)
+        // שורה של 4 כתבות (מכתבה 4 עד 7)
         document.getElementById('row-1').innerHTML = articles.slice(3,7).map((a,i) => createCard(a, i+3)).join('');
 
-        // עוד 3 שורות (12 כתבות)
+        // שאר הכתבות למטה (מכתבה 8 והלאה)
         document.getElementById('more-rows').innerHTML = articles.slice(7,19).map((a,i) => createCard(a, i+7)).join('');
     }
-
     function createCard(a, idx) {
         return `
             <div class="news-card" onclick="openArt(${idx})">
