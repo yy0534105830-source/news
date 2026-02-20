@@ -186,7 +186,8 @@
 
     function render() {
         const cats = ['הכל', ...new Set(articles.map(a => a.category))];
-        document.getElementById('main-nav').innerHTML = cats.map(c => `<div class="nav-link" onclick="filterBy('${c}')">${c}</div>`).join('');
+        document.getElementById('main-nav').innerHTML = cats.map(c => `<div class="nav-link" onclick="filterBy('${c}')" style="cursor:pointer; padding: 10px 15px; transition: 0.3s;">${c}</div>`).join('');
+
         document.getElementById('footer-nav').innerHTML = cats.map(c => `<li onclick="filterBy('${c}')">${c}</li>`).join('');
 
         // Hero ימין: כתבה 1
