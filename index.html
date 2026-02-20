@@ -4,102 +4,132 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>חדשות חרדים | הפורטל המרכזי</title>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&family=Frank+Ruhl+Libre:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;800&family=Frank+Ruhl+Libre:wght@800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #002d5f; --accent: #c5a059; --bg: #f4f6f8; --white: #ffffff; 
-            --text: #1a1a1a; --card-bg: #ffffff; --radius: 12px; --gap: 20px;
+            --primary: #001a33; --accent: #d4af37; --bg: #f4f7f9; --white: #ffffff; 
+            --text: #1c1e21; --card-bg: #ffffff; --radius: 20px; --gap: 25px;
         }
 
         body.dark-mode {
-            --bg: #0d1117; --white: #161b22; --text: #f0f6fc; 
-            --card-bg: #1c2128; --nav-bg: #161b22;
+            --bg: #0a0c10; --white: #161b22; --text: #e6edf3; 
+            --card-bg: #1c2128; --primary: #000a14;
         }
 
-        body { font-family: 'Assistant', sans-serif; background-color: var(--bg); margin: 0; color: var(--text); line-height: 1.8; transition: 0.3s; }
-        
+        body { font-family: 'Assistant', sans-serif; background-color: var(--bg); margin: 0; color: var(--text); transition: 0.3s; }
+
+        /* Top Bar - Weather & Zmanim */
+        .top-bar { 
+            background: var(--primary); color: white; padding: 10px 40px; 
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.85rem; border-bottom: 2px solid var(--accent);
+        }
+        .zmanim-item { margin-left: 15px; padding-left: 15px; border-left: 1px solid rgba(255,255,255,0.2); }
+        .zmanim-item:last-child { border-left: none; }
+        .zmanim-label { color: var(--accent); font-weight: bold; margin-left: 5px; }
+
         /* Header */
-        header { background: var(--primary); color: white; padding: 25px; text-align: center; border-bottom: 5px solid var(--accent); position: relative; }
-        header h1 { font-family: 'Frank Ruhl Libre', serif; margin: 0; font-size: 2.8rem; cursor: pointer; }
-
-        .theme-toggle {
-            position: absolute; left: 20px; top: 50%; transform: translateY(-50%);
-            background: rgba(255,255,255,0.1); border: 1px solid var(--accent); color: white;
-            padding: 8px 15px; border-radius: 50px; cursor: pointer; font-size: 0.9rem;
-        }
-
-        /* Nav & Search */
+        header { background: var(--primary); color: white; padding: 40px 20px; text-align: center; position: relative; }
+        header h1 { font-family: 'Frank Ruhl Libre', serif; margin: 0; font-size: 3.5rem; letter-spacing: -2px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        
+        /* Sticky Nav */
         .nav-wrapper {
-            background: var(--card-bg); position: sticky; top: 0; z-index: 1000;
-            border-bottom: 1px solid rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: space-between;
-            padding: 10px 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow-x: auto;
+            background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(20px);
+            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.08);
+            display: flex; align-items: center; justify-content: space-between; padding: 15px 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         }
+        body.dark-mode .nav-wrapper { background: rgba(13, 17, 23, 0.9); }
 
-        nav { display: flex; gap: 10px; white-space: nowrap; }
-        .nav-link { font-weight: bold; color: var(--primary); cursor: pointer; padding: 6px 15px; border-radius: 20px; }
+        .nav-link { font-weight: 800; color: var(--primary); cursor: pointer; padding: 10px 22px; border-radius: 50px; transition: 0.3s; }
         body.dark-mode .nav-link { color: var(--accent); }
-        .nav-link.active { background: var(--accent); color: white !important; }
+        .nav-link:hover, .nav-link.active { background: var(--accent); color: white !important; transform: translateY(-2px); }
 
-        .search-box input { padding: 8px 15px; border-radius: 20px; border: 1px solid #ddd; background: var(--bg); color: var(--text); outline: none; }
+        /* Breaking News Ticker */
+        .ticker-container {
+            background: #fff; margin: 25px auto; max-width: 1300px; border-radius: 50px;
+            display: flex; align-items: center; padding: 8px 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        .ticker-btn { background: #d93025; color: white; padding: 5px 18px; border-radius: 20px; font-weight: 900; margin-left: 20px; }
 
-        /* Grid System */
-        .container { max-width: 1300px; margin: 30px auto; padding: 0 20px; }
+        /* Bento Grid */
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 25px; }
+        .hero-layout { display: grid; grid-template-columns: 2.5fr 1fr; gap: var(--gap); height: 600px; margin-bottom: 50px; }
         
-        .hero-bento { display: grid; grid-template-columns: 2fr 1fr; gap: var(--gap); height: 550px; margin-bottom: var(--gap); }
-        .slider-container { position: relative; height: 100%; border-radius: var(--radius); overflow: hidden; background: #000; }
-        .slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 0.8s ease; cursor: pointer; }
-        .slide.active { opacity: 1; z-index: 1; }
-        .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7); }
-        .slide-content { position: absolute; bottom: 0; right: 0; padding: 40px; color: white; z-index: 2; width: 100%; background: linear-gradient(transparent, rgba(0,0,0,0.9)); }
-        
-        .side-stack { display: grid; grid-template-rows: 1fr 1fr; gap: var(--gap); }
-        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); margin-bottom: var(--gap); }
+        .main-slider { position: relative; border-radius: var(--radius); overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        .slide { position: absolute; inset: 0; opacity: 0; transition: 1.2s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
+        .slide.active { opacity: 1; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85); transition: 0.5s; }
+        .slide:hover img { transform: scale(1.03); }
+        .slide-text { position: absolute; bottom: 0; padding: 60px 40px; color: white; background: linear-gradient(transparent, rgba(0,0,0,0.95)); width: 100%; }
+        .slide-text h2 { font-family: 'Frank Ruhl Libre', serif; font-size: 3rem; margin: 0; line-height: 1.1; }
 
-        .section-divider { display: flex; align-items: center; margin: 50px 0 30px 0; }
-        .section-divider .line { flex: 1; height: 1px; background: #ccc; }
-        .section-divider .title { padding: 0 20px; font-weight: 900; color: var(--primary); font-size: 1.4rem; }
+        .news-list { background: white; border-radius: var(--radius); padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); overflow-y: auto; }
+        .news-item { padding: 15px 0; border-bottom: 1px solid #f0f0f0; cursor: pointer; transition: 0.2s; }
+        .news-item:hover .m-title { color: var(--accent); }
+        .m-time { font-size: 0.75rem; color: #d93025; font-weight: bold; display: block; margin-bottom: 5px; }
+        .m-title { font-weight: 800; font-size: 1rem; line-height: 1.4; }
 
-        /* Card Styling */
-        .card { background: var(--card-bg); border-radius: var(--radius); overflow: hidden; position: relative; cursor: pointer; height: 260px; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .card:hover { transform: translateY(-5px); }
-        .card img { width: 100%; height: 100%; object-fit: cover; }
-        .card-tag { position: absolute; top: 10px; left: 10px; background: var(--accent); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; z-index: 5; }
-        .card-overlay { position: absolute; bottom: 0; width: 100%; padding: 15px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); color: white; }
+        /* Grid Articles */
+        .articles-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); }
+        .article-card { 
+            background: white; border-radius: var(--radius); overflow: hidden; position: relative;
+            cursor: pointer; height: 320px; transition: 0.4s; box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+        }
+        .article-card:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .article-card img { width: 100%; height: 100%; object-fit: cover; }
+        .article-card-overlay { position: absolute; inset: 0; background: linear-gradient(transparent, rgba(0,0,0,0.85)); display: flex; flex-direction: column; justify-content: flex-end; padding: 25px; color: white; }
+        .card-cat { position: absolute; top: 20px; right: 20px; background: var(--accent); padding: 5px 15px; border-radius: 10px; font-size: 0.8rem; font-weight: 900; }
 
-        /* Contact Box */
-        .contact-footer { background: var(--primary); color: white; padding: 40px; border-radius: var(--radius); text-align: center; margin-top: 60px; }
-        .contact-item { background: var(--accent); padding: 10px 25px; border-radius: 50px; color: white; text-decoration: none; font-weight: bold; margin: 10px; display: inline-block; }
-
-        @media (max-width: 900px) {
-            .hero-bento, .grid-4 { grid-template-columns: 1fr; height: auto; }
-            .slider-container { height: 300px; }
-            .side-stack { height: 500px; }
+        @media (max-width: 1000px) {
+            .hero-layout { grid-template-columns: 1fr; height: auto; }
+            .main-slider { height: 400px; }
+            .articles-grid { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
 <body>
 
-<header onclick="showHome()">
-    <h1>חדשות חרדים</h1>
-    <button class="theme-toggle" onclick="toggleTheme(event)">🌙 מצב לילה</button>
-</header>
-
-<div class="nav-wrapper">
-    <nav id="categories-nav"><div class="nav-link active">טוען...</div></nav>
-    <div class="search-box"><input type="text" id="site-search" placeholder="חיפוש..." oninput="handleSearch()"></div>
-</div>
-
-<div class="container" id="home-view">
-    <div id="dynamic-content"></div>
-    <div class="contact-footer">
-        <h2>יש לכם סקופ? שלחו לנו!</h2>
-        <a href="#" class="contact-item">וואטסאפ</a>
-        <a href="#" class="contact-item">מייל אדום</a>
+<div class="top-bar">
+    <div id="jewish-date">טוען תאריך עברי...</div>
+    <div style="display: flex;">
+        <span class="zmanim-item"><span class="zmanim-label">נץ:</span> 06:24</span>
+        <span class="zmanim-item"><span class="zmanim-label">שמע:</span> 09:05</span>
+        <span class="zmanim-item"><span class="zmanim-label">שקיעה:</span> 17:15</span>
+        <span class="zmanim-item" id="weather-top">☀️ ירושלים: 21°</span>
     </div>
 </div>
 
-<div class="container" id="article-view" style="display:none;">
-    <button onclick="showHome()" style="margin-bottom:20px; cursor:pointer; padding:10px 20px; border-radius:50px; background:var(--primary); color:white; border:none;">← חזרה</button>
+<header onclick="showHome()">
+    <h1>חדשות חרדים</h1>
+    <button class="theme-toggle" onclick="toggleTheme(event)" style="position: absolute; left: 40px; top: 45px; background: rgba(255,255,255,0.1); border: 1px solid var(--accent); color: white; padding: 10px 18px; border-radius: 50px; cursor: pointer; font-size: 1.2rem;">🌙</button>
+</header>
+
+<div class="nav-wrapper">
+    <nav id="categories-nav"></nav>
+    <div class="search-box"><input type="text" id="site-search" placeholder="חפש כתבה או נושא..." oninput="handleSearch()" style="padding: 12px 25px; border-radius: 50px; border: 1px solid #ddd; outline: none; width: 250px;"></div>
+</div>
+
+<div class="ticker-container">
+    <div class="ticker-btn">מבזק</div>
+    <marquee id="ticker-text" behavior="scroll" direction="right" scrollamount="6" style="font-weight: 700; font-size: 1.1rem; color: var(--primary);"></marquee>
+</div>
+
+<div class="container" id="home-view">
+    <div class="hero-layout">
+        <div class="main-slider" id="main-slider"></div>
+        <div class="news-list">
+            <h2 style="margin-top:0; border-bottom: 3px solid var(--accent); padding-bottom: 10px; font-size: 1.4rem;">החדשות האחרונות</h2>
+            <div id="list-items"></div>
+        </div>
+    </div>
+    
+    <div id="dynamic-content"></div>
+</div>
+
+<div class="container" id="article-view" style="display:none; background: white; padding: 50px; border-radius: var(--radius); margin-top: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.05);">
+    <button onclick="showHome()" style="background: var(--primary); color: white; border: none; padding: 12px 30px; border-radius: 50px; cursor: pointer; font-weight: 800; margin-bottom: 30px;">→ חזרה לראשי</button>
     <div id="full-article-content"></div>
 </div>
 
@@ -115,6 +145,9 @@
     }
 
     async function loadData() {
+        // עדכון תאריך עברי (סימולציה למטרה עיצובית)
+        document.getElementById('jewish-date').innerText = "יום שישי, י' בשבט תשפ\"ד | פרשת בשלח";
+
         try {
             const res = await fetch(`https://api.github.com/repos/${repo}/contents/content/blog`);
             const files = (await res.json()).reverse();
@@ -130,9 +163,10 @@
                 if (meta.img && !meta.img.startsWith('http')) meta.img = baseUrl + meta.img;
                 return { ...meta, body: t.split('---').pop().trim() };
             });
+            
             allArticles = await Promise.all(promises);
             buildCategoriesNav();
-            renderLayout(allArticles);
+            renderUI();
             startSlider();
         } catch (e) { console.error(e); }
     }
@@ -143,42 +177,36 @@
         nav.innerHTML = categories.map(cat => `<div class="nav-link ${cat === 'הכל' ? 'active' : ''}" onclick="filterBy('${cat}', this)">${cat}</div>`).join('');
     }
 
-    function renderLayout(data, isFiltered = false) {
-        const target = document.getElementById('dynamic-content');
-        if (!data.length) { target.innerHTML = "אין תוצאות"; return; }
-        let html = "";
-        if (!isFiltered && data.length >= 3) {
-            html += `<div class="hero-bento"><div class="slider-container">`;
-            data.slice(0,3).forEach((a, i) => {
-                html += `<div class="slide ${i === 0 ? 'active' : ''}" onclick="openArticle(${allArticles.indexOf(a)})"><img src="${a.img}"><div class="slide-content"><h2>${a.title}</h2></div></div>`;
-            });
-            html += `</div><div class="side-stack">${data.slice(3,5).map(a => createCard(a)).join('')}</div></div>`;
-            html += `<div class="grid-4">${data.slice(5,9).map(a => createCard(a)).join('')}</div>`;
-            if(data.length > 9) {
-                html += `<div class="section-divider"><div class="line"></div><div class="title">חדשות נוספות</div><div class="line"></div></div>`;
-                html += `<div class="grid-4" style="grid-template-rows: repeat(3, auto);">${data.slice(9, 21).map(a => createCard(a)).join('')}</div>`;
-            }
-        } else {
-            html += `<div class="grid-4">${data.map(a => createCard(a)).join('')}</div>`;
-        }
-        target.innerHTML = html;
+    function renderUI() {
+        // Slider
+        document.getElementById('main-slider').innerHTML = allArticles.slice(0,3).map((a, i) => `
+            <div class="slide ${i === 0 ? 'active' : ''}" onclick="openArticle(${allArticles.indexOf(a)})">
+                <img src="${a.img}">
+                <div class="slide-text"><h2>${a.title}</h2></div>
+            </div>
+        `).join('');
+
+        // Ticker & List
+        document.getElementById('ticker-text').innerText = allArticles.slice(0,8).map(a => a.title).join(' • ');
+        document.getElementById('list-items').innerHTML = allArticles.slice(0,10).map(a => `
+            <div class="news-item" onclick="openArticle(${allArticles.indexOf(a)})">
+                <span class="m-time">לפני זמן קצר</span>
+                <span class="m-title">${a.title}</span>
+            </div>
+        `).join('');
+
+        // Articles Grid
+        renderArticles(allArticles.slice(3, 23));
     }
 
-    function createCard(a) {
-        return `<div class="card" onclick="openArticle(${allArticles.indexOf(a)})"><div class="card-tag">${a.category}</div><img src="${a.img}"><div class="card-overlay"><h3>${a.title}</h3></div></div>`;
-    }
-
-    function filterBy(cat, el) {
-        document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
-        el.classList.add('active');
-        if (cat === 'הכל') renderLayout(allArticles, false);
-        else renderLayout(allArticles.filter(a => a.category === cat), true);
-        window.scrollTo(0,0);
-    }
-
-    function handleSearch() {
-        const q = document.getElementById('site-search').value.toLowerCase();
-        renderLayout(allArticles.filter(a => a.title.toLowerCase().includes(q)), q.length > 0);
+    function renderArticles(data) {
+        document.getElementById('dynamic-content').innerHTML = `<div class="articles-grid">${data.map(a => `
+            <div class="article-card" onclick="openArticle(${allArticles.indexOf(a)})">
+                <div class="card-cat">${a.category}</div>
+                <img src="${a.img}">
+                <div class="article-card-overlay"><h3>${a.title}</h3></div>
+            </div>
+        `).join('')}</div>`;
     }
 
     function startSlider() {
@@ -188,14 +216,31 @@
             slides[currentSlide].classList.remove('active');
             currentSlide = (currentSlide + 1) % slides.length;
             slides[currentSlide].classList.add('active');
-        }, 5000);
+        }, 6000);
+    }
+
+    function filterBy(cat, el) {
+        document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+        el.classList.add('active');
+        const filtered = cat === 'הכל' ? allArticles : allArticles.filter(a => a.category === cat);
+        renderArticles(filtered);
+    }
+
+    function handleSearch() {
+        const q = document.getElementById('site-search').value.toLowerCase();
+        renderArticles(allArticles.filter(a => a.title.toLowerCase().includes(q)));
     }
 
     function openArticle(idx) {
         const a = allArticles[idx];
         document.getElementById('home-view').style.display = 'none';
         document.getElementById('article-view').style.display = 'block';
-        document.getElementById('full-article-content').innerHTML = `<h1>${a.title}</h1><img src="${a.img}" style="width:100%; border-radius:12px;"><div style="font-size:1.4rem; margin-top:20px;">${a.body}</div>`;
+        document.getElementById('full-article-content').innerHTML = `
+            <h1 style="font-family:'Frank Ruhl Libre', serif; font-size:3.8rem; line-height:1; margin-bottom:15px;">${a.title}</h1>
+            <div style="background: var(--accent); color:white; display:inline-block; padding:5px 20px; border-radius:10px; font-weight:800; margin-bottom:30px;">${a.category}</div>
+            <img src="${a.img}" style="width:100%; max-height:650px; object-fit:cover; border-radius:25px; box-shadow: 0 20px 50px rgba(0,0,0,0.1);">
+            <div style="font-size:1.5rem; line-height:1.9; margin-top:40px; color:#333; white-space: pre-wrap; font-weight:500;">${a.body}</div>
+        `;
         window.scrollTo(0,0);
     }
 
