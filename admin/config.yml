@@ -13,6 +13,8 @@ collections:
     create: true
     fields:
       - { label: "כותרת", name: "title", widget: "string" }
+      - { label: "קטגוריה", name: "category", widget: "select", options: ["חדשות", "ביטחוני", "חצרות קודש", "כלכלה", "פוליטי", "כללי"] }
+      - { label: "כותרת משנה", name: "subtitle", widget: "string", required: false }
       - { label: "תמונה ראשית", name: "thumbnail", widget: "image", required: false }
       - { label: "תוכן הכתבה", name: "body", widget: "markdown" }
 
