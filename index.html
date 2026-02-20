@@ -143,46 +143,6 @@
         </div>
     </div>
 </footer>
-
-<script>
-    const repo = 'yy0534105830-source/news';
-    const rawBase = 'https://raw.githubusercontent.com/' + repo + '/main/';
-    let articles = [];
-
-    async function start() {
-        document.getElementById('date-heb').innerText = "יום שישי, י' בשבט תשפ\"ו";
-        try {
-            // טעינת מבזקים
-            const fRes = await fetch(`https://api.github.com/repos/${repo}/contents/content/flashes`);
-            const fFiles = await fRes.json();
-            const flashData = await Promise.all(fFiles.reverse().slice(0,12).map(async f => {
-                const r = await fetch(f.download_url);
-                const t = await r.text();
-                return t.split('title:')[1]?.split('\n')[0].replace(/['"]/g,'').trim() || "";
-            }));
-            document.getElementById('flashes-list').innerHTML = flashData.map(m => `<div class="flash-row">${m}</div>`).join('');
-
-            // טעינת כתבות
-            const bRes = await fetch(`https://api.github.com/repos/${repo}/contents/content/blog`);
-            const bFiles = await bRes.json();
-            articles = await Promise.all(bFiles.reverse().map(async f => {
-                const r = await fetch(f.download_url);
-                const t = await r.text();
-                const m = { title: "כתבה", category: "כללי", img: "", body: "" };
-                t.split('\n').forEach(l => {
-                    if (l.startsWith('title:')) m.title = l.split(':')[1].trim().replace(/['"]/g, '');
-                    if (l.startsWith('category:')) m.category = l.split(':')[1].trim().replace(/['"]/g, '');
-                    if (l.startsWith('thumbnail:')) {
-                        let img = l.split(':')[1].trim().replace(/['"]/g, '');
-                        m.img = img.startsWith('http') ? img : rawBase + "images/" + img.replace(/^\/?images\//, '');
-                    }
-                });
-                m.body = t.split('---').pop().trim();
-                return m;
-            }));
-            render();
-        } catch(e) { console.error(e); }
-    }
 function render() {
         const cats = ['הכל', ...new Set(articles.map(a => a.category))];
         
@@ -216,55 +176,7 @@ function render() {
 
         // שאר הכתבות
         document.getElementById('more-rows').innerHTML = articles.slice(7,19).map((a,i) => createCard(a, i+7)).join('');
-    }  }
-    function createCard(a, idx) {
-        return `
-            <div class="news-card" onclick="openArt(${idx})">
-                <img src="${a.img}" onerror="this.src='https://via.placeholder.com/300x170'">
-                <div class="card-content">
-                    <span class="card-cat">${a.category}</span>
-                    <h3 class="card-title">${a.title}</h3>
-                </div>
-            </div>`;
-    }
-
-    function openArt(idx) {
-        const a = articles[idx];
-        document.getElementById('home-view').style.display='none';
-        document.getElementById('article-view').style.display='block';
-        document.getElementById('art-content').innerHTML = `
-            <span style="color:var(--accent); font-weight:800;">${a.category}</span>
-            <h1 style="font-family:'Frank Ruhl Libre'; font-size:2.8rem; margin:10px 0;">${a.title}</h1>
-            <img src="${a.img}" style="width:100%; border-radius:10px; margin:20px 0;">
-            <div style="font-size:1.4rem; line-height:1.8;">${a.body}</div>`;
-        window.scrollTo(0,0);
-    }
-
-    function showHome() {
-        document.getElementById('home-view').style.display='block';
-        document.getElementById('article-view').style.display='none';
-    }
-function filterBy(cat) {
-        // אם לחצו על "הכל", מציגים את המערך המלא, אחרת מסננים לפי קטגוריה
-        const filtered = (cat === 'הכל') ? articles : articles.filter(a => a.category === cat);
-        
-        // עכשיו נשתמש ב-filtered במקום ב-articles כדי לרנדר רק את מה שצריך
-        renderFiltered(filtered);
-        
-        // עדכון ויזואלי של התפריט (סימון הקטגוריה הנבחרת)
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.style.background = link.innerText === cat ? 'var(--accent)' : 'transparent';
-            link.style.color = link.innerText === cat ? 'white' : 'var(--primary)';
-        });
-    }
-
-    function renderFiltered(data) {
-        // כאן אנחנו פשוט מעדכנים את הגריד התחתון עם הכתבות המסוננות
-        // כדי לא להרוס את מבנה ה-Hero, הסינון יתבצע בעיקר בגרידים למטה
-        document.getElementById('row-1').innerHTML = data.slice(0, 4).map((a, i) => createCard(a, articles.indexOf(a))).join('');
-        document.getElementById('more-rows').innerHTML = data.slice(4, 16).map((a, i) => createCard(a, articles.indexOf(a))).join('');
-    }
-    start();
+    } start();
 </script>
 </body>
 </html>
