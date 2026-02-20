@@ -234,7 +234,34 @@
         document.getElementById('home-view').style.display='block';
         document.getElementById('article-view').style.display='none';
     }
+function filterBy(cat) {
+        // אם בחרנו "הכל", נציג את הדף הראשי הרגיל
+        if (cat === 'הכל') {
+            render();
+            window.scrollTo(0,0);
+            return;
+        }
 
+        // סינון הכתבות לפי הקטגוריה שנבחרה
+        const filtered = articles.filter(a => a.category === cat);
+        
+        // עדכון התצוגה - אנחנו משתמשים באותם גרידים אבל עם הנתונים המסוננים
+        // כדי שהעיצוב לא יישבר, נציג אותם בתוך שורות הגריד
+        document.getElementById('row-1').innerHTML = filtered.slice(0, 4).map((a) => createCard(a, articles.indexOf(a))).join('');
+        document.getElementById('more-rows').innerHTML = filtered.slice(4, 20).map((a) => createCard(a, articles.indexOf(a))).join('');
+        
+        // בונוס: ננקה את ה-Hero (החלק העליון) בזמן סינון כדי שהמשתמש יראה רק מה שביקש
+        document.getElementById('hero-med').innerHTML = '<h2 style="padding:20px;">תוצאות עבור: ' + cat + '</h2>';
+        document.getElementById('hero-center').innerHTML = '';
+        
+        // עיצוב כפתור נבחר
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.style.color = (link.innerText === cat) ? 'var(--accent)' : 'var(--primary)';
+            link.style.borderBottom = (link.innerText === cat) ? '2px solid var(--accent)' : 'none';
+        });
+        
+        window.scrollTo(0,0);
+    }
     start();
 </script>
 </body>
