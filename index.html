@@ -239,7 +239,26 @@
         document.getElementById('home-view').style.display='block';
         document.getElementById('article-view').style.display='none';
     }
+function filterBy(cat) {
+        // אם לחצו על "הכל", מציגים את המערך המלא, אחרת מסננים לפי קטגוריה
+        const filtered = (cat === 'הכל') ? articles : articles.filter(a => a.category === cat);
+        
+        // עכשיו נשתמש ב-filtered במקום ב-articles כדי לרנדר רק את מה שצריך
+        renderFiltered(filtered);
+        
+        // עדכון ויזואלי של התפריט (סימון הקטגוריה הנבחרת)
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.style.background = link.innerText === cat ? 'var(--accent)' : 'transparent';
+            link.style.color = link.innerText === cat ? 'white' : 'var(--primary)';
+        });
+    }
 
+    function renderFiltered(data) {
+        // כאן אנחנו פשוט מעדכנים את הגריד התחתון עם הכתבות המסוננות
+        // כדי לא להרוס את מבנה ה-Hero, הסינון יתבצע בעיקר בגרידים למטה
+        document.getElementById('row-1').innerHTML = data.slice(0, 4).map((a, i) => createCard(a, articles.indexOf(a))).join('');
+        document.getElementById('more-rows').innerHTML = data.slice(4, 16).map((a, i) => createCard(a, articles.indexOf(a))).join('');
+    }
     start();
 </script>
 </body>
