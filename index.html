@@ -13,20 +13,22 @@
 
         body { font-family: 'Assistant', sans-serif; background-color: var(--bg); margin: 0; color: #1a1a1a; }
 
-        /* שורת מידע */
-        .top-info-bar { background: #eee; border-bottom: 1px solid #ddd; padding: 10px 40px; display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700; }
+        /* שורת מידע עליונה */
+        .top-bar { background: #eee; border-bottom: 1px solid #ddd; padding: 10px 40px; display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700; }
         
         header { background: var(--primary); padding: 25px; text-align: center; color: white; border-bottom: 4px solid var(--accent); cursor: pointer; }
         header h1 { font-family: 'Frank Ruhl Libre', serif; font-size: 3.5rem; margin: 0; }
 
-        .nav-wrapper { background: white; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 10px; display: flex; justify-content: center; }
-        nav { display: flex; gap: 20px; }
-        .nav-link { font-weight: 800; color: var(--primary); cursor: pointer; padding: 5px 15px; }
+        .container { max-width: 1400px; margin: 30px auto; padding: 0 20px; }
 
-        .container { max-width: 1400px; margin: 25px auto; padding: 0 20px; }
-
-        /* --- פריסת HERO --- */
-        .hero-layout { display: grid; grid-template-columns: 2fr 1fr 320px; gap: 20px; height: 500px; margin-bottom: 50px; } /* רווח גדול אחרי ההירו */
+        /* --- ה-HERO שרצית (בינוני, 2 קטנים, מבזקים) --- */
+        .hero-layout { 
+            display: grid; 
+            grid-template-columns: 2fr 1fr 320px; 
+            gap: 25px; 
+            height: 520px; 
+            margin-bottom: 60px; /* רווח גדול מאוד מתחת ל-Hero */
+        }
 
         .hero-main { position: relative; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); cursor: pointer; background: #000; }
         .hero-stack { display: grid; grid-template-rows: 1fr 1fr; gap: 20px; }
@@ -40,21 +42,22 @@
         .flash-item { padding: 12px; border-bottom: 1px solid #f0f0f0; font-size: 0.95rem; font-weight: 700; text-decoration: none; color: inherit; display: block; }
         .flash-item:hover { background: #f9f9f9; }
 
-        .img-fit { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; transition: 0.4s; }
+        .img-fit { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; }
         .text-overlay { position: absolute; bottom: 0; padding: 20px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); color: white; width: 100%; box-sizing: border-box; }
 
-        /* --- גריד שורות (הפרדה ברורה) --- */
+        /* --- פתרון הרווחים בין השורות --- */
         .news-row { 
             display: grid; 
             grid-template-columns: repeat(4, 1fr); 
-            gap: 20px; 
-            margin-bottom: 40px; /* הפרדה בין שורה לשורה */
+            gap: 25px; 
+            margin-bottom: 50px; /* זה יוצר את הרווח בין שורה לשורה */
         }
 
-        .news-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); cursor: pointer; border: 1px solid #eee; }
-        .news-card img { width: 100%; height: 170px; object-fit: cover; }
+        .news-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); cursor: pointer; border: 1px solid #eee; transition: 0.3s; }
+        .news-card:hover { transform: translateY(-5px); }
+        .news-card img { width: 100%; height: 180px; object-fit: cover; }
         .card-content { padding: 15px; }
-        .card-title { font-weight: 700; font-size: 1.05rem; margin: 0; line-height: 1.4; }
+        .card-title { font-weight: 700; font-size: 1.1rem; margin: 0; line-height: 1.4; }
 
         .divider { margin: 60px 0; border-top: 2px solid var(--primary); position: relative; text-align: center; }
         .divider span { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); background: var(--bg); padding: 0 25px; font-weight: 900; color: var(--primary); font-size: 1.3rem; }
@@ -64,14 +67,12 @@
 </head>
 <body>
 
-<div class="top-info-bar">
-    <div id="date-heb">טוען תאריך...</div>
+<div class="top-bar">
+    <div id="date-heb">טוען תאריך עברי...</div>
     <div>בני ברק: 22°C | הדלקת נרות: 17:15</div>
 </div>
 
-<header onclick="showHome()"><h1>חדשות חרדים</h1></header>
-
-<div class="nav-wrapper"><nav id="main-nav"></nav></div>
+<header onclick="location.reload()"><h1>חדשות חרדים</h1></header>
 
 <div class="container" id="home-view">
     <div class="hero-layout">
@@ -79,22 +80,16 @@
         <div id="hero-stack" class="hero-stack"></div>
         <div class="hero-flashes">
             <div class="flashes-head"><div class="live-dot"></div>מבזקי "כל רגע"</div>
-            <div id="flashes-list" class="flashes-body">טוען מבזקים...</div>
+            <div id="flashes-list" class="flashes-body">מנסה להתחבר למבזקים...</div>
         </div>
     </div>
 
     <div id="row-1" class="news-row"></div>
 
-    <div class="divider"><span>חדשות נוספות</span></div>
+    <div class="divider"><span>עוד חדשות מהשטח</span></div>
 
     <div id="row-2" class="news-row"></div>
-    
     <div id="row-3" class="news-row"></div>
-</div>
-
-<div id="article-view" class="container" style="display:none; background:white; padding:40px; border-radius:8px;">
-    <button onclick="showHome()" style="background:var(--primary); color:white; border:none; padding:10px 20px; cursor:pointer; font-weight:800; margin-bottom:20px;">← חזרה לראשי</button>
-    <div id="art-content"></div>
 </div>
 
 <script>
@@ -102,40 +97,37 @@
     const rawBase = 'https://raw.githubusercontent.com/' + repo + '/main/';
     let articles = [];
 
-    async function start() {
+    async function init() {
         // תאריך עברי
-        const options = { calendar: 'hebrew', dateStyle: 'full' };
-        document.getElementById('date-heb').innerText = new Intl.DateTimeFormat('he-IL-u-ca-hebrew', options).format(new Date());
+        document.getElementById('date-heb').innerText = new Intl.DateTimeFormat('he-IL-u-ca-hebrew', {calendar:'hebrew', dateStyle:'full'}).format(new Date());
 
-        // מבזקי "כל רגע" עם Proxy לפתרון בעיית טעינה
+        // טעינת מבזקי "כל רגע" (תיקון CORS)
         try {
-            const rssUrl = 'https://www.kore.co.il/rss';
-            // משתמש ב-api.rss2json כפרוקסי חינמי
-            const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`);
+            const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://www.kore.co.il/rss')}`);
             const data = await res.json();
+            const parser = new DOMParser();
+            const xml = parser.parseFromString(data.contents, "text/xml");
+            const items = Array.from(xml.querySelectorAll("item")).slice(0, 15);
             
-            if (data.status === 'ok') {
-                document.getElementById('flashes-list').innerHTML = data.items.map(item => {
-                    const time = new Date(item.pubDate).toLocaleTimeString('he-IL', {hour: '2-digit', minute:'2-digit'});
-                    return `<a class="flash-item" href="${item.link}" target="_blank">
-                        <span style="color:var(--danger); margin-left:5px;">${time}</span> ${item.title}
-                    </a>`;
-                }).join('');
-            } else {
-                throw new Error();
-            }
+            document.getElementById('flashes-list').innerHTML = items.map(item => {
+                const title = item.querySelector("title").textContent;
+                const link = item.querySelector("link").textContent;
+                const dateText = item.querySelector("pubDate").textContent;
+                const time = new Date(dateText).toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'});
+                return `<a class="flash-item" href="${link}" target="_blank"><span style="color:var(--danger); margin-left:5px;">${time}</span>${title}</a>`;
+            }).join('');
         } catch(e) {
-            document.getElementById('flashes-list').innerHTML = '<p style="padding:20px; text-align:center;">שגיאה בחיבור לשרת המבזקים</p>';
+            document.getElementById('flashes-list').innerHTML = '<p style="padding:15px;">המבזקים מתעדכנים כעת. ניתן לצפות באתר "כל רגע".</p>';
         }
 
-        // טעינת כתבות מ-GitHub
+        // טעינת כתבות
         try {
             const bRes = await fetch(`https://api.github.com/repos/${repo}/contents/content/blog`);
             const bFiles = await bRes.json();
             articles = await Promise.all(bFiles.reverse().map(async f => {
                 const r = await fetch(f.download_url);
                 const t = await r.text();
-                const m = { title: "כתבה", img: "", body: "" };
+                const m = { title: "כתבה", img: "" };
                 t.split('\n').forEach(l => {
                     if (l.startsWith('title:')) m.title = l.split(':')[1].trim().replace(/['"]/g, '');
                     if (l.startsWith('thumbnail:')) {
@@ -143,48 +135,34 @@
                         m.img = img.startsWith('http') ? img : rawBase + "images/" + img.replace(/^\/?images\//, '');
                     }
                 });
-                m.body = t.split('---').pop().trim();
                 return m;
             }));
             render();
-        } catch(e) { console.error(e); }
+        } catch(e) {}
     }
 
     function render() {
         // Hero
         if(articles[0]) {
-            document.getElementById('hero-main').innerHTML = `<div onclick="openArt(0)" style="height:100%"><img src="${articles[0].img}" class="img-fit"><div class="text-overlay"><h2>${articles[0].title}</h2></div></div>`;
+            document.getElementById('hero-main').innerHTML = `<img src="${articles[0].img}" class="img-fit"><div class="text-overlay"><h2>${articles[0].title}</h2></div>`;
         }
-        document.getElementById('hero-stack').innerHTML = articles.slice(1,3).map((a,i) => `
-            <div class="hero-small" onclick="openArt(${i+1})"><img src="${a.img}" class="img-fit"><div class="text-overlay"><h2 style="font-size:1.1rem;">${a.title}</h2></div></div>`).join('');
+        document.getElementById('hero-stack').innerHTML = articles.slice(1, 3).map(a => `
+            <div class="hero-small"><img src="${a.img}" class="img-fit"><div class="text-overlay"><h2 style="font-size:1rem;">${a.title}</h2></div></div>`).join('');
         
-        // שורות (4 בכל אחת)
-        document.getElementById('row-1').innerHTML = articles.slice(3,7).map((a,i) => createCard(a, i+3)).join('');
-        document.getElementById('row-2').innerHTML = articles.slice(7,11).map((a,i) => createCard(a, i+7)).join('');
-        document.getElementById('row-3').innerHTML = articles.slice(11,15).map((a,i) => createCard(a, i+11)).join('');
+        // שורות מופרדות (4 בכל שורה)
+        document.getElementById('row-1').innerHTML = articles.slice(3, 7).map(a => createCard(a)).join('');
+        document.getElementById('row-2').innerHTML = articles.slice(7, 11).map(a => createCard(a)).join('');
+        document.getElementById('row-3').innerHTML = articles.slice(11, 15).map(a => createCard(a)).join('');
     }
 
-    function createCard(a, idx) {
-        return `<div class="news-card" onclick="openArt(${idx})">
-            <img src="${a.img}" onerror="this.src='https://via.placeholder.com/300x170'">
+    function createCard(a) {
+        return `<div class="news-card">
+            <img src="${a.img}" onerror="this.src='https://via.placeholder.com/300x180'">
             <div class="card-content"><h3>${a.title}</h3></div>
         </div>`;
     }
 
-    function openArt(idx) {
-        const a = articles[idx];
-        document.getElementById('home-view').style.display='none';
-        document.getElementById('article-view').style.display='block';
-        document.getElementById('art-content').innerHTML = `<h1>${a.title}</h1><img src="${a.img}" style="width:100%; border-radius:8px;"><div style="font-size:1.3rem; margin-top:20px;">${a.body}</div>`;
-        window.scrollTo(0,0);
-    }
-
-    function showHome() {
-        document.getElementById('home-view').style.display='block';
-        document.getElementById('article-view').style.display='none';
-    }
-
-    start();
+    init();
 </script>
 </body>
 </html>
