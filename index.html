@@ -4,97 +4,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>חדשות חרדים | הפורטל המרכזי</title>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;700;800&family=Frank+Ruhl+Libre:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700;800&family=Frank+Ruhl+Libre:wght@700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #002347;
-            --accent: #c5a059;
-            --danger: #e31e24;
-            --bg: #f4f7f9;
-            --white: #ffffff;
-            --text: #1a1a1a;
-            --border: #e1e4e8;
-            --shadow: 0 2px 8px rgba(0,0,0,0.06);
+            --primary: #002347; --accent: #c5a059; --danger: #e31e24;
+            --bg: #f4f7f9; --white: #ffffff; --border: #d1d5db;
         }
 
-        body { font-family: 'Assistant', sans-serif; background-color: var(--bg); margin: 0; color: var(--text); }
+        body { font-family: 'Assistant', sans-serif; background-color: var(--bg); margin: 0; color: #1a1a1a; }
 
-        /* שורת מידע */
-        .top-bar { background: #fdfdfd; border-bottom: 1px solid var(--border); padding: 8px 40px; display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 700; color: var(--primary); }
+        /* שורת מידע עליונה */
+        .top-bar { background: #fff; border-bottom: 1px solid var(--border); padding: 10px 40px; display: flex; justify-content: space-between; font-weight: 700; font-size: 0.9rem; }
 
-        header { background: var(--primary); padding: 30px; text-align: center; color: white; border-bottom: 5px solid var(--accent); }
-        header h1 { font-family: 'Frank Ruhl Libre', serif; font-size: 4rem; margin: 0; cursor: pointer; letter-spacing: -1px; }
+        header { background: var(--primary); padding: 30px; text-align: center; color: white; border-bottom: 5px solid var(--accent); cursor: pointer; }
+        header h1 { font-family: 'Frank Ruhl Libre', serif; font-size: 3.5rem; margin: 0; }
 
-        /* קטגוריות */
-        .nav-wrapper { background: white; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-bottom: 1px solid var(--border); }
-        nav { max-width: 1400px; margin: 0 auto; display: flex; justify-content: center; padding: 12px; gap: 25px; }
-        .nav-link { font-weight: 800; color: var(--primary); cursor: pointer; text-decoration: none; font-size: 1.1rem; transition: 0.3s; }
-        .nav-link:hover { color: var(--accent); }
+        /* שורת קטגוריות */
+        .nav-wrapper { background: white; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-bottom: 1px solid var(--border); }
+        nav { max-width: 1400px; margin: 0 auto; display: flex; justify-content: center; padding: 10px; gap: 20px; }
+        .nav-btn { font-weight: 800; color: var(--primary); cursor: pointer; padding: 5px 15px; }
 
         .container { max-width: 1400px; margin: 20px auto; padding: 0 20px; }
 
-        /* --- מבנה HERO (ריבועים עליונים) --- */
-        .hero-section { display: grid; grid-template-columns: 2fr 1fr 320px; gap: 15px; height: 500px; margin-bottom: 30px; }
+        /* --- חלוקת ה-HERO המבוקשת --- */
+        .hero-grid { 
+            display: grid; 
+            grid-template-columns: 2fr 1fr 300px; /* בינוני, קטנים, מבזקים */
+            gap: 20px; 
+            height: 550px; 
+            margin-bottom: 40px; 
+        }
 
-        .hero-main { position: relative; background: #000; overflow: hidden; border: 1px solid var(--border); cursor: pointer; }
-        .hero-stack { display: grid; grid-template-rows: 1fr 1fr; gap: 15px; }
-        .hero-sub { position: relative; background: #000; overflow: hidden; border: 1px solid var(--border); cursor: pointer; }
-        
-        .hero-flashes { background: white; border: 1px solid var(--border); border-top: 5px solid var(--danger); display: flex; flex-direction: column; height: 100%; }
-        .flashes-title { padding: 15px; font-weight: 900; background: #f9f9f9; border-bottom: 1px solid var(--border); color: var(--danger); display: flex; align-items: center; gap: 8px; }
+        .hero-main { position: relative; background: #000; border: 1px solid var(--border); cursor: pointer; }
+        .hero-stack { display: grid; grid-template-rows: 1fr 1fr; gap: 20px; }
+        .hero-sub { position: relative; background: #000; border: 1px solid var(--border); cursor: pointer; }
 
-        .flash-item { padding: 12px 15px; border-bottom: 1px solid #eee; font-size: 0.95rem; font-weight: 700; transition: 0.2s; cursor: pointer; }
-        .flash-item:hover { background: #fff4f4; }
-        .flash-time { color: var(--danger); margin-left: 8px; font-size: 0.85rem; }
+        .hero-flashes { 
+            background: white; border: 1px solid var(--border); border-top: 4px solid var(--danger); 
+            display: flex; flex-direction: column; overflow: hidden;
+        }
+        .flashes-head { padding: 15px; font-weight: 800; background: #f8f8f8; border-bottom: 1px solid #eee; color: var(--danger); display: flex; align-items: center; gap: 10px; }
+        .flash-list { flex: 1; overflow-y: auto; }
+        .flash-link { padding: 12px; border-bottom: 1px solid #f0f0f0; display: block; text-decoration: none; color: inherit; font-size: 0.95rem; font-weight: 700; }
+        .flash-link:hover { background: #fff5f5; }
+        .flash-time { color: var(--danger); margin-left: 8px; font-size: 0.8rem; }
 
-        /* --- גריד ריבועים (4 בשורה) --- */
-        .news-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 20px; }
-        .square-card { background: white; border: 1px solid var(--border); transition: 0.3s; cursor: pointer; position: relative; }
-        .square-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
-        .square-card img { width: 100%; height: 190px; object-fit: cover; border-bottom: 1px solid var(--border); }
-        
-        .card-body { padding: 15px; }
-        .card-tag { color: var(--accent); font-weight: 800; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 8px; display: block; }
-        .card-title { font-weight: 700; font-size: 1.15rem; margin: 0; line-height: 1.3; }
+        /* --- גריד כתבות (4 בשורה) --- */
+        .news-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
+        .card { background: white; border: 1px solid var(--border); cursor: pointer; transition: 0.3s; }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .card img { width: 100%; height: 180px; object-fit: cover; border-bottom: 1px solid var(--border); }
+        .card-inner { padding: 15px; }
+        .card-cat { color: var(--accent); font-weight: 800; font-size: 0.75rem; display: block; margin-bottom: 5px; }
+        .card-title { font-weight: 700; font-size: 1.1rem; margin: 0; line-height: 1.4; }
 
-        .divider { margin: 50px 0; border-top: 3px solid var(--primary); position: relative; }
-        .divider span { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); background: var(--bg); padding: 0 25px; font-weight: 900; color: var(--primary); font-size: 1.4rem; }
+        .divider { margin: 50px 0; border-top: 3px solid var(--primary); position: relative; text-align: center; }
+        .divider span { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); background: var(--bg); padding: 0 20px; font-weight: 900; color: var(--primary); font-size: 1.3rem; }
 
-        .img-fill { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; transition: 0.5s; }
-        .hero-main:hover .img-fill, .hero-sub:hover .img-fill { opacity: 1; transform: scale(1.03); }
-        .text-overlay { position: absolute; bottom: 0; right: 0; left: 0; padding: 25px; background: linear-gradient(transparent, rgba(0,0,0,0.85)); color: white; }
+        .overlay { position: absolute; bottom: 0; width: 100%; padding: 20px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); color: white; box-sizing: border-box; }
+        .img-fit { width: 100%; height: 100%; object-fit: cover; }
 
         /* פוטר */
-        footer { background: var(--primary); color: white; padding: 50px 40px; margin-top: 80px; }
-        .f-grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px; }
-        .f-col h3 { color: var(--accent); font-size: 1.3rem; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
-        .f-links { list-style: none; padding: 0; }
-        .f-links li { margin-bottom: 12px; cursor: pointer; opacity: 0.8; }
-        .f-links li:hover { opacity: 1; color: var(--accent); }
+        footer { background: var(--primary); color: white; padding: 50px 40px; margin-top: 60px; }
+        .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 50px; }
+        .footer-col h3 { color: var(--accent); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
 
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
     </style>
 </head>
 <body>
 
 <div class="top-bar">
-    <div id="date-heb">טוען תאריך עברי...</div>
-    <div id="weather-wrap">בני ברק: <span id="temp">--</span>°C | <span id="condition">טוען...</span></div>
+    <div id="cur-date">טוען תאריך עברי...</div>
+    <div id="cur-weather">בני ברק: <strong>21°C</strong> | בהיר</div>
 </div>
 
 <header onclick="location.reload()"><h1>חדשות חרדים</h1></header>
 
-<div class="nav-wrapper">
-    <nav id="top-nav"></nav>
-</div>
+<div class="nav-wrapper"><nav id="category-nav"></nav></div>
 
-<div class="container" id="home-view">
-    <div class="hero-section">
-        <div id="hero-main" class="hero-main"></div>
-        <div id="hero-stack" class="hero-stack"></div>
+<div class="container" id="home-page">
+    <div class="hero-grid">
+        <div id="hero-main-box" class="hero-main"></div>
+        <div id="hero-sub-boxes" class="hero-stack"></div>
         <div class="hero-flashes">
-            <div class="flashes-title"><div style="width:10px; height:10px; background:red; border-radius:50%; animation:pulse 1s infinite;"></div>מבזקי N12 בזמן אמת</div>
-            <div id="flashes-list" style="overflow-y:auto;"></div>
+            <div class="flashes-head"><span style="width:10px; height:10px; background:red; border-radius:50%; animation:blink 1s infinite;"></span>מבזקי N12 בזמן אמת</div>
+            <div id="flashes-content" class="flash-list"></div>
         </div>
     </div>
 
@@ -107,26 +102,25 @@
     <div id="more-rows" class="news-grid"></div>
 </div>
 
-<div id="article-view" class="container" style="display:none; background:white; padding:50px; border:1px solid var(--border);">
-    <button onclick="showHome()" style="background:var(--primary); color:white; border:none; padding:12px 25px; cursor:pointer; font-weight:800; margin-bottom:30px;">← חזרה לדף הבית</button>
-    <div id="art-content"></div>
+<div id="article-page" class="container" style="display:none; background:white; padding:40px; border:1px solid var(--border);">
+    <button onclick="showHome()" style="background:var(--primary); color:white; border:none; padding:10px 20px; cursor:pointer; font-weight:800; margin-bottom:20px;">← חזרה לראשי</button>
+    <div id="full-article"></div>
 </div>
 
 <footer>
-    <div class="f-grid">
-        <div class="f-col">
-            <h3>ניווט באתר</h3>
-            <ul id="f-nav" class="f-links"></ul>
+    <div class="footer-content">
+        <div class="footer-col">
+            <h3>ניווט מהיר</h3>
+            <div id="footer-cats"></div>
         </div>
-        <div class="f-col">
+        <div class="footer-col">
             <h3>יצירת קשר</h3>
-            <p>מייל האדום: <strong>red@news.co.il</strong></p>
-            <p>וואטסאפ למערכת: <strong>054-888-8888</strong></p>
-            <p>כתובת: רחוב חזון איש, בני ברק</p>
+            <p>מייל האדום: <b>editor@haredi-news.co.il</b></p>
+            <p>וואטסאפ: <b>050-123-4567</b></p>
         </div>
-        <div class="f-col">
-            <h3>אודות הפורטל</h3>
-            <p>חדשות חרדים הינו אתר החדשות המוביל למגזר, המביא עדכונים שוטפים בזמן אמת תוך שמירה על ערכי היהדות והמסורת.</p>
+        <div class="footer-col">
+            <h3>אודות</h3>
+            <p>הפורטל המוביל לחדשות המגזר החרדי. עדכונים שוטפים, מבזקים וכתבות עומק.</p>
         </div>
     </div>
 </footer>
@@ -134,34 +128,37 @@
 <script>
     const repo = 'yy0534105830-source/news';
     const rawBase = 'https://raw.githubusercontent.com/' + repo + '/main/';
-    let articles = [];
+    let allArticles = [];
 
-    async function start() {
+    async function init() {
         // 1. תאריך עברי
-        const options = { calendar: 'hebrew', dateStyle: 'full' };
-        document.getElementById('date-heb').innerText = new Intl.DateTimeFormat('he-IL-u-ca-hebrew', options).format(new Date());
+        const dOptions = { calendar: 'hebrew', dateStyle: 'full' };
+        document.getElementById('cur-date').innerText = new Intl.DateTimeFormat('he-IL-u-ca-hebrew', dOptions).format(new Date());
 
-        // 2. מזג אוויר אוטומטי
+        // 2. מזג אוויר (Open-Meteo)
         try {
-            const w = await fetch('https://api.open-meteo.com/v1/forecast?latitude=32.08&longitude=34.83&current_weather=true');
-            const data = await w.json();
-            document.getElementById('temp').innerText = Math.round(data.current_weather.temperature);
-            document.getElementById('condition').innerText = "בהיר";
+            const wRes = await fetch('https://api.open-meteo.com/v1/forecast?latitude=32.08&longitude=34.83&current_weather=true');
+            const wData = await wRes.json();
+            document.getElementById('cur-weather').innerHTML = `בני ברק: <strong>${Math.round(wData.current_weather.temperature)}°C</strong> | בהיר`;
         } catch(e) {}
 
+        // 3. מבזקי N12 (עם Proxy למניעת חסימות)
         try {
-            // 3. מבזקי N12
-            const f = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.mako.co.il%2Ffeeds%2FNews-hamaid-mivzakim.xml`);
-            const fd = await f.json();
-            document.getElementById('flashes-list').innerHTML = fd.items.slice(0, 15).map(item => {
-                const time = new Date(item.pubDate).toLocaleTimeString('he-IL', {hour: '2-digit', minute:'2-digit'});
-                return `<div class="flash-item" onclick="window.open('${item.link}', '_blank')"><span class="flash-time">${time}</span>${item.title}</div>`;
-            }).join('');
+            const fRes = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.mako.co.il%2Ffeeds%2FNews-hamaid-mivzakim.xml&api_key=yh7f0qjsi6skp7fghf9z9y0uok8yvof0zbxp2v0s');
+            const fData = await fRes.json();
+            if(fData.items) {
+                document.getElementById('flashes-content').innerHTML = fData.items.slice(0, 15).map(item => {
+                    const time = new Date(item.pubDate).toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'});
+                    return `<a href="${item.link}" target="_blank" class="flash-link"><span class="flash-time">${time}</span>${item.title}</a>`;
+                }).join('');
+            }
+        } catch(e) { document.getElementById('flashes-content').innerHTML = '<p style="padding:15px;">טוען מבזקים...</p>'; }
 
-            // 4. טעינת תוכן
-            const res = await fetch(`https://api.github.com/repos/${repo}/contents/content/blog`);
-            const files = await res.json();
-            articles = await Promise.all(files.reverse().map(async f => {
+        // 4. טעינת כתבות מ-GitHub
+        try {
+            const bRes = await fetch(`https://api.github.com/repos/${repo}/contents/content/blog`);
+            const bFiles = await bRes.json();
+            allArticles = await Promise.all(bFiles.reverse().map(async f => {
                 const r = await fetch(f.download_url);
                 const t = await r.text();
                 const m = { title: "חדשות", category: "כללי", img: "", body: "" };
@@ -174,74 +171,68 @@
                 return m;
             }));
             render();
-        } catch(e) { console.error(e); }
+        } catch(e) { console.error("Error loading articles", e); }
     }
 
     function render() {
-        // קטגוריות
-        const cats = ['הכל', ...new Set(articles.map(a => a.category))];
-        const navHtml = cats.map(c => `<div class="nav-link" onclick="filterBy('${c}')">${c}</div>`).join('');
-        document.getElementById('top-nav').innerHTML = navHtml;
-        document.getElementById('f-nav').innerHTML = cats.map(c => `<li onclick="filterBy('${c}')">${c}</li>`).join('');
+        const cats = ['הכל', ...new Set(allArticles.map(a => a.category))];
+        document.getElementById('category-nav').innerHTML = cats.map(c => `<div class="nav-btn" onclick="filter('${c}')">${c}</div>`).join('');
+        document.getElementById('footer-cats').innerHTML = cats.map(c => `<p onclick="filter('${c}')" style="cursor:pointer">${c}</p>`).join('');
 
         // Hero Main
-        if(articles[0]) {
-            document.getElementById('hero-main').innerHTML = `
-                <div onclick="openArt(0)" style="height:100%;">
-                    <img src="${articles[0].img}" class="img-fill">
-                    <div class="text-overlay"><span style="color:var(--accent); font-weight:800;">${articles[0].category}</span><h2 style="font-size:2rem; margin:10px 0;">${articles[0].title}</h2></div>
+        if(allArticles[0]) {
+            document.getElementById('hero-main-box').innerHTML = `
+                <div onclick="openNews(0)" style="height:100%">
+                    <img src="${allArticles[0].img}" class="img-fit">
+                    <div class="overlay"><span>${allArticles[0].category}</span><h2 style="font-size:2rem;margin:5px 0;">${allArticles[0].title}</h2></div>
                 </div>`;
         }
 
-        // Hero Stack
-        let stackHtml = '';
-        if(articles[1]) stackHtml += `<div class="hero-sub" onclick="openArt(1)"><img src="${articles[1].img}" class="img-fill"><div class="text-overlay"><h3>${articles[1].title}</h3></div></div>`;
-        if(articles[2]) stackHtml += `<div class="hero-sub" onclick="openArt(2)"><img src="${articles[2].img}" class="img-fill"><div class="text-overlay"><h3>${articles[2].title}</h3></div></div>`;
-        document.getElementById('hero-stack').innerHTML = stackHtml;
+        // Hero Sub
+        let subHtml = "";
+        if(allArticles[1]) subHtml += createSubHero(allArticles[1], 1);
+        if(allArticles[2]) subHtml += createSubHero(allArticles[2], 2);
+        document.getElementById('hero-sub-boxes').innerHTML = subHtml;
 
         // Rows
-        document.getElementById('row-1').innerHTML = articles.slice(3, 7).map((a,i) => createCard(a, i+3)).join('');
-        document.getElementById('row-2').innerHTML = articles.slice(7, 11).map((a,i) => createCard(a, i+7)).join('');
-        document.getElementById('more-rows').innerHTML = articles.slice(11, 23).map((a,i) => createCard(a, i+11)).join('');
+        document.getElementById('row-1').innerHTML = allArticles.slice(3, 7).map((a,i) => createCard(a, i+3)).join('');
+        document.getElementById('row-2').innerHTML = allArticles.slice(7, 11).map((a,i) => createCard(a, i+7)).join('');
+        document.getElementById('more-rows').innerHTML = allArticles.slice(11, 27).map((a,i) => createCard(a, i+11)).join('');
+    }
+
+    function createSubHero(a, idx) {
+        return `<div class="hero-sub" onclick="openNews(${idx})"><img src="${a.img}" class="img-fit"><div class="overlay"><h3>${a.title}</h3></div></div>`;
     }
 
     function createCard(a, idx) {
-        return `<div class="square-card" onclick="openArt(${idx})">
-            <img src="${a.img}" onerror="this.src='https://via.placeholder.com/400x250?text=News'">
-            <div class="card-body">
-                <span class="card-tag">${a.category}</span>
-                <h3 class="card-title">${a.title}</h3>
-            </div>
+        return `<div class="card" onclick="openNews(${idx})">
+            <img src="${a.img}" onerror="this.src='https://via.placeholder.com/400x250'">
+            <div class="card-inner"><span class="card-cat">${a.category}</span><h3 class="card-title">${a.title}</h3></div>
         </div>`;
     }
 
-    function openArt(idx) {
-        const a = articles[idx];
-        document.getElementById('home-view').style.display='none';
-        document.getElementById('article-view').style.display='block';
-        document.getElementById('art-content').innerHTML = `
-            <span style="color:var(--accent); font-weight:800;">${a.category}</span>
-            <h1 style="font-size:3rem; margin:15px 0;">${a.title}</h1>
-            <img src="${a.img}" style="width:100%; border-radius:4px; margin-bottom:30px;">
-            <div style="font-size:1.4rem; line-height:1.9;">${a.body}</div>`;
+    function openNews(idx) {
+        const a = allArticles[idx];
+        document.getElementById('home-page').style.display='none';
+        document.getElementById('article-page').style.display='block';
+        document.getElementById('full-article').innerHTML = `<h1 style="font-size:2.8rem;">${a.title}</h1><img src="${a.img}" style="width:100%;"><div style="font-size:1.4rem;margin-top:20px;">${a.body}</div>`;
         window.scrollTo(0,0);
     }
 
     function showHome() {
-        document.getElementById('home-view').style.display='block';
-        document.getElementById('article-view').style.display='none';
+        document.getElementById('home-page').style.display='block';
+        document.getElementById('article-page').style.display='none';
     }
 
-    function filterBy(c) {
+    function filter(c) {
         if(c==='הכל') { render(); return; }
-        const f = articles.filter(a => a.category === c);
-        document.getElementById('row-1').innerHTML = f.map((a) => createCard(a, articles.indexOf(a))).join('');
-        document.getElementById('row-2').innerHTML = '';
-        document.getElementById('more-rows').innerHTML = '';
+        const f = allArticles.filter(a => a.category === c);
+        document.getElementById('row-1').innerHTML = f.map(a => createCard(a, allArticles.indexOf(a))).join('');
+        document.getElementById('row-2').innerHTML = ''; document.getElementById('more-rows').innerHTML = '';
         window.scrollTo(0,0);
     }
 
-    start();
+    init();
 </script>
 </body>
 </html>
