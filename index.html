@@ -149,40 +149,53 @@
     const rawBase = 'https://raw.githubusercontent.com/' + repo + '/main/';
     let articles = [];
 
-    async function start() {
-        document.getElementById('date-heb').innerText = "יום שישי, י' בשבט תשפ\"ו";
-        try {
-            // טעינת מבזקים
-            const fRes = await fetch(`https://api.github.com/repos/${repo}/contents/content/flashes`);
-            const fFiles = await fRes.json();
-            const flashData = await Promise.all(fFiles.reverse().slice(0,12).map(async f => {
-                const r = await fetch(f.download_url);
-                const t = await r.text();
-                return t.split('title:')[1]?.split('\n')[0].replace(/['"]/g,'').trim() || "";
-            }));
-            document.getElementById('flashes-list').innerHTML = flashData.map(m => `<div class="flash-row">${m}</div>`).join('');
+   async function start() {
+    // עדכון תאריך עברי אוטומטי
+    const options = { calendar: 'hebrew', dateStyle: 'full' };
+    document.getElementById('date-heb').innerText = new Intl.DateTimeFormat('he-IL-u-ca-hebrew', options).format(new Date());
 
-            // טעינת כתבות
-            const bRes = await fetch(`https://api.github.com/repos/${repo}/contents/content/blog`);
-            const bFiles = await bRes.json();
-            articles = await Promise.all(bFiles.reverse().map(async f => {
-                const r = await fetch(f.download_url);
-                const t = await r.text();
-                const m = { title: "כתבה", category: "כללי", img: "", body: "" };
-                t.split('\n').forEach(l => {
-                    if (l.startsWith('title:')) m.title = l.split(':')[1].trim().replace(/['"]/g, '');
-                    if (l.startsWith('category:')) m.category = l.split(':')[1].trim().replace(/['"]/g, '');
-                    if (l.startsWith('thumbnail:')) {
-                        let img = l.split(':')[1].trim().replace(/['"]/g, '');
-                        m.img = img.startsWith('http') ? img : rawBase + "images/" + img.replace(/^\/?images\//, '');
-                    }
-                });
-                m.body = t.split('---').pop().trim();
-                return m;
-            }));
-            render();
-        } catch(e) { console.error(e); }
+    try {
+        // משיכת מבזקים מאתר כל רגע (באמצעות AllOrigins לעקיפת חסימת CORS)
+        const rssUrl = "https://www.kore.co.il/rss";
+        const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`);
+        const data = await response.json();
+        
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(data.contents, "text/xml");
+        const items = Array.from(xml.querySelectorAll("item")).slice(0, 20);
+        
+        document.getElementById('flashes-list').innerHTML = items.map(item => {
+            const title = item.querySelector("title").textContent;
+            const link = item.querySelector("link").textContent;
+            const pubDate = new Date(item.querySelector("pubDate").textContent);
+            const time = pubDate.toLocaleTimeString('he-IL', {hour: '2-digit', minute:'2-digit'});
+            return `<a href="${link}" target="_blank" class="flash-row"><span class="flash-time">${time}</span> ${title}</a>`;
+        }).join('');
+
+        // טעינת הכתבות מה-GitHub שלך (נשאר כפי שהיה)
+        const bRes = await fetch(`https://api.github.com/repos/${repo}/contents/content/blog`);
+        const bFiles = await bRes.json();
+        articles = await Promise.all(bFiles.reverse().map(async f => {
+            const r = await fetch(f.download_url);
+            const t = await r.text();
+            const m = { title: "כתבה", category: "כללי", img: "", body: "" };
+            t.split('\n').forEach(l => {
+                if (l.startsWith('title:')) m.title = l.split(':')[1].trim().replace(/['"]/g, '');
+                if (l.startsWith('category:')) m.category = l.split(':')[1].trim().replace(/['"]/g, '');
+                if (l.startsWith('thumbnail:')) {
+                    let img = l.split(':')[1].trim().replace(/['"]/g, '');
+                    m.img = img.startsWith('http') ? img : rawBase + "images/" + img.replace(/^\/?images\//, '');
+                }
+            });
+            m.body = t.split('---').pop().trim();
+            return m;
+        }));
+        render();
+    } catch(e) { 
+        console.error("Error loading data:", e);
+        document.getElementById('flashes-list').innerHTML = '<div class="flash-row">שגיאה בטעינת מבזקי כל רגע</div>';
     }
+}
 
     function render() {
         const cats = ['הכל', ...new Set(articles.map(a => a.category))];
