@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>חדשות חרדים | הפורטל המרכזי</title>
+    <title>חדשות חרדים | ניהול תוכן חכם</title>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;700;800&family=Frank+Ruhl+Libre:wght@700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -14,41 +14,42 @@
 
         body { font-family: 'Assistant', sans-serif; background-color: var(--bg); margin: 0; color: var(--text); line-height: 1.6; }
 
+        /* --- Header & Nav --- */
         .top-info-bar { background: #eee; border-bottom: 1px solid #ddd; padding: 10px 40px; display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700; }
         header { background: var(--primary); padding: 25px; text-align: center; color: white; border-bottom: 4px solid var(--accent); cursor: pointer; }
         header h1 { font-family: 'Frank Ruhl Libre', serif; font-size: 3.5rem; margin: 0; }
 
         .nav-wrapper { background: white; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 15px 40px; display: flex; justify-content: center; }
-        nav { display: flex; gap: 30px; }
-        .nav-link { font-weight: 800; color: var(--primary); cursor: pointer; font-size: 1.1rem; }
+        nav { display: flex; gap: 25px; flex-wrap: wrap; }
+        .nav-link { font-weight: 800; color: var(--primary); cursor: pointer; font-size: 1.1rem; padding: 5px 10px; border-radius: 4px; transition: 0.2s; }
+        .nav-link:hover { background: #f0f0f0; color: var(--accent); }
 
         .container { max-width: 1400px; margin: 25px auto; padding: 0 20px; }
 
-        /* --- Hero Section - Fixed Design --- */
+        /* --- Hero Section --- */
         .hero-section { display: flex; gap: 20px; height: 500px; margin-bottom: 40px; }
-        .hero-medium { flex: 1.5; position: relative; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); background: #eee; }
+        .hero-medium { flex: 1.5; position: relative; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); background: #eee; cursor: pointer; }
         .hero-stack { flex: 1; display: flex; flex-direction: column; gap: 20px; }
-        .hero-small { flex: 1; position: relative; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); background: #eee; }
+        .hero-small { flex: 1; position: relative; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); background: #eee; cursor: pointer; }
         
-        /* תיבת המבזקים החדשה */
-        .hero-flashes { width: 320px; background: white; border-radius: var(--radius); border-top: 4px solid var(--danger); box-shadow: var(--shadow); display: flex; flex-direction: column; overflow: hidden; }
-        .flashes-head { padding: 15px; font-weight: 800; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #eee; background: white; z-index: 10; }
+        .hero-flashes { width: 320px; background: white; border-radius: var(--radius); border-top: 4px solid var(--danger); box-shadow: var(--shadow); overflow: hidden; }
+        .flashes-head { padding: 15px; font-weight: 800; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #eee; }
         .live-dot { width: 10px; height: 10px; background: var(--danger); border-radius: 50%; animation: pulse 1s infinite; }
-        
-        /* Iframe המבזקים */
-        .flashes-frame { flex: 1; border: none; width: 100%; height: 100%; overflow: hidden; }
 
+        /* --- Cards & Grid --- */
         .news-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px; }
-        .news-card { background: white; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); cursor: pointer; }
+        .news-card { background: white; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); cursor: pointer; transition: 0.3s; }
+        .news-card:hover { transform: translateY(-5px); }
         .news-card img { width: 100%; height: 170px; object-fit: cover; }
         .card-content { padding: 15px; }
+        .card-cat { color: var(--accent); font-weight: 800; font-size: 0.8rem; }
 
-        .overlay-text { position: absolute; bottom: 0; padding: 20px; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; width: 100%; box-sizing: border-box; }
+        .overlay-text { position: absolute; bottom: 0; padding: 25px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); color: white; width: 100%; box-sizing: border-box; }
         .divider { margin: 50px 0; border-top: 2px solid var(--primary); position: relative; text-align: center; }
         .divider span { position: absolute; top: -16px; left: 50%; transform: translateX(-50%); background: var(--bg); padding: 0 25px; font-weight: 900; color: var(--primary); }
 
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
-        @media (max-width: 1100px) { .hero-section { flex-direction: column; height: auto; } .hero-flashes { width: 100%; height: 400px; } }
+        @media (max-width: 1100px) { .hero-section { flex-direction: column; height: auto; } .hero-flashes { width: 100%; height: 400px; } .news-grid { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
 <body>
@@ -58,7 +59,7 @@
     <div>בני ברק: 21°C | הדלקת נרות: 17:15</div>
 </div>
 
-<header onclick="location.reload()"><h1>חדשות חרדים</h1></header>
+<header onclick="window.location.reload()"><h1>חדשות חרדים</h1></header>
 
 <div class="nav-wrapper"><nav id="main-nav"></nav></div>
 
@@ -68,12 +69,12 @@
         <div id="hero-center" class="hero-stack"></div>
         <div class="hero-flashes">
             <div class="flashes-head"><div class="live-dot"></div>מבזקי "כל רגע"</div>
-            <iframe class="flashes-frame" src="https://www.kore.co.il/flashNews"></iframe>
+            <iframe style="width:100%; height:100%; border:none;" src="https://www.kore.co.il/flashNews"></iframe>
         </div>
     </div>
 
     <div id="row-1" class="news-grid"></div>
-    <div class="divider"><span>עוד כתבות מהשטח</span></div>
+    <div class="divider"><span>חדשות נוספות</span></div>
     <div id="more-rows" class="news-grid"></div>
 </div>
 
@@ -85,82 +86,103 @@
 <script>
     const repo = 'yy0534105830-source/news';
     const rawBase = 'https://raw.githubusercontent.com/' + repo + '/main/';
-    let articles = [];
+    let allArticles = [];
 
     async function start() {
         try {
             const options = { calendar: 'hebrew', dateStyle: 'full' };
             document.getElementById('date-heb').innerText = new Intl.DateTimeFormat('he-IL-u-ca-hebrew', options).format(new Date());
         } catch(e) {}
-
         fetchArticles();
     }
 
     async function fetchArticles() {
         try {
-            const bRes = await fetch(`https://api.github.com/repos/${repo}/contents/content/blog`);
-            const bFiles = await bRes.json();
+            const res = await fetch(`https://api.github.com/repos/${repo}/contents/content/blog`);
+            const files = await res.json();
             
-            articles = await Promise.all(bFiles.reverse().map(async f => {
+            allArticles = await Promise.all(files.reverse().map(async f => {
                 const r = await fetch(f.download_url);
                 const t = await r.text();
-                const m = { title: "כתבה", category: "כללי", img: "", body: "" };
-                t.split('\n').forEach(l => {
+                const m = { title: "ללא כותרת", category: "כללי", img: "", body: "", position: "grid" };
+                
+                const lines = t.split('---')[0].split('\n');
+                lines.forEach(l => {
                     if (l.startsWith('title:')) m.title = l.split(':')[1].trim().replace(/['"]/g, '');
                     if (l.startsWith('category:')) m.category = l.split(':')[1].trim().replace(/['"]/g, '');
+                    if (l.startsWith('position:')) m.position = l.split(':')[1].trim().toLowerCase();
                     if (l.startsWith('thumbnail:')) {
                         let img = l.split(':')[1].trim().replace(/['"]/g, '');
                         m.img = img.startsWith('http') ? img : rawBase + "images/" + img.replace(/^\/?images\//, '');
                     }
                 });
-                m.body = t.split('---').pop().trim();
+                m.body = t.split('---').slice(1).join('---').trim();
                 return m;
             }));
-            render();
+            render('הכל');
         } catch(e) { console.error(e); }
     }
 
-    function render() {
-        if(!articles.length) return;
+    function render(filterCat) {
+        const filtered = filterCat === 'הכל' ? allArticles : allArticles.filter(a => a.category === filterCat);
         
-        const cats = ['הכל', ...new Set(articles.map(a => a.category))];
-        document.getElementById('main-nav').innerHTML = cats.map(c => `<div class="nav-link">${c}</div>`).join('');
+        // יצירת תפריט קטגוריות
+        const cats = ['הכל', ...new Set(allArticles.map(a => a.category))];
+        document.getElementById('main-nav').innerHTML = cats.map(c => 
+            `<div class="nav-link" onclick="render('${c}')" style="${c === filterCat ? 'color:var(--accent); border-bottom:2px solid var(--accent)' : ''}">${c}</div>`
+        ).join('');
 
-        document.getElementById('hero-med').innerHTML = `
-            <div onclick="openArt(0)" style="height:100%; cursor:pointer;">
-                <img src="${articles[0].img}" style="width:100%; height:100%; object-fit:cover;">
-                <div class="overlay-text"><h2>${articles[0].title}</h2></div>
-            </div>`;
+        // מיון למיקומים
+        const mainArt = filtered.find(a => a.position === 'main') || filtered[0];
+        const stackArts = filtered.filter(a => a.position === 'stack').slice(0, 2);
+        
+        // אם אין מספיק מסומנים, ניקח את הבאים בתור
+        const usedTitles = [mainArt?.title, ...stackArts.map(s => s?.title)];
+        const gridArts = filtered.filter(a => !usedTitles.includes(a.title));
 
-        document.getElementById('hero-center').innerHTML = articles.slice(1,3).map((a,i) => `
-            <div class="hero-small" onclick="openArt(${i+1})">
+        // רינדור Hero
+        if(mainArt) {
+            document.getElementById('hero-med').innerHTML = `
+                <div onclick="openArt('${escape(mainArt.title)}')" style="height:100%">
+                    <img src="${mainArt.img}" style="width:100%; height:100%; object-fit:cover;">
+                    <div class="overlay-text">
+                        <span class="card-cat" style="color:var(--accent)">${mainArt.category}</span>
+                        <h2>${mainArt.title}</h2>
+                    </div>
+                </div>`;
+        }
+
+        document.getElementById('hero-center').innerHTML = stackArts.map(a => `
+            <div class="hero-small" onclick="openArt('${escape(a.title)}')">
                 <img src="${a.img}" style="width:100%; height:100%; object-fit:cover;">
                 <div class="overlay-text"><h2 style="font-size:1.1rem;">${a.title}</h2></div>
             </div>`).join('');
 
-        document.getElementById('row-1').innerHTML = articles.slice(3,7).map((a,i) => createCard(a, i+3)).join('');
-        document.getElementById('more-rows').innerHTML = articles.slice(7,19).map((a,i) => createCard(a, i+7)).join('');
+        // רינדור גריד
+        document.getElementById('row-1').innerHTML = gridArts.slice(0, 4).map(a => createCard(a)).join('');
+        document.getElementById('more-rows').innerHTML = gridArts.slice(4, 16).map(a => createCard(a)).join('');
     }
 
-    function createCard(a, idx) {
+    function createCard(a) {
         return `
-            <div class="news-card" onclick="openArt(${idx})">
+            <div class="news-card" onclick="openArt('${escape(a.title)}')">
                 <img src="${a.img}">
                 <div class="card-content">
-                    <span style="color:var(--accent); font-weight:800; font-size:0.75rem;">${a.category}</span>
+                    <span class="card-cat">${a.category}</span>
                     <h3 style="font-size:1rem; margin:5px 0;">${a.title}</h3>
                 </div>
             </div>`;
     }
 
-    function openArt(idx) {
-        const a = articles[idx];
+    function openArt(title) {
+        const a = allArticles.find(art => art.title === unescape(title));
         document.getElementById('home-view').style.display='none';
         document.getElementById('article-view').style.display='block';
         document.getElementById('art-content').innerHTML = `
-            <h1 style="font-family:'Frank Ruhl Libre'; font-size:2.5rem;">${a.title}</h1>
-            <img src="${a.img}" style="width:100%; border-radius:10px; margin-bottom:20px;">
-            <div style="font-size:1.3rem;">${a.body}</div>`;
+            <span class="card-cat" style="font-size:1.2rem">${a.category}</span>
+            <h1 style="font-family:'Frank Ruhl Libre'; font-size:2.8rem; margin:10px 0;">${a.title}</h1>
+            <img src="${a.img}" style="width:100%; border-radius:10px; margin:20px 0;">
+            <div style="font-size:1.4rem; line-height:1.8;">${a.body}</div>`;
         window.scrollTo(0,0);
     }
 
